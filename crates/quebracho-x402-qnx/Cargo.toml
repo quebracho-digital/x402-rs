@@ -6,11 +6,12 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
+# Published once it builds and runs on QNX 8.0 (the viability test).
 publish = false
 
 [dependencies]
-quebracho-x402 = { path = "../quebracho-x402" }
-quebracho-x402-ofac = { path = "../quebracho-x402-ofac" }
+quebracho-x402 = { path = "../quebracho-x402", version = "0.1.0" }
+quebracho-x402-ofac = { path = "../quebracho-x402-ofac", version = "0.1.0" }
 serde_json = { version = "1", features = ["std"] }
 sha2 = { workspace = true }
 rustls = { version = "0.23", default-features = false, features = ["std", "tls12"] }

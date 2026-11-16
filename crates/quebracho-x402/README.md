@@ -1,5 +1,7 @@
 # quebracho-x402
 
+> **0.1, experimental.** Not audited. The API will change before 1.0. Test on testnets first.
+
 The `no_std` + `alloc` core of the Rust port of [quebracho/x402](https://github.com/quebracho-digital/x402):
 what a device needs to **charge** with x402. A seller only verifies, so this crate holds no key and
 needs no entropy.

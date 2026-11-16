@@ -6,8 +6,10 @@ edition.workspace = true
 rust-version.workspace = true
 license.workspace = true
 repository.workspace = true
-# Not on crates.io until it does something real (crates.io forbids name squatting).
-publish = false
+homepage.workspace = true
+readme = "README.md"
+keywords = ["x402", "payments", "eip-3009", "no-std", "qnx"]
+categories = ["cryptography::cryptocurrencies", "no-std", "embedded", "web-programming"]
 
 [dependencies]
 k256 = { workspace = true }
