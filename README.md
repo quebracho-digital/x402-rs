@@ -47,6 +47,7 @@ conformance/export.sh           # regenerate the vectors from the PHP library (n
 |---|---|
 | `conformance/` | The vectors and the scripts that export them from PHP ([README](conformance/README.md)) |
 | `docs/THREATS.md` | The threat model |
+| `docs/TESTING.md` | How it is tested, and the mutants left on purpose |
 | `SECURITY.md` | How to report a vulnerability |
 
 ## License

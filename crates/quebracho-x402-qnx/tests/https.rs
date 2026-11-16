@@ -390,3 +390,56 @@ fn builders_keep_the_roots_and_raise_or_set_the_cap() {
         b"hi"
     );
 }
+
+/// A server that answers and keeps the connection open: the answer is returned as soon as it is whole,
+/// not when the server finally closes or the deadline runs out.
+#[test]
+fn a_whole_answer_returns_without_waiting_for_the_close() {
+    let Some((cert, key)) = certificate("keepalive") else {
+        return;
+    };
+    let lingering = |answer: &'static [u8]| -> u16 {
+        let certs = vec![CertificateDer::from_pem_file(&cert).unwrap()];
+        let pkey = PrivateKeyDer::from_pem_file(&key).unwrap();
+        let config = ServerConfig::builder_with_provider(Arc::new(rustls_rustcrypto::provider()))
+            .with_safe_default_protocol_versions()
+            .unwrap()
+            .with_no_client_auth()
+            .with_single_cert(certs, pkey)
+            .unwrap();
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        thread::spawn(move || {
+            let (tcp, _) = listener.accept().unwrap();
+            let mut tls = StreamOwned::new(ServerConnection::new(Arc::new(config)).unwrap(), tcp);
+            let mut buf = [0u8; 4096];
+            let _ = tls.read(&mut buf);
+            let _ = tls.write_all(answer);
+            let _ = tls.flush();
+            thread::sleep(std::time::Duration::from_secs(4));
+        });
+        port
+    };
+    for answer in [
+        b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nhi".as_slice(),
+        b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n2\r\nhi\r\n0\r\n\r\n".as_slice(),
+    ] {
+        let port = lingering(answer);
+        let started = std::time::Instant::now();
+        let r = trusting(&cert)
+            .deadline(std::time::Duration::from_secs(10))
+            .send(&HttpsRequest {
+                method: "GET",
+                url: format!("https://127.0.0.1:{port}/"),
+                headers: vec![],
+                body: vec![],
+            })
+            .unwrap();
+        assert_eq!(r.body, b"hi");
+        assert!(
+            started.elapsed() < std::time::Duration::from_secs(2),
+            "waited {:?}",
+            started.elapsed()
+        );
+    }
+}
