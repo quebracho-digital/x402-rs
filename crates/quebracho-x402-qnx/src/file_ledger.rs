@@ -35,19 +35,20 @@ impl FileLedger {
         Self { dir: dir.into() }
     }
 
-    /// Deletes expired states; returns how many.
+    /// Deletes expired states; returns how many. Under the claim lock, so a claim written meanwhile is
+    /// never taken for expired; a file it cannot read is left for a person.
     pub fn prune(&self) -> Result<usize, LedgerUnavailable> {
+        let lock = self.lock()?;
         let mut n = 0;
-        let Ok(entries) = fs::read_dir(&self.dir) else {
-            return Ok(0);
-        };
+        let entries = fs::read_dir(&self.dir).map_err(|_| LedgerUnavailable)?;
         for e in entries.flatten() {
             let p = e.path();
-            if p.extension().is_some_and(|x| x == "json") && read_state(&p).is_none() {
+            if p.extension().is_some_and(|x| x == "json") && matches!(read_state(&p), Ok(None)) {
                 remove(&p)?;
                 n += 1;
             }
         }
+        drop(lock);
         Ok(n)
     }
 
@@ -124,45 +125,74 @@ fn remove(file: &Path) -> Result<(), LedgerUnavailable> {
     }
 }
 
-/// A live state, or `None` (absent, unreadable or expired).
-fn read_state(file: &Path) -> Option<Value> {
-    let data: Value = serde_json::from_slice(&fs::read(file).ok()?).ok()?;
-    let expires = data.get("expires")?.as_u64()?;
-    let state = data
-        .get("state")
-        .filter(|s| s.is_object() || s.is_array())?;
-    (expires > now()).then(|| state.clone())
+/// The file's JSON: `None` only when there is no file. Any other read error, or content this ledger never
+/// writes, is unavailable: treating it as absent would admit the payment again (fail closed).
+fn read_json(file: &Path) -> Result<Option<Value>, LedgerUnavailable> {
+    match fs::read(file) {
+        Ok(bytes) => serde_json::from_slice(&bytes)
+            .map(Some)
+            .map_err(|_| LedgerUnavailable),
+        Err(e) if e.kind() == ErrorKind::NotFound => Ok(None),
+        Err(_) => Err(LedgerUnavailable),
+    }
 }
 
-/// A live open entry: its key and reference.
-fn read_open(file: &Path) -> Option<(String, Value)> {
-    let data: Value = serde_json::from_slice(&fs::read(file).ok()?).ok()?;
-    let expires = data.get("expires")?.as_u64()?;
-    let key = data.get("key")?.as_str()?.to_string();
+/// A live state; `None` when absent or expired.
+fn read_state(file: &Path) -> Result<Option<Value>, LedgerUnavailable> {
+    let Some(data) = read_json(file)? else {
+        return Ok(None);
+    };
+    let expires = data
+        .get("expires")
+        .and_then(Value::as_u64)
+        .ok_or(LedgerUnavailable)?;
+    let state = data
+        .get("state")
+        .filter(|s| s.is_object() || s.is_array())
+        .ok_or(LedgerUnavailable)?;
+    Ok((expires > now()).then(|| state.clone()))
+}
+
+/// A live open entry, its key and reference; `None` when absent or expired.
+fn read_open(file: &Path) -> Result<Option<(String, Value)>, LedgerUnavailable> {
+    let Some(data) = read_json(file)? else {
+        return Ok(None);
+    };
+    let expires = data
+        .get("expires")
+        .and_then(Value::as_u64)
+        .ok_or(LedgerUnavailable)?;
+    let key = data
+        .get("key")
+        .and_then(Value::as_str)
+        .ok_or(LedgerUnavailable)?
+        .to_string();
     let reference = data
         .get("ref")
-        .filter(|r| r.is_object() || r.is_array())?
+        .filter(|r| r.is_object() || r.is_array())
+        .ok_or(LedgerUnavailable)?
         .clone();
-    (expires > now()).then_some((key, reference))
+    Ok((expires > now()).then_some((key, reference)))
 }
 
 impl Ledger for FileLedger {
     fn claim(&self, key: &str, ttl: u64) -> Result<bool, LedgerUnavailable> {
         let lock = self.lock()?;
         let file = self.path(key, "json");
-        let out = if read_state(&file).is_some() {
-            Ok(false)
-        } else {
+        let out = match read_state(&file) {
+            Ok(Some(_)) => Ok(false),
             // Absent or expired: the lock keeps other claims out, so the rename is the claim.
-            self.write(&file, &Self::encode(&json!({ "status": "claimed" }), ttl))
-                .map(|()| true)
+            Ok(None) => self
+                .write(&file, &Self::encode(&json!({ "status": "claimed" }), ttl))
+                .map(|()| true),
+            Err(e) => Err(e),
         };
         drop(lock);
         out
     }
 
     fn get(&self, key: &str) -> Result<Option<Value>, LedgerUnavailable> {
-        Ok(read_state(&self.path(key, "json")))
+        read_state(&self.path(key, "json"))
     }
 
     fn put(&self, key: &str, state: &Value, ttl: u64) -> Result<(), LedgerUnavailable> {
@@ -177,7 +207,7 @@ impl Ledger for FileLedger {
     fn open(&self, key: &str, reference: &Value, ttl: u64) -> Result<(), LedgerUnavailable> {
         let file = self.path(key, "open");
         let mut reference = reference.clone();
-        let opened = read_open(&file)
+        let opened = read_open(&file)?
             .and_then(|(_, r)| r.get("opened").cloned())
             .or_else(|| reference.get("opened").filter(|o| o.is_u64()).cloned())
             .unwrap_or_else(|| json!(now()));
@@ -205,8 +235,10 @@ impl Ledger for FileLedger {
                 continue;
             }
             match read_open(&p) {
-                Some(entry) => out.push(entry),
-                None => remove(&p)?,
+                Ok(Some(entry)) => out.push(entry),
+                // Expired: gone. Unreadable: kept for a person, and listed nowhere.
+                Ok(None) => remove(&p)?,
+                Err(_) => {}
             }
         }
         Ok(out)

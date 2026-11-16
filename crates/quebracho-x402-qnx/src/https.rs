@@ -29,6 +29,7 @@ pub const MAX_RESPONSE: usize = 4 * 1024 * 1024;
 pub struct HttpsClient {
     config: Arc<ClientConfig>,
     timeout: Duration,
+    deadline: Duration,
     max_response: usize,
 }
 
@@ -50,6 +51,7 @@ impl HttpsClient {
         Self {
             config: Arc::new(config),
             timeout: Duration::from_secs(30),
+            deadline: Duration::from_secs(120),
             max_response: MAX_RESPONSE,
         }
     }
@@ -58,6 +60,13 @@ impl HttpsClient {
     /// several megabytes (the PHP library allows 64 MiB).
     pub fn max_response(mut self, bytes: usize) -> Self {
         self.max_response = bytes;
+        self
+    }
+
+    /// The most a whole answer may take, however it trickles in (120 s by default). The timeout below
+    /// bounds each read; this bounds them all.
+    pub fn deadline(mut self, deadline: Duration) -> Self {
+        self.deadline = deadline;
         self
     }
 
@@ -90,18 +99,34 @@ impl HttpsClient {
             .map_err(|_| HttpsUnavailable)?;
         stream.flush().map_err(|_| HttpsUnavailable)?;
 
+        let started = std::time::Instant::now();
         let mut raw = Vec::new();
         let mut chunk = [0u8; 16 * 1024];
+        // Where the head ends, once seen: searched only in the bytes that arrived since.
+        let mut head_end: Option<usize> = None;
         loop {
-            if let Some(done) = parse(&raw) {
+            if let Some(end) = head_end
+                && complete(&raw, end)
+                && let Some(done) = parse(&raw)
+            {
                 return done;
+            }
+            if started.elapsed() > self.deadline {
+                return Err(HttpsUnavailable);
             }
             match stream.read(&mut chunk) {
                 Ok(0) => break,
                 Ok(n) => {
+                    let from = raw.len().saturating_sub(3);
                     raw.extend_from_slice(&chunk[..n]);
                     if raw.len() > self.max_response {
                         return Err(HttpsUnavailable);
+                    }
+                    if head_end.is_none() {
+                        head_end = raw[from..]
+                            .windows(4)
+                            .position(|w| w == b"\r\n\r\n")
+                            .map(|i| from + i);
                     }
                 }
                 Err(e) if e.kind() == ErrorKind::Interrupted => {}
@@ -282,6 +307,20 @@ fn parse_at_eof(raw: &[u8]) -> Option<Result<HttpsResponse, HttpsUnavailable>> {
     }
 }
 
+/// Cheap test of whether a message whose head ends at `head_end` may be whole: it avoids decoding a
+/// chunked body (or rescanning a long one) on every read.
+fn complete(raw: &[u8], head_end: usize) -> bool {
+    match split(raw) {
+        Some(Ok((_, Framing::Length(n), start, _))) => raw.len() - start >= n,
+        Some(Ok((_, Framing::Chunked, _, _))) => {
+            raw.ends_with(b"\r\n\r\n") || raw.ends_with(b"0\r\n")
+        }
+        Some(Ok((_, Framing::UntilClose, _, _))) => false,
+        // A bad head: parse() says so at once.
+        Some(Err(_)) | None => raw.len() > head_end,
+    }
+}
+
 /// A chunked body, or `None` until its last chunk arrived.
 fn dechunk(mut body: &[u8]) -> Option<Result<Vec<u8>, HttpsUnavailable>> {
     let mut out = Vec::new();
@@ -297,11 +336,15 @@ fn dechunk(mut body: &[u8]) -> Option<Result<Vec<u8>, HttpsUnavailable>> {
         if size == 0 {
             return Some(Ok(out));
         }
-        if body.len() < size + 2 {
+        // A size no answer can have (it would overflow) is refused, not trusted.
+        let Some(need) = size.checked_add(2) else {
+            return Some(Err(HttpsUnavailable));
+        };
+        if body.len() < need {
             return None;
         }
         out.extend_from_slice(&body[..size]);
-        body = &body[size + 2..];
+        body = &body[need..];
     }
 }
 
@@ -349,6 +392,36 @@ mod tests {
             302
         );
         assert!(parse(b"garbage\r\n\r\n").unwrap().is_err());
+    }
+
+    /// A chunk larger than the default cap is fine when the client allows more (an OFAC sync).
+    #[test]
+    fn a_big_chunk_within_the_cap_is_read() {
+        let size = 5 * 1024 * 1024;
+        let mut raw = format!("HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n{size:x}\r\n")
+            .into_bytes();
+        raw.extend(std::iter::repeat_n(b'a', size));
+        raw.extend_from_slice(b"\r\n0\r\n\r\n");
+        assert_eq!(parse(&raw).unwrap().unwrap().body.len(), size);
+    }
+
+    /// Half of a big chunk is "not yet", never an error, even when its last bytes look like an end.
+    #[test]
+    fn half_a_big_chunk_waits_for_more() {
+        let size = 5 * 1024 * 1024;
+        let mut raw = format!("HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n{size:x}\r\n")
+            .into_bytes();
+        raw.extend(std::iter::repeat_n(b'a', 1024 * 1024));
+        raw.extend_from_slice(b"0\r\n");
+        assert!(parse(&raw).is_none());
+    }
+
+    /// Audit M1: a chunk size near usize::MAX must be refused, not overflow.
+    #[test]
+    fn a_huge_chunk_size_is_refused_without_panicking() {
+        let raw = b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\nffffffffffffffff\r\nxx";
+        assert!(matches!(parse(raw), Some(Err(_))));
+        assert!(matches!(parse_at_eof(raw), Some(Err(_))));
     }
 
     #[test]

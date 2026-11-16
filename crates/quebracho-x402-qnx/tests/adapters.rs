@@ -199,3 +199,36 @@ fn write_a_ledger_for_php() {
     l.open("written-by-rust", &json!({ "status": "settling" }), 600)
         .unwrap();
 }
+
+/// Audit M2: a state file that cannot be read is not "absent". Admitting the payment again would sell it
+/// twice; the ledger answers unavailable instead (nothing is charged, 503).
+#[test]
+fn an_unreadable_state_is_unavailable_not_absent() {
+    use std::os::unix::fs::PermissionsExt;
+    let dir = temp("unreadable");
+    let l = FileLedger::new(&dir);
+    assert!(l.claim("k", 600).unwrap());
+    let file = std::fs::read_dir(&dir)
+        .unwrap()
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| p.extension().is_some_and(|x| x == "json"))
+        .unwrap();
+    std::fs::set_permissions(&file, std::fs::Permissions::from_mode(0o000)).unwrap();
+    if std::fs::read(&file).is_ok() {
+        // Running as root: permissions do not stop reads, so this case cannot be staged.
+        let _ = std::fs::remove_dir_all(dir);
+        return;
+    }
+    assert!(l.get("k").is_err(), "get must not say absent");
+    assert!(l.claim("k", 600).is_err(), "a second claim must not win");
+    std::fs::set_permissions(&file, std::fs::Permissions::from_mode(0o600)).unwrap();
+    // A corrupt file (not what this ledger writes) is held, never absent.
+    std::fs::write(&file, b"{not json").unwrap();
+    assert!(l.get("k").is_err());
+    assert!(l.claim("k", 600).is_err());
+    // prune leaves what it cannot read.
+    assert_eq!(l.prune().unwrap(), 0);
+    assert!(file.exists());
+    let _ = std::fs::remove_dir_all(dir);
+}

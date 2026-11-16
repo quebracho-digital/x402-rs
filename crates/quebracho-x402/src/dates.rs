@@ -101,7 +101,8 @@ pub fn parse_http(text: &str) -> Option<i64> {
     ];
     let month = f.next()?;
     let mo = months.iter().position(|m| *m == month)? as i64 + 1;
-    let y = num(f.next()?)?;
+    // Four-digit years only, as both forms write them: a longer number would overflow the arithmetic.
+    let y = f.next().filter(|y| y.len() == 4).and_then(num)?;
     let mut clock = f.next()?.split(':');
     let (h, mi, s) = (
         num(clock.next()?)?,

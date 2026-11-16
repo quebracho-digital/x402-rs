@@ -132,3 +132,19 @@ fn response_headers_are_found_in_any_case_and_clocks_trust_by_default() {
     assert!(C.reliable());
     assert_eq!(C.now(), 7);
 }
+
+/// Audit L2: a date with an absurd year is not a date (it used to overflow).
+#[test]
+fn absurd_years_are_not_dates() {
+    assert_eq!(
+        dates::parse_http("Fri, 13 Nov 9999999999999999 16:33:06 GMT"),
+        None
+    );
+    assert_eq!(dates::parse_http("Fri, 13 Nov 99999 16:33:06 GMT"), None);
+    assert_eq!(
+        dates::parse_http("Fri, 13 Nov 2026 16:33:06 GMT")
+            .map(dates::iso)
+            .as_deref(),
+        Some("2026-11-13T16:33:06Z")
+    );
+}

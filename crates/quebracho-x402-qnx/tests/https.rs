@@ -204,3 +204,51 @@ fn the_facilitator_verifies_over_tls() {
     let sent = String::from_utf8(server.join().unwrap()).unwrap();
     assert!(sent.starts_with("POST /verify HTTP/1.1\r\n"), "{sent}");
 }
+
+/// Audit L6: a server that drips its answer cannot hold the client past its total deadline.
+#[test]
+fn a_dripping_server_hits_the_total_deadline() {
+    let Some((cert, key)) = certificate("drip") else {
+        return;
+    };
+    let certs = vec![CertificateDer::from_pem_file(&cert).unwrap()];
+    let pkey = PrivateKeyDer::from_pem_file(&key).unwrap();
+    let config = ServerConfig::builder_with_provider(Arc::new(rustls_rustcrypto::provider()))
+        .with_safe_default_protocol_versions()
+        .unwrap()
+        .with_no_client_auth()
+        .with_single_cert(certs, pkey)
+        .unwrap();
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let port = listener.local_addr().unwrap().port();
+    thread::spawn(move || {
+        let (tcp, _) = listener.accept().unwrap();
+        let mut tls = StreamOwned::new(ServerConnection::new(Arc::new(config)).unwrap(), tcp);
+        let mut buf = [0u8; 1024];
+        let _ = tls.read(&mut buf);
+        let _ = tls.write_all(b"HTTP/1.1 200 OK\r\nContent-Length: 1000\r\n\r\n");
+        let _ = tls.flush();
+        for _ in 0..1000 {
+            if tls.write_all(b"x").and_then(|()| tls.flush()).is_err() {
+                return;
+            }
+            thread::sleep(std::time::Duration::from_millis(50));
+        }
+    });
+    let started = std::time::Instant::now();
+    let r = trusting(&cert)
+        .timeout(std::time::Duration::from_secs(5))
+        .deadline(std::time::Duration::from_secs(1))
+        .send(&HttpsRequest {
+            method: "GET",
+            url: format!("https://127.0.0.1:{port}/"),
+            headers: vec![],
+            body: vec![],
+        });
+    assert!(r.is_err(), "a 50 s drip must not complete");
+    assert!(
+        started.elapsed() < std::time::Duration::from_secs(4),
+        "took {:?}",
+        started.elapsed()
+    );
+}
