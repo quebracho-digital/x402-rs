@@ -1,0 +1,18 @@
+[package]
+name = "quebracho-x402-qnx"
+description = "Platform adapters for quebracho-x402 on QNX 8.0 (and any POSIX host): file ledger, stop switch, clock, OFAC list files."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+quebracho-x402 = { path = "../quebracho-x402" }
+quebracho-x402-ofac = { path = "../quebracho-x402-ofac" }
+serde_json = { version = "1", features = ["std"] }
+sha2 = { workspace = true }
+
+[lints]
+workspace = true

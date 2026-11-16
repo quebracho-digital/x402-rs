@@ -1,0 +1,2054 @@
+{
+    "source": "quebracho/x402 @ 592f1e6",
+    "generator": "conformance/export.php",
+    "cases": [
+        {
+            "name": "accepts its own payment",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": null
+        },
+        {
+            "name": "amount",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "1",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_value_mismatch"
+        },
+        {
+            "name": "recipient",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x0000000000000000000000000000000000000001",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_recipient_mismatch"
+        },
+        {
+            "name": "payer",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x0000000000000000000000000000000000000001",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_signature"
+        },
+        {
+            "name": "network",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:7",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_network"
+        },
+        {
+            "name": "array nonce",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": [
+                            "x"
+                        ]
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "echoed payTo",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x0000000000000000000000000000000000000001",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "echoed asset",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x0000000000000000000000000000000000000001",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "echoed amount",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "9",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "echoed asset, other case",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036cbd53842c5426634e7929541ec2318f3dcf7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": null
+        },
+        {
+            "name": "version",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 1,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_x402_version"
+        },
+        {
+            "name": "version as a string",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": "2",
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_x402_version"
+        },
+        {
+            "name": "version as a float",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2.0,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_x402_version"
+        },
+        {
+            "name": "scheme",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "upto",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_scheme"
+        },
+        {
+            "name": "nonce without 0x",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "nonce not hex",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "zz"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "nonce upper-case, same bytes",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6A1F3E4B5C7D8E9FA0B1C2D3E4F5061728394A5B6C7D8E9F0A1B2C3D4E5F6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": null
+        },
+        {
+            "name": "validAfter not decimal",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0abc",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "validAfter as a number",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": 0,
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "value with a leading zero",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "010000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "signature not a string",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": 42,
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "signature with a trailing newline",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b\n",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "smart-wallet signature",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1babababababababababababababababababababababababababababababababab6492649264926492649264926492649264926492649264926492649264926492",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "no authorization",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b"
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payload"
+        },
+        {
+            "name": "no accepted",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_scheme"
+        },
+        {
+            "name": "validAfter in the future",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x0dea083bc24e44b5379179818375c216b8ab7b72ecdf6c8c5e8b30929810dc386d1bfb5873567f4e12b44bd1855ffb3f5864686a5e950318720b96cf0f4af9e91c",
+                    "authorization": {
+                        "validAfter": "1800000001",
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_after"
+        },
+        {
+            "name": "validAfter now",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0xe42a49a014e8da388a2a28611ada9b307ebb6d6831e6ee3be98dea8051a8a1fd1310503d616975f494ddb4898fa510e3c23022d1879ef0073be38a19ff7218d61b",
+                    "authorization": {
+                        "validAfter": "1800000000",
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": null
+        },
+        {
+            "name": "validBefore now + 0",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0xa35232251d42ba00b10cd6bc03ba2c1f7790361df2b9e94d6f6859cbd986e3db2ced9d9d20735ae9b76560d023dee2d6e99791a0b1086da94671a095518adc8b1b",
+                    "authorization": {
+                        "validBefore": "1800000000",
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_before"
+        },
+        {
+            "name": "validBefore now + 1",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0xf0f9e7648d4e0eb8fa7c7c52211c1e9a002eecd04149708655061b1aa5ce7460318cbe4619a010fe9cadb9e3ce8608dad494cc9d5f2dd9d82d981491175b6dae1b",
+                    "authorization": {
+                        "validBefore": "1800000001",
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_before"
+        },
+        {
+            "name": "validBefore now + 5",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x8a099f3357c52d7b3f8cdf0ace2541cd74dc1c04b0e552f4744d5c2ce8c5c1967636853c1116284e3f539d7445600569a2d5da510007c9425971333decd5a0d91c",
+                    "authorization": {
+                        "validBefore": "1800000005",
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_before"
+        },
+        {
+            "name": "validBefore now + 6",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x5e4838da9c515dd0b9dfe0d2fa873a37d6e37278a0e05acc0f37eaaa9213a7002239c106263eef3f4dd92d5a5a505790cdbc09378af8f68db461f10795a256e41c",
+                    "authorization": {
+                        "validBefore": "1800000006",
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": null
+        },
+        {
+            "name": "signed by another key",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0xa4e51516658ab6dafc2ac0adbb964627792e7d849f7b6156699fa8959203e582581cc6becbb2c6a6c89df5030acb72f99d959e1a33e5c72ae25f567927ecc4871c",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_signature"
+        },
+        {
+            "name": "another key signing as itself",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x025fa21d0b133610024a229cc267833a5b99fe6bbfe1411e5630b09c5fd2aca2128cb894f8425ca22ee022efb3350a4f008c79a708f419abdcabf6699a0954971b",
+                    "authorization": {
+                        "from": "0x17c5185167401eD00cF5F5b2fc97D9BBfDb7D025",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": null
+        },
+        {
+            "name": "expired",
+            "now": 1800003600,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_before"
+        },
+        {
+            "name": "about to expire",
+            "now": 1800000055,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_before"
+        },
+        {
+            "name": "requirements without the token version",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        },
+        {
+            "name": "high-s signature",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b5393ac990f0cc2aeb89331b407e73f3101f40ee819e0578045c8028929babf3bd8d31c",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_signature"
+        },
+        {
+            "name": "validity longer than the offer",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "99999999999",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_exact_evm_payload_authorization_valid_before"
+        },
+        {
+            "name": "offer amount '0'",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "amount": "0",
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        },
+        {
+            "name": "offer amount ''",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "amount": "",
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        },
+        {
+            "name": "offer amount '-1'",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "amount": "-1",
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        },
+        {
+            "name": "offer amount '1e3'",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "amount": "1e3",
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        },
+        {
+            "name": "offer amount '01'",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "amount": "01",
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        },
+        {
+            "name": "offer payTo not canonical",
+            "now": 1800000000,
+            "payment": {
+                "x402Version": 2,
+                "resource": {
+                    "url": "https://example.test/mcp"
+                },
+                "accepted": {
+                    "extra": {
+                        "assetTransferMethod": "eip3009",
+                        "name": "USDC",
+                        "version": "2"
+                    },
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60
+                },
+                "payload": {
+                    "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                    "authorization": {
+                        "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "to": "0x000000000000000000000000000000000000dEaD",
+                        "value": "10000",
+                        "validAfter": "0",
+                        "validBefore": "1800000060",
+                        "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                    }
+                }
+            },
+            "req": {
+                "payTo": "000000000000000000000000000000000000dEaD",
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "reason": "invalid_payment_requirements"
+        }
+    ]
+}

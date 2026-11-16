@@ -1,0 +1,341 @@
+{
+    "source": "quebracho/x402 @ 592f1e6",
+    "generator": "conformance/export.php",
+    "cases": [
+        {
+            "rule": "address",
+            "value": "0xaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB",
+            "ok": true
+        },
+        {
+            "rule": "address",
+            "value": "0xabababababababababababababababababababab",
+            "ok": true
+        },
+        {
+            "rule": "address",
+            "value": "aBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": "0XaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": "0xaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB\n",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": "0xaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB0",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": "0xaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBa",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": "0xgggggggggggggggggggggggggggggggggggggggg",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": "",
+            "ok": false
+        },
+        {
+            "rule": "address",
+            "value": " 0xaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaBaB",
+            "ok": false
+        },
+        {
+            "rule": "bytes32",
+            "value": "0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
+            "ok": true
+        },
+        {
+            "rule": "bytes32",
+            "value": "0X0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F",
+            "ok": false
+        },
+        {
+            "rule": "bytes32",
+            "value": "0x0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F",
+            "ok": true
+        },
+        {
+            "rule": "bytes32",
+            "value": "0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f",
+            "ok": false
+        },
+        {
+            "rule": "bytes32",
+            "value": "0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f\n",
+            "ok": false
+        },
+        {
+            "rule": "bytes32",
+            "value": "0x000000000000000000000000000000000000000000000000000000000000000",
+            "ok": false
+        },
+        {
+            "rule": "bytes32",
+            "value": "0x00000000000000000000000000000000000000000000000000000000000000000",
+            "ok": false
+        },
+        {
+            "rule": "bytes32",
+            "value": "zz",
+            "ok": false
+        },
+        {
+            "rule": "signature",
+            "value": "0x1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c",
+            "ok": true
+        },
+        {
+            "rule": "signature",
+            "value": "0x1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c00",
+            "ok": false
+        },
+        {
+            "rule": "signature",
+            "value": "0x1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c",
+            "ok": false
+        },
+        {
+            "rule": "signature",
+            "value": "0x1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c\n",
+            "ok": false
+        },
+        {
+            "rule": "signature",
+            "value": "1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c",
+            "ok": false
+        },
+        {
+            "rule": "private_key",
+            "value": "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318",
+            "ok": true
+        },
+        {
+            "rule": "private_key",
+            "value": "4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318",
+            "ok": false
+        },
+        {
+            "rule": "private_key",
+            "value": "0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318\n",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "0",
+            "ok": true
+        },
+        {
+            "rule": "uint256",
+            "value": "1",
+            "ok": true
+        },
+        {
+            "rule": "uint256",
+            "value": "10000",
+            "ok": true
+        },
+        {
+            "rule": "uint256",
+            "value": "010000",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "00",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "-1",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "+1",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "1e3",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "0x10",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": " 1",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "1 ",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "1\n",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "\u0661",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "999999999999999999999999999999999999999999999999999999999999999999999999999999",
+            "ok": true
+        },
+        {
+            "rule": "uint256",
+            "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999999",
+            "ok": false
+        },
+        {
+            "rule": "uint256",
+            "value": "",
+            "ok": false
+        },
+        {
+            "rule": "amount",
+            "value": "1",
+            "ok": true
+        },
+        {
+            "rule": "amount",
+            "value": "10000",
+            "ok": true
+        },
+        {
+            "rule": "amount",
+            "value": "0",
+            "ok": false
+        },
+        {
+            "rule": "amount",
+            "value": "01",
+            "ok": false
+        },
+        {
+            "rule": "amount",
+            "value": "-1",
+            "ok": false
+        },
+        {
+            "rule": "amount",
+            "value": "",
+            "ok": false
+        },
+        {
+            "rule": "amount",
+            "value": "1.5",
+            "ok": false
+        },
+        {
+            "rule": "amount",
+            "value": "999999999999999999999999999999999999999999999999999999999999999999999999999999",
+            "ok": true
+        },
+        {
+            "rule": "amount",
+            "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999999",
+            "ok": false
+        },
+        {
+            "rule": "timestamp",
+            "value": "0",
+            "ok": true
+        },
+        {
+            "rule": "timestamp",
+            "value": "1800000000",
+            "ok": true
+        },
+        {
+            "rule": "timestamp",
+            "value": "01",
+            "ok": false
+        },
+        {
+            "rule": "timestamp",
+            "value": "9999999999999999999",
+            "ok": true
+        },
+        {
+            "rule": "timestamp",
+            "value": "99999999999999999999",
+            "ok": false
+        },
+        {
+            "rule": "timestamp",
+            "value": "-5",
+            "ok": false
+        },
+        {
+            "rule": "timestamp",
+            "value": "1.0",
+            "ok": false
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:1",
+            "ok": true
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:84532",
+            "ok": true
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:4689",
+            "ok": true
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:0",
+            "ok": false
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:01",
+            "ok": false
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:",
+            "ok": false
+        },
+        {
+            "rule": "evm_network",
+            "value": "EIP155:1",
+            "ok": false
+        },
+        {
+            "rule": "evm_network",
+            "value": "eip155:1 ",
+            "ok": false
+        },
+        {
+            "rule": "evm_network",
+            "value": "solana:abc",
+            "ok": false
+        }
+    ]
+}

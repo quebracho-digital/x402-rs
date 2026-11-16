@@ -1,0 +1,162 @@
+{
+    "source": "quebracho/x402 @ 592f1e6",
+    "generator": "conformance/export.php",
+    "cases": [
+        {
+            "name": "base-sepolia/pay",
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "authorization": {
+                "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "to": "0x000000000000000000000000000000000000dEaD",
+                "value": "10000",
+                "validAfter": "0",
+                "validBefore": "1800000300",
+                "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+            },
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1c",
+            "signer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "base-sepolia/max-values",
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:84532",
+                "amount": "10000",
+                "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USDC",
+                    "version": "2"
+                }
+            },
+            "authorization": {
+                "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "to": "0x000000000000000000000000000000000000dEaD",
+                "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "validAfter": "9999999999999999999",
+                "validBefore": "9999999999999999999",
+                "nonce": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+            },
+            "digest": "0x48e449fa65773697f3aa37c174583db923740aa09a4901a6402c711245c93689",
+            "signature": "0xa45b45c0fcb713de227baaa78372a5c1bba98515ca0ec8ae817e66ce381f2fcb05b3e62dd6b132a86935870e2a159b858c1d6997476e1dbcfaee50c59316dab41c",
+            "signer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "base/pay",
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:8453",
+                "amount": "1500000",
+                "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USD Coin",
+                    "version": "2"
+                }
+            },
+            "authorization": {
+                "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "to": "0x000000000000000000000000000000000000dEaD",
+                "value": "1500000",
+                "validAfter": "0",
+                "validBefore": "1800000300",
+                "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+            },
+            "digest": "0xbbaf755956550223c7b46db8e30d883d2cc7c99c09317cb030a65e1227f6a8a5",
+            "signature": "0xe229e7554c3df89454c287005e9cb6446e64a0601e567d418aff0b33bd4e044d77434404ee750bd8229f0271d563ca626ab25de1380a124d2a7338970e12c6821b",
+            "signer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "base/max-values",
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:8453",
+                "amount": "1500000",
+                "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+                "payTo": "0x000000000000000000000000000000000000dEaD",
+                "maxTimeoutSeconds": 60,
+                "extra": {
+                    "name": "USD Coin",
+                    "version": "2"
+                }
+            },
+            "authorization": {
+                "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "to": "0x000000000000000000000000000000000000dEaD",
+                "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "validAfter": "9999999999999999999",
+                "validBefore": "9999999999999999999",
+                "nonce": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+            },
+            "digest": "0xd9375f9f650c464487ece61080b70b45052a7fb9c859e9d6b143c89b73b49422",
+            "signature": "0x715ffa86b82b4f9f220d65c2124261a356044ee3b22051d22ceec47f00490ba22e2e35e40b4ff89e95bb232734bbe400e0bb1469fc27a20e9a09097d120ae4fa1c",
+            "signer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "chain-4689-placeholder/pay",
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:4689",
+                "amount": "250000",
+                "asset": "0x1111111111111111111111111111111111111111",
+                "payTo": "0x2222222222222222222222222222222222222222",
+                "maxTimeoutSeconds": 300,
+                "extra": {
+                    "name": "Placeholder",
+                    "version": "1"
+                }
+            },
+            "authorization": {
+                "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "to": "0x2222222222222222222222222222222222222222",
+                "value": "250000",
+                "validAfter": "0",
+                "validBefore": "1800000300",
+                "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+            },
+            "digest": "0x2f86f548a2397254300a17db034998fc9e133d37a395c99b7ae98f11a9e18c58",
+            "signature": "0x7e55cbbd67db359b4e91975139c086c8a180ca29ef04fabaebd2216ad0f8b2074d7556d1fc6804e151d52b3ecc96d935b1c26af7ee59226abada2c46f4c2d2941b",
+            "signer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "chain-4689-placeholder/max-values",
+            "req": {
+                "scheme": "exact",
+                "network": "eip155:4689",
+                "amount": "250000",
+                "asset": "0x1111111111111111111111111111111111111111",
+                "payTo": "0x2222222222222222222222222222222222222222",
+                "maxTimeoutSeconds": 300,
+                "extra": {
+                    "name": "Placeholder",
+                    "version": "1"
+                }
+            },
+            "authorization": {
+                "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "to": "0x2222222222222222222222222222222222222222",
+                "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+                "validAfter": "9999999999999999999",
+                "validBefore": "9999999999999999999",
+                "nonce": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+            },
+            "digest": "0xff2aff0b2c9ed8245a826526a5a267af4b5243dfd7b93cd20eb0a04abdab7582",
+            "signature": "0xbac8521d1c411a299e32ec9f2a5fd002afae5096d9c2672b5a33dbecc0797ab10181d6e1ae62e5f443d96756a8eb5a124a59bd99742d7b013493454f3fd249571b",
+            "signer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        }
+    ]
+}

@@ -1,0 +1,38 @@
+# quebracho-x402
+
+The `no_std` + `alloc` core of the Rust port of [quebracho/x402](https://github.com/quebracho-digital/x402):
+what a device needs to **charge** with x402. A seller only verifies, so this crate holds no key and
+needs no entropy.
+
+| Module | Does | Port of |
+|---|---|---|
+| `field` | One spelling per value read from outside | `Field.php` |
+| `keccak256`, `eip712` | EIP-3009 `TransferWithAuthorization` digest | `Eip712.php`, `Authorization::digest` |
+| `signer` | ecrecover (low-s only), EIP-55 addresses | `Signer.php` (verifying half) |
+| `evm_exact` | Offline verify of an `exact` EVM payment, x402 v2 reason codes | `EvmExact::verify` |
+| `settlement`, `headers` | Payment key, TTLs, offer matching, reading a settle answer, `PAYMENT-*` headers | `Settlement`, `PaymentHeaders` |
+| `screening` | OFAC (on unless turned off by name), more lists, fail closed | `OfacSdn`, `AddressCheck`, `AddressList` |
+| `ports` | `Ledger`, `Facilitator`, `Lookup`, `Clock`, `AddressListener`, `Pause`, `Events` | `PaymentLedger`, `Facilitator`, ... |
+| `seller` | One paid request: 402, verify, claim, run, settle; upfront; ledger replay | `X402Middleware`, `Sale` |
+
+```rust
+use quebracho_x402::evm_exact;
+
+// payment: the decoded PAYMENT-SIGNATURE; req: our offer (one entry of `accepts`).
+match evm_exact::verify(&payment, &req, now_unix_seconds) {
+    Ok(()) => { /* next: claim, then run or settle */ }
+    Err(reason) => { /* answer 402 with reason.as_str() */ }
+}
+```
+
+## Tests
+
+```bash
+cargo test -p quebracho-x402                                   # conformance vectors from PHP
+cargo build -p quebracho-x402 --target wasm32-unknown-unknown  # checks it stays no_std
+```
+
+## Not yet
+
+The HTTP facilitator client, the reconciler, job mode, the buyer and MCP.
+Order and reasons: `planning/DESIGN.md`, `planning/CRATES.md`, `planning/todo.txt`.

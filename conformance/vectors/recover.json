@@ -1,0 +1,90 @@
+{
+    "source": "quebracho/x402 @ 592f1e6",
+    "generator": "conformance/export.php",
+    "cases": [
+        {
+            "name": "good",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1c",
+            "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "good, upper-case hex",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465EC799A96FB510DC04F91976657E8CBADF8EF8B6E2244831DE50D55D034F5055516239731EC8E096C82E1201959829152D2A0696C03214711AB859E9522A2A1C",
+            "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+        },
+        {
+            "name": "v flipped",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1b",
+            "address": "0xeEe0C634f1ff21A53e722eea7F7519EBF149892E"
+        },
+        {
+            "name": "high s (malleated)",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f50aaae9dc68ce1371f6937d1edfe6a67d5a581b2e018886e274eb7a632e6e417171b",
+            "address": null
+        },
+        {
+            "name": "v = 0",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a00",
+            "address": null
+        },
+        {
+            "name": "v = 1",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a01",
+            "address": null
+        },
+        {
+            "name": "v = 29",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1d",
+            "address": null
+        },
+        {
+            "name": "r = 0",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x000000000000000000000000000000000000000000000000000000000000000055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1c",
+            "address": null
+        },
+        {
+            "name": "s = 0",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5000000000000000000000000000000000000000000000000000000000000000001c",
+            "address": null
+        },
+        {
+            "name": "r = n",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd036414155516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1c",
+            "address": null
+        },
+        {
+            "name": "all zeros",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "address": null
+        },
+        {
+            "name": "too short",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "0x465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a",
+            "address": null
+        },
+        {
+            "name": "no 0x",
+            "digest": "0xc1fc0435a5d67fc9a0d26e0414991c2e354e708b910afffb6fa01053878c8136",
+            "signature": "465ec799a96fb510dc04f91976657e8cbadf8ef8b6e2244831de50d55d034f5055516239731ec8e096c82e1201959829152d2a0696c03214711ab859e9522a2a1c",
+            "address": null
+        },
+        {
+            "name": "eip-712 spec Mail",
+            "digest": "0xbe609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2",
+            "signature": "0x4355c47d63924e8a72e509b65029052eb6c299d53a04e167c5775fd466751c9d07299936d304c153f6443dfa05f40ff007d72911b6f72307f996231605b915621c",
+            "address": "0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+[package]
+name = "quebracho-x402-ofac"
+description = "OFAC's SDN digital-currency addresses, shipped with quebracho-x402 so screening works offline from the first request."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+quebracho-x402 = { path = "../quebracho-x402" }
+
+[lints]
+workspace = true
