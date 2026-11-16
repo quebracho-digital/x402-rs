@@ -144,13 +144,14 @@ pub fn check(
     reason
 }
 
-/// One plain-text list (`resources/address-list.example.txt`): one address per line, `#` comments, blank
-/// lines ignored, anything after the address ignored. `0x…` matches in any case.
+/// One plain-text list (`resources/address-list.example.txt` of the PHP library): one address per line,
+/// `#` comments and blank lines ignored, anything after the address ignored. `0x…` matches in any case.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct AddressList {
-    entries: BTreeSet<String>,
+    entries: alloc::vec::Vec<String>,
+    index: BTreeSet<String>,
     reason: String,
-    /// The `# updated:` line, if any.
+    /// The list's date from its `# updated:` line, as `YYYY-MM-DDTHH:MM:SSZ`, if it has one.
     pub updated: Option<String>,
 }
 
@@ -158,27 +159,46 @@ impl AddressList {
     pub fn parse(text: &str, reason: &str) -> Self {
         let mut list = Self {
             reason: reason.into(),
+            updated: updated(text),
             ..Self::default()
         };
         for line in text.lines() {
             let line = line.trim();
-            if let Some(date) = line.strip_prefix("# updated:") {
-                list.updated = Some(date.trim().into());
-                continue;
-            }
             if line.is_empty() || line.starts_with('#') {
                 continue;
             }
             if let Some(address) = line.split_whitespace().next() {
-                list.entries.insert(normalize(address));
+                let address = normalize(address);
+                if list.index.insert(address.clone()) {
+                    list.entries.push(address);
+                }
             }
         }
         list
     }
 
-    pub fn contains(&self, address: &str) -> bool {
-        self.entries.contains(&normalize(address))
+    /// The addresses, normalized (`0x…` in lower case), in order, without repeats.
+    pub fn addresses(&self) -> &[String] {
+        &self.entries
     }
+
+    pub fn contains(&self, address: &str) -> bool {
+        self.index.contains(&normalize(address))
+    }
+}
+
+/// The date in a list's `# updated:` comment (any case, any spacing), as `YYYY-MM-DDTHH:MM:SSZ`, or `None`.
+pub fn updated(text: &str) -> Option<String> {
+    text.lines().find_map(|line| {
+        let rest = line.trim().strip_prefix('#')?.trim_start();
+        let rest = rest
+            .get(..8)
+            .filter(|p| p.eq_ignore_ascii_case("updated:"))
+            .map(|_| &rest[8..])?;
+        let value = rest.trim();
+        (!value.is_empty() && !value.contains(char::is_whitespace))
+            .then(|| crate::dates::parse_iso(value).map(crate::dates::iso))?
+    })
 }
 
 impl AddressListener for AddressList {

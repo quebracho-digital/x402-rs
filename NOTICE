@@ -2,7 +2,7 @@ x402-rs is a port to Rust of the PHP library quebracho/x402
 (https://github.com/quebracho-digital/x402, MIT), by the same author, Leo Fishman,
 released here under the MIT License (see LICENSE).
 
-crates/quebracho-x402-ofac/ofac-sdn.json holds the digital currency addresses of the
+crates/quebracho-x402-screening/ofac-sdn.json holds the digital currency addresses of the
 U.S. Treasury's OFAC SDN list (https://ofac.treasury.gov/sanctions-list-service), a public
 U.S. government work, as shipped by quebracho/x402.
 

@@ -34,7 +34,7 @@ Out of scope: an attacker with root on the device, hardware side channels, legal
 | T4 | Another app steals the key (C/L → A1) | The key lives only in `signerd`: separate process, minimal QNX abilities, file mode 0600 | Pending (`signerd`) |
 | T5 | A fake EIP-712 domain: signing for a token that is not USDC (R/P → A2) | Closed list of tokens and domains verified on chain | Pending (buyer) |
 | T6 | A wrong clock: an expired or endless `validBefore` (R/L → A2/A4) | No trusted time, no payment admitted or signed (fail closed) | **Done**: `Clock::reliable`, `SystemClock` |
-| T7 | Sanctioned or frozen addresses (P → A5) | OFAC's SDN list on by default, more lists, USDC freeze by RPC; a list that cannot answer refuses | **Done** for OFAC and lists; USDC freeze pending |
+| T7 | Sanctioned or frozen addresses (P → A5) | OFAC's SDN list on by default, more lists, USDC freeze by RPC; a list that cannot answer refuses | **Done**: OFAC shipped, token blacklists (USDC/USDT freeze), Chainalysis oracle and API, own lists, list syncs (`quebracho-x402-screening`) |
 | T8 | Reading or changing payment or charger traffic (R → A2/A3) | TLS on every connection; without TLS it does not run | **Done** for outgoing calls (`HttpsClient`); seller and OCPP servers pending |
 | T9 | A fake charger connects to the gateway (R → A3/A7) | One identity per charger; `payTo` fixed by the gateway | Pending (gateway) |
 | T10 | The charger lies about its meter (C → A2/A3) | v1: readings shown as declared, energy blocks capped. Production: signed meter readings | Pending (gateway) |

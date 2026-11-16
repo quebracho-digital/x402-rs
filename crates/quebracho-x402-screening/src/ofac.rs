@@ -1,10 +1,8 @@
-//! OFAC's SDN list, as shipped (port of `resources/ofac-sdn.json` of the PHP library).
+//! OFAC's SDN list, as shipped (feature `ofac`, on by default).
 //!
-//! The copy here is the PHP library's, refreshed with it. **Keeping the list fresh is the device's job**:
-//! OFAC updates it a few times a week. A device syncs its own copy and passes both to
-//! [`Ofac::younger`], so the younger one is used and a lagging copy can never roll the list back.
-
-#![no_std]
+//! The copy is the PHP library's, refreshed with it. **Keeping the list fresh is the device's job**: OFAC
+//! updates it a few times a week. Sync your own copy ([`crate::sync`]) and pass both to [`Ofac::younger`],
+//! so the younger one is used and a lagging copy never rolls the list back.
 
 use quebracho_x402::screening::Ofac;
 
@@ -42,15 +40,13 @@ mod tests {
 
     #[test]
     fn a_younger_own_copy_wins_and_an_older_one_does_not() {
-        let own = |date: &str| Ofac::from_snapshot(alloc_free_json(date));
+        let young = Ofac::from_snapshot(r#"{"published":"2999-01-01T00:00:00Z","addresses":{}}"#);
+        let old = Ofac::from_snapshot(r#"{"published":"2000-01-01T00:00:00Z","addresses":{}}"#);
         assert_eq!(
-            bundled().younger(own("2999-01-01T00:00:00Z")).published(),
+            bundled().younger(young).published(),
             Some("2999-01-01T00:00:00Z")
         );
-        assert_eq!(
-            bundled().younger(own("2000-01-01T00:00:00Z")).published(),
-            bundled().published()
-        );
+        assert_eq!(bundled().younger(old).published(), bundled().published());
         // A broken own copy never replaces a readable list.
         assert_eq!(
             bundled()
@@ -58,12 +54,5 @@ mod tests {
                 .published(),
             bundled().published()
         );
-    }
-
-    fn alloc_free_json(date: &str) -> &'static str {
-        match date {
-            "2999-01-01T00:00:00Z" => r#"{"published":"2999-01-01T00:00:00Z","addresses":{}}"#,
-            _ => r#"{"published":"2000-01-01T00:00:00Z","addresses":{}}"#,
-        }
     }
 }

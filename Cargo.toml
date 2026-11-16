@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/quebracho-x402", "crates/quebracho-x402-ofac", "crates/quebracho-x402-qnx"]
+members = ["crates/quebracho-x402", "crates/quebracho-x402-screening", "crates/quebracho-x402-qnx"]
 
 [workspace.package]
 version = "0.1.0"

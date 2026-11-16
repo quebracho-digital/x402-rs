@@ -23,12 +23,13 @@ use quebracho_x402::ports::{Https, HttpsRequest, HttpsResponse, HttpsUnavailable
 use rustls::pki_types::ServerName;
 use rustls::{ClientConfig, ClientConnection, RootCertStore, StreamOwned};
 
-/// The largest answer read, headers included.
+/// The largest answer read by default, headers included.
 pub const MAX_RESPONSE: usize = 4 * 1024 * 1024;
 
 pub struct HttpsClient {
     config: Arc<ClientConfig>,
     timeout: Duration,
+    max_response: usize,
 }
 
 impl HttpsClient {
@@ -49,7 +50,15 @@ impl HttpsClient {
         Self {
             config: Arc::new(config),
             timeout: Duration::from_secs(30),
+            max_response: MAX_RESPONSE,
         }
+    }
+
+    /// The largest answer accepted ([`MAX_RESPONSE`] by default). A list sync needs more: OFAC's SDN.CSV is
+    /// several megabytes (the PHP library allows 64 MiB).
+    pub fn max_response(mut self, bytes: usize) -> Self {
+        self.max_response = bytes;
+        self
     }
 
     /// Connect, read and write timeout (30 s by default). Keep it below what the caller can wait.
@@ -91,7 +100,7 @@ impl HttpsClient {
                 Ok(0) => break,
                 Ok(n) => {
                     raw.extend_from_slice(&chunk[..n]);
-                    if raw.len() > MAX_RESPONSE {
+                    if raw.len() > self.max_response {
                         return Err(HttpsUnavailable);
                     }
                 }
@@ -196,7 +205,9 @@ enum Framing {
 }
 
 /// The status, the framing and where the body starts, once the head is complete.
-fn split(raw: &[u8]) -> Option<Result<(u16, Framing, usize), HttpsUnavailable>> {
+type Head = (u16, Framing, usize, Vec<(String, String)>);
+
+fn split(raw: &[u8]) -> Option<Result<Head, HttpsUnavailable>> {
     let end = raw.windows(4).position(|w| w == b"\r\n\r\n")?;
     let Ok(head) = std::str::from_utf8(&raw[..end]) else {
         return Some(Err(HttpsUnavailable));
@@ -211,11 +222,13 @@ fn split(raw: &[u8]) -> Option<Result<(u16, Framing, usize), HttpsUnavailable>> 
         return Some(Err(HttpsUnavailable));
     };
     let mut framing = Framing::UntilClose;
+    let mut headers = Vec::new();
     for line in lines {
         let Some((name, value)) = line.split_once(':') else {
             continue;
         };
         let value = value.trim();
+        headers.push((name.trim().to_string(), value.to_string()));
         if name.eq_ignore_ascii_case("transfer-encoding") && value.eq_ignore_ascii_case("chunked") {
             framing = Framing::Chunked;
         } else if name.eq_ignore_ascii_case("content-length")
@@ -227,12 +240,12 @@ fn split(raw: &[u8]) -> Option<Result<(u16, Framing, usize), HttpsUnavailable>> 
             }
         }
     }
-    Some(Ok((status, framing, end + 4)))
+    Some(Ok((status, framing, end + 4, headers)))
 }
 
 /// A complete message, or `None` while more bytes are needed.
 fn parse(raw: &[u8]) -> Option<Result<HttpsResponse, HttpsUnavailable>> {
-    let (status, framing, start) = match split(raw)? {
+    let (status, framing, start, headers) = match split(raw)? {
         Ok(s) => s,
         Err(e) => return Some(Err(e)),
     };
@@ -241,10 +254,17 @@ fn parse(raw: &[u8]) -> Option<Result<HttpsResponse, HttpsUnavailable>> {
         Framing::Length(n) => (body.len() >= n).then(|| {
             Ok(HttpsResponse {
                 status,
+                headers,
                 body: body[..n].to_vec(),
             })
         }),
-        Framing::Chunked => dechunk(body).map(|b| b.map(|body| HttpsResponse { status, body })),
+        Framing::Chunked => dechunk(body).map(|b| {
+            b.map(|body| HttpsResponse {
+                status,
+                headers,
+                body,
+            })
+        }),
         Framing::UntilClose => None,
     }
 }
@@ -252,8 +272,9 @@ fn parse(raw: &[u8]) -> Option<Result<HttpsResponse, HttpsUnavailable>> {
 /// At end of stream: a body read until close is complete; anything still short is not.
 fn parse_at_eof(raw: &[u8]) -> Option<Result<HttpsResponse, HttpsUnavailable>> {
     match split(raw)? {
-        Ok((status, Framing::UntilClose, start)) => Some(Ok(HttpsResponse {
+        Ok((status, Framing::UntilClose, start, headers)) => Some(Ok(HttpsResponse {
             status,
+            headers,
             body: raw[start..].to_vec(),
         })),
         Ok(_) => parse(raw),

@@ -1,0 +1,29 @@
+[package]
+name = "quebracho-x402-screening"
+description = "Address screening for quebracho-x402: OFAC's list shipped, the token's own blacklist (USDC/USDT freeze), Chainalysis' oracle and API, your own allow and deny lists, and their syncs."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+keywords = ["x402", "ofac", "sanctions", "screening", "no-std"]
+categories = ["cryptography::cryptocurrencies", "no-std"]
+
+[features]
+default = ["ofac"]
+# OFAC's SDN list, shipped in the binary (27 KB): screening works offline from the first request.
+ofac = []
+# Write synced lists to files (atomic rename). Everything else is no_std + alloc.
+std = []
+
+[dependencies]
+quebracho-x402 = { path = "../quebracho-x402", version = "0.1.0" }
+serde_json = { workspace = true }
+
+[dev-dependencies]
+serde_json = { version = "1", features = ["std"] }
+
+[lints]
+workspace = true

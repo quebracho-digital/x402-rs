@@ -122,6 +122,12 @@ pub enum Event<'a> {
         address: &'a str,
         reason: &'a str,
     },
+    /// A list built to fail open could not answer, so the address passed it unchecked. `by` names the list.
+    ScreeningSkipped {
+        role: &'a str,
+        address: &'a str,
+        by: &'a str,
+    },
 }
 
 /// Where events go: a log (slog2 on QNX), a file of records.
@@ -139,11 +145,22 @@ pub struct HttpsRequest {
     pub body: Vec<u8>,
 }
 
-/// What came back: the status and the body.
-#[derive(Debug, Clone, PartialEq, Eq)]
+/// What came back: the status, the headers and the body.
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
 pub struct HttpsResponse {
     pub status: u16,
+    pub headers: Vec<(String, String)>,
     pub body: Vec<u8>,
+}
+
+impl HttpsResponse {
+    /// The first header of that name, in any case.
+    pub fn header(&self, name: &str) -> Option<&str> {
+        self.headers
+            .iter()
+            .find(|(n, _)| n.eq_ignore_ascii_case(name))
+            .map(|(_, v)| v.as_str())
+    }
 }
 
 /// The request did not complete (connection, TLS, timeout).

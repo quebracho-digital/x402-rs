@@ -1,0 +1,1305 @@
+{
+    "source": "quebracho/x402 @ 592f1e6",
+    "generator": "conformance/screening.php",
+    "cases": {
+        "listeners": [
+            {
+                "kind": "token_blacklist",
+                "name": "known USDC, not frozen",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "known USDC, frozen",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000001\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_blacklisted",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "node returns an error",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":{\"code\":-32000,\"message\":\"execution reverted\"}}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "node down",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "down": true
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "node down, fail open",
+                "options": {
+                    "failOpen": true
+                },
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "down": true
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": null,
+                "skipped": 1
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "answer is not a word",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x1\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "answer is not JSON-RPC",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 502,
+                        "body": "Bad gateway"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "token not known: not asked",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "asset": "0x1111111111111111111111111111111111111111",
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "token added by the caller (legacy USDT function)",
+                "options": {
+                    "tokens": {
+                        "eip155:84532|0x1111111111111111111111111111111111111111": "isBlackListed"
+                    }
+                },
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "asset": "0x1111111111111111111111111111111111111111",
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000001\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x1111111111111111111111111111111111111111",
+                                    "data": "0xe47d60600000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_blacklisted",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "payer not an EVM address",
+                "options": {},
+                "address": "alice.near",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": "invalid_payload",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
+                "name": "Ethereum mainnet USDT",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "network": "eip155:1",
+                    "asset": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+                    "scheme": "exact",
+                    "amount": "10000",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://ethereum-rpc.publicnode.com",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+                                    "data": "0xe47d60600000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_oracle",
+                "name": "not sanctioned",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://ethereum-rpc.publicnode.com",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+                                    "data": "0xdf592f7d0000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_oracle",
+                "name": "sanctioned",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000001\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://ethereum-rpc.publicnode.com",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+                                    "data": "0xdf592f7d0000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_sanctioned",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_oracle",
+                "name": "node down",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "down": true
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://ethereum-rpc.publicnode.com",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+                                    "data": "0xdf592f7d0000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_oracle",
+                "name": "node down, fail open",
+                "options": {
+                    "failOpen": true
+                },
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "down": true
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://ethereum-rpc.publicnode.com",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+                                    "data": "0xdf592f7d0000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": null,
+                "skipped": 1
+            },
+            {
+                "kind": "chainalysis_oracle",
+                "name": "own RPC endpoint",
+                "options": {
+                    "rpc": "https://rpc.example.test/eth"
+                },
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000000\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://rpc.example.test/eth",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x40C57923924B5c5c5455c48D93317139ADDaC8fb",
+                                    "data": "0xdf592f7d0000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_oracle",
+                "name": "not an EVM address: not asked",
+                "options": {},
+                "address": "alice.near",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "not identified",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"identifications\":[]}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "identified",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"identifications\":[{\"category\":\"sanctions\",\"name\":\"SANCTIONS: OFAC SDN\"}]}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": "address_sanctioned",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "bad key (401): never fails open",
+                "options": {
+                    "failOpen": true
+                },
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 401,
+                        "body": "{\"message\":\"Unauthorized\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "server error",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 500,
+                        "body": "oops"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "server error, fail open",
+                "options": {
+                    "failOpen": true
+                },
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 500,
+                        "body": "oops"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": null,
+                "skipped": 1
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "no identifications field",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"other\":1}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "down",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "down": true
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": "address_check_failed",
+                "skipped": 0
+            },
+            {
+                "kind": "chainalysis_api",
+                "name": "address with characters to encode",
+                "options": {},
+                "address": "bc1q a/b?c",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"identifications\":[]}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/bc1q%20a%2Fb%3Fc",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "not listed, no API",
+                "allow": null,
+                "deny": null,
+                "api": false,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "denied",
+                "allow": null,
+                "deny": "# updated: 2026-11-01T00:00:00Z\n0x000000000000000000000000000000000000bEEF  a note\n",
+                "api": false,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": "address_denied",
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "denied in another case",
+                "allow": null,
+                "deny": "0x000000000000000000000000000000000000beef\n",
+                "api": false,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": "address_denied",
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "allowed: the API is not asked",
+                "allow": "0x000000000000000000000000000000000000bEEF\n",
+                "deny": null,
+                "api": true,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"identifications\":[{\"category\":\"sanctions\"}]}"
+                    }
+                ],
+                "sent": [],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "allowed and denied: allow wins",
+                "allow": "0x000000000000000000000000000000000000bEEF\n",
+                "deny": "0x000000000000000000000000000000000000bEEF\n",
+                "api": false,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [],
+                "sent": [],
+                "reason": null,
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "not listed, API says sanctioned",
+                "allow": null,
+                "deny": null,
+                "api": true,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"identifications\":[{\"category\":\"sanctions\"}]}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x000000000000000000000000000000000000bEEF",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": "address_sanctioned",
+                "skipped": 0
+            },
+            {
+                "kind": "screening",
+                "name": "not listed, API clean",
+                "allow": null,
+                "deny": null,
+                "api": true,
+                "address": "0x000000000000000000000000000000000000bEEF",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"identifications\":[]}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "GET",
+                        "url": "https://public.chainalysis.com/api/v1/address/0x000000000000000000000000000000000000bEEF",
+                        "api_key": "test-api-key",
+                        "body": null
+                    }
+                ],
+                "reason": null,
+                "skipped": 0
+            }
+        ],
+        "lists": [
+            {
+                "text": "# comment\n\n0x000000000000000000000000000000000000dEaD  note\n9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin\nscam-example.near\n",
+                "addresses": [
+                    "0x000000000000000000000000000000000000dead",
+                    "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
+                    "scam-example.near"
+                ],
+                "updated": null
+            },
+            {
+                "text": "0xAbC0000000000000000000000000000000000001\r\n0xabc0000000000000000000000000000000000001\r\n  # indented comment\n\tspaced.near\textra\n",
+                "addresses": [
+                    "0xabc0000000000000000000000000000000000001",
+                    "spaced.near"
+                ],
+                "updated": null
+            },
+            {
+                "text": "",
+                "addresses": [],
+                "updated": null
+            }
+        ],
+        "dates": [
+            {
+                "text": "# updated: 2026-11-06T19:33:18Z",
+                "updated": "2026-11-06T19:33:18Z"
+            },
+            {
+                "text": "# UPDATED: 2026-11-06T19:33:18+00:00",
+                "updated": "2026-11-06T19:33:18Z"
+            },
+            {
+                "text": "#updated:2026-11-06",
+                "updated": "2026-11-06T00:00:00Z"
+            },
+            {
+                "text": "# updated: not-a-date",
+                "updated": null
+            },
+            {
+                "text": "# updated: 2026-11-06T19:33:18-03:00",
+                "updated": "2026-11-06T22:33:18Z"
+            },
+            {
+                "text": "no comment",
+                "updated": null
+            }
+        ],
+        "sdn": {
+            "csv": "36,\"AEROCARIBBEAN AIRLINES\",-0- ,\"CUBA\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Havana, Cuba.\"\n9001,\"SOMEONE\",individual,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XBT 1AbcDefGhij.; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A; alt. Digital Currency Address - ETH 0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b.\"\n9002,\"MULTI LINE\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Website example.org; Digital Currency Address - USDT\nTXyz123; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A.\"\n9003,\"QUOTED \"\"NAME\"\"\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XMR 4Abc\"",
+            "addresses": {
+                "ETH": [
+                    "0x0330070FD38Ec3bB94F58FA55D40368271E9e54A",
+                    "0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b"
+                ],
+                "USDT": [
+                    "TXyz123"
+                ],
+                "XBT": [
+                    "1AbcDefGhij"
+                ],
+                "XMR": [
+                    "4Abc"
+                ]
+            }
+        },
+        "rpc": [
+            {
+                "network": "eip155:1",
+                "rpc": "https://ethereum-rpc.publicnode.com"
+            },
+            {
+                "network": "eip155:8453",
+                "rpc": "https://mainnet.base.org"
+            },
+            {
+                "network": "eip155:84532",
+                "rpc": "https://sepolia.base.org"
+            },
+            {
+                "network": "eip155:5042",
+                "rpc": "https://rpc.mainnet.arc.io"
+            },
+            {
+                "network": "eip155:5042002",
+                "rpc": "https://rpc.testnet.arc.network"
+            },
+            {
+                "network": "eip155:11155111",
+                "rpc": "https://ethereum-sepolia-rpc.publicnode.com"
+            },
+            {
+                "network": "eip155:43113",
+                "rpc": "https://api.avax-test.network/ext/bc/C/rpc"
+            },
+            {
+                "network": "eip155:80002",
+                "rpc": "https://rpc-amoy.polygon.technology"
+            }
+        ],
+        "tokens": {
+            "eip155:84532|0x036cbd53842c5426634e7929541ec2318f3dcf7e": "isBlacklisted",
+            "eip155:5042002|0x3600000000000000000000000000000000000000": "isBlacklisted",
+            "eip155:43113|0x5425890298aed601595a70ab815c96711a31bc65": "isBlacklisted",
+            "eip155:11155111|0x1c7d4b196cb0c7b01d743fbc6116a902379c7238": "isBlacklisted",
+            "eip155:80002|0x41e94eb019c0762f9bfcf9fb1e58725bfb0e7582": "isBlacklisted",
+            "eip155:1|0xdac17f958d2ee523a2206206994597c13d831ec7": "isBlackListed",
+            "eip155:1|0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": "isBlacklisted",
+            "eip155:8453|0x833589fcd6edb6e08f4c7c32d4f71b54bda02913": "isBlacklisted",
+            "eip155:137|0x3c499c542cef5e3811e1192ce70d8cc03d5c3359": "isBlacklisted",
+            "eip155:43114|0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e": "isBlacklisted",
+            "eip155:10|0x0b2c639c533813f4aa9d7837caf62653d097ff85": "isBlacklisted",
+            "eip155:42161|0xaf88d065e77c8cc2239327c5edb3a432268e5831": "isBlacklisted",
+            "eip155:5042|0x3600000000000000000000000000000000000000": "isBlacklisted"
+        },
+        "functions": {
+            "isBlacklisted": "0xfe575a87",
+            "isBlackListed": "0xe47d6060",
+            "getBlackListStatus": "0x59bf1abe",
+            "isBlocked": "0xfbac3951"
+        }
+    }
+}

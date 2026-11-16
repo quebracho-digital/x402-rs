@@ -13,7 +13,8 @@ needs no entropy.
 | `signer` | ecrecover (low-s only), EIP-55 addresses | `Signer.php` (verifying half) |
 | `evm_exact` | Offline verify of an `exact` EVM payment, x402 v2 reason codes | `EvmExact::verify` |
 | `settlement`, `headers` | Payment key, TTLs, offer matching, reading a settle answer, `PAYMENT-*` headers | `Settlement`, `PaymentHeaders` |
-| `screening` | OFAC (on unless turned off by name), more lists, fail closed | `OfacSdn`, `AddressCheck`, `AddressList` |
+| `screening` | OFAC (on unless turned off by name), the listener chain, fail closed, the list format; the providers are in `quebracho-x402-screening` | `OfacSdn`, `AddressCheck`, `AddressList` |
+| `dates` | ISO 8601 and HTTP dates, UTC, no time zone database | (`strtotime`, `gmdate`) |
 | `ports` | `Ledger`, `Facilitator`, `Lookup`, `Clock`, `AddressListener`, `Pause`, `Events` | `PaymentLedger`, `Facilitator`, ... |
 | `http_facilitator` | Any x402 facilitator by URL over the `Http` port; settle consistency rule, /status polling | `HttpFacilitator` |
 | `seller` | One paid request: 402, verify, claim, run, settle; upfront; ledger replay | `X402Middleware`, `Sale` |

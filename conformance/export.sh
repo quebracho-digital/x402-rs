@@ -22,7 +22,7 @@ if [ -n "${X402_LIB:-}" ]; then
   mount=(-v "$lib":/x402:ro)
 fi
 
-for script in export.php scenarios.php facilitator.php; do
+for script in export.php scenarios.php facilitator.php screening.php; do
   docker run --rm --user "$(id -u):$(id -g)" \
     -e X402_COMMIT="$commit" "${mount[@]}" -v "$here":/out \
     "$image" /out/"$script" /x402 /out/vectors

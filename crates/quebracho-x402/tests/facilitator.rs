@@ -41,6 +41,7 @@ impl Https for Scripted {
         }
         Ok(HttpsResponse {
             status: a["status"].as_u64().unwrap() as u16,
+            headers: vec![],
             body: a["body"].as_str().unwrap().as_bytes().to_vec(),
         })
     }
