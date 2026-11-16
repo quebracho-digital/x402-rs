@@ -8,14 +8,14 @@ POSIX host: offline EVM `exact` verification (EIP-712 / EIP-3009, low-s
 ecrecover), OFAC screening on by default, one signature = one delivery, pay on
 delivery or upfront, a payment ledger in files with replay and crash recovery,
 a stop switch. Every step is checked against vectors and sale scenarios
-exported from the PHP library. Next: HTTP facilitator, HTTPS server, the OCPP
+exported from the PHP library. Next: the reconciler, the seller's HTTPS server, the OCPP
 gateway, then the buyer and `signerd` (see `planning/todo.txt`).
 
 | Path | What |
 |---|---|
 | `crates/quebracho-x402` | The `no_std` core: verify, screen, sell ([README](crates/quebracho-x402/README.md)) |
 | `crates/quebracho-x402-ofac` | OFAC's SDN list, shipped |
-| `crates/quebracho-x402-qnx` | Platform adapters (std/POSIX): file ledger, stop switch, clock |
+| `crates/quebracho-x402-qnx` | Platform adapters (std/POSIX): file ledger, stop switch, clock, HTTPS client (rustls, pure Rust) |
 | `conformance/` | Vectors exported from the PHP library, and the exporter ([README](conformance/README.md)) |
 | `planning/` | Design, threats, crates, OCPP, schedule |
 
