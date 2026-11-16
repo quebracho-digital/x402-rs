@@ -141,9 +141,9 @@ fn php_string_int(s: &str) -> i64 {
     while b.get(i).is_some_and(u8::is_ascii_digit) {
         i += 1;
     }
-    let int_digits = i - int_start;
     let mut float = false;
-    if b.get(i) == Some(&b'.') && (int_digits > 0 || b.get(i + 1).is_some_and(u8::is_ascii_digit)) {
+    // A point makes it a float; ".", "-." or ".e3" then parse to nothing below, and cast to 0 as in PHP.
+    if b.get(i) == Some(&b'.') {
         float = true;
         i += 1;
         while b.get(i).is_some_and(u8::is_ascii_digit) {

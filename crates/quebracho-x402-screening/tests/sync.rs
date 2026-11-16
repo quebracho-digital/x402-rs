@@ -259,3 +259,50 @@ fn the_api_needs_a_key() {
     let https = Script::new(vec![]);
     assert!(matches!(Api::new(&https, ""), Err(NoKey)));
 }
+
+/// Boundaries: exactly the minimum is a list; a copy of the same date is replaced (only a younger one is
+/// kept), as in PHP.
+#[test]
+fn sync_boundaries() {
+    assert_eq!(
+        sync::ofac_snapshot(
+            &sdn_csv(sync::OFAC_MIN_ADDRESSES),
+            "2026-11-10T00:00:00Z",
+            None
+        )
+        .unwrap()
+        .count,
+        100
+    );
+    assert!(
+        sync::ofac_snapshot(
+            &sdn_csv(sync::OFAC_MIN_ADDRESSES - 1),
+            "2026-11-10T00:00:00Z",
+            None
+        )
+        .is_err()
+    );
+    let first = sync::ofac_snapshot(&sdn_csv(120), "2026-11-10T00:00:00Z", None)
+        .unwrap()
+        .content
+        .unwrap();
+    assert!(
+        sync::ofac_snapshot(&sdn_csv(130), "2026-11-10T00:00:00Z", Some(&first))
+            .unwrap()
+            .replaced(),
+        "same date: replaced"
+    );
+    let url = "https://lists.example.org/denied.txt";
+    let current = "# updated: 2026-11-01T00:00:00Z\n0xaa00000000000000000000000000000000000001\n";
+    let same = Script::new(vec![answer(
+        200,
+        &[],
+        "# updated: 2026-11-01T00:00:00Z\n0xbb00000000000000000000000000000000000001\n",
+    )]);
+    assert!(
+        sync::list(&same, url, 1, 0, Some(current))
+            .unwrap()
+            .replaced(),
+        "same date: replaced"
+    );
+}

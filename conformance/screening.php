@@ -98,6 +98,7 @@ $listeners = [
         'known USDC, not frozen' => [[$rpcOk($word(0))], [], $payer, $base],
         'known USDC, frozen' => [[$rpcOk($word(1))], [], $payer, $base],
         'node returns an error' => [[$rpcErr], [], $payer, $base],
+        'node returns error null and a result' => [[['status' => 200, 'body' => json_encode(['jsonrpc' => '2.0', 'id' => 1, 'error' => null, 'result' => $word(1)])]], [], $payer, $base],
         'node down' => [[['down' => true]], [], $payer, $base],
         'node down, fail open' => [[['down' => true]], ['failOpen' => true], $payer, $base],
         'answer is not a word' => [[$rpcOk('0x1')], [], $payer, $base],
@@ -175,7 +176,7 @@ foreach ([
     $lists[] = ['text' => $text, 'addresses' => AddressList::parse($text), 'updated' => AddressList::updated($text)];
 }
 $dates = [];
-foreach (['# updated: 2026-11-06T19:33:18Z', '# UPDATED: 2026-11-06T19:33:18+00:00', '#updated:2026-11-06', '# updated: not-a-date', '# updated: 2026-11-06T19:33:18-03:00', 'no comment'] as $text) {
+foreach (['# updated: 2026-11-06 10:00:00', '# updated: 2026-11-06T19:33:18Z', '# UPDATED: 2026-11-06T19:33:18+00:00', '#updated:2026-11-06', '# updated: not-a-date', '# updated: 2026-11-06T19:33:18-03:00', 'no comment'] as $text) {
     $dates[] = ['text' => $text, 'updated' => AddressList::updated($text)];
 }
 $csv = implode("\n", [
@@ -186,6 +187,10 @@ $csv = implode("\n", [
     '9003,"QUOTED ""NAME""",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Digital Currency Address - XMR 4Abc"',
     '9004,"BROKEN MARKERS",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Digital Currency Address - ; Digital Currency Address - eth 0xab; Digital Currency Address - ETH; Digital Currency Address - TRX TCrlf1"'."\r",
     '9005,"SHORT ROW"',
+    '9006,"ESCAPED",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"note ""q"", Digital Currency Address - XBT 1Escaped"',
+    '9007,"MID QUOTE",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,Digital Currency Address - XBT 1Mid"q,trailing',
+    '9008,"GLUED",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Digital Currency Address - ETH0xglued; Digital Currency Address -  0xdouble"',
+    '9009,"TRAILING COMMA",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Digital Currency Address - XBT 1Last",',
 ]);
 $sdn = ['csv' => $csv, 'addresses' => OfacSdn::parse($csv)];
 

@@ -102,14 +102,14 @@ impl HttpsClient {
         let started = std::time::Instant::now();
         let mut raw = Vec::new();
         let mut chunk = [0u8; 16 * 1024];
-        // Where the head ends, once seen: searched only in the bytes that arrived since.
-        let mut head_end: Option<usize> = None;
+        // Whether the head has fully arrived: searched only in the bytes that arrived since.
+        let mut head_seen = false;
         // Ok(0) from rustls means the peer closed TLS properly (close_notify); an error means the connection
         // was cut, which an attacker on the path can do to truncate an answer.
         let mut clean_close = false;
         loop {
-            if let Some(end) = head_end
-                && complete(&raw, end)
+            if head_seen
+                && complete(&raw)
                 && let Some(done) = parse(&raw)
             {
                 return done;
@@ -128,12 +128,7 @@ impl HttpsClient {
                     if raw.len() > self.max_response {
                         return Err(HttpsUnavailable);
                     }
-                    if head_end.is_none() {
-                        head_end = raw[from..]
-                            .windows(4)
-                            .position(|w| w == b"\r\n\r\n")
-                            .map(|i| from + i);
-                    }
+                    head_seen = head_seen || raw[from..].windows(4).any(|w| w == b"\r\n\r\n");
                 }
                 Err(e) if e.kind() == ErrorKind::Interrupted => {}
                 // A peer that closes without close_notify: only a complete message counts.
@@ -181,11 +176,20 @@ impl Url {
         if authority.is_empty() || authority.contains('@') || target.contains('#') {
             return None;
         }
-        let (host, port) = match authority.rsplit_once(':') {
-            Some((h, p)) if !h.ends_with(']') || h.starts_with('[') => (h, p.parse().ok()?),
-            _ => (authority, 443),
+        let (host, port) = match authority.strip_prefix('[') {
+            // An IPv6 literal: "[::1]" or "[::1]:8443".
+            Some(v6) => {
+                let (host, rest) = v6.split_once(']')?;
+                match rest {
+                    "" => (host, 443),
+                    _ => (host, rest.strip_prefix(':')?.parse().ok()?),
+                }
+            }
+            None => match authority.split_once(':') {
+                Some((h, p)) => (h, p.parse().ok()?),
+                None => (authority, 443),
+            },
         };
-        let host = host.trim_start_matches('[').trim_end_matches(']');
         if host.is_empty() {
             return None;
         }
@@ -317,9 +321,9 @@ fn parse_at_eof(raw: &[u8]) -> Option<Result<HttpsResponse, HttpsUnavailable>> {
     }
 }
 
-/// Cheap test of whether a message whose head ends at `head_end` may be whole: it avoids decoding a
-/// chunked body (or rescanning a long one) on every read.
-fn complete(raw: &[u8], head_end: usize) -> bool {
+/// Cheap test of whether a message whose head arrived may be whole: it avoids decoding a chunked body
+/// (or rescanning a long one) on every read. Performance only: a wrong "maybe" just costs a parse.
+fn complete(raw: &[u8]) -> bool {
     match split(raw) {
         Some(Ok((_, Framing::Length(n), start, _))) => raw.len() - start >= n,
         Some(Ok((_, Framing::Chunked, _, _))) => {
@@ -327,7 +331,7 @@ fn complete(raw: &[u8], head_end: usize) -> bool {
         }
         Some(Ok((_, Framing::UntilClose, _, _))) => false,
         // A bad head: parse() says so at once.
-        Some(Err(_)) | None => raw.len() > head_end,
+        Some(Err(_)) | None => true,
     }
 }
 
@@ -430,15 +434,11 @@ mod tests {
             "until close: not complete yet"
         );
         // complete(): cheap and conservative.
-        assert!(complete(b"garbage\r\n\r\nx", 7));
-        assert!(!complete(b"HTTP/1.1 200 OK\r\n\r\nrest", 15));
-        assert!(complete(
-            b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nhi",
-            34
-        ));
+        assert!(complete(b"garbage\r\n\r\nx"));
+        assert!(!complete(b"HTTP/1.1 200 OK\r\n\r\nrest"));
+        assert!(complete(b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nhi"));
         assert!(!complete(
-            b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n5\r\nhel",
-            44
+            b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n5\r\nhel"
         ));
     }
 
@@ -470,6 +470,74 @@ mod tests {
         let raw = b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\nffffffffffffffff\r\nxx";
         assert!(matches!(parse(raw), Some(Err(_))));
         assert!(matches!(parse_at_eof(raw), Some(Err(_))));
+    }
+
+    #[test]
+    fn ipv6_literals_parse_with_and_without_a_port() {
+        let u = Url::parse("https://[::1]/settle").unwrap();
+        assert_eq!(
+            (u.host.as_str(), u.port, u.target.as_str()),
+            ("::1", 443, "/settle")
+        );
+        let u = Url::parse("https://[2001:db8::1]:8443").unwrap();
+        assert_eq!(
+            (u.host.as_str(), u.port, u.target.as_str()),
+            ("2001:db8::1", 8443, "/")
+        );
+        assert!(Url::parse("https://[::1/").is_none(), "no closing bracket");
+        assert!(
+            Url::parse("https://[::1]x/").is_none(),
+            "junk after the bracket"
+        );
+        assert!(Url::parse("https://[::1]:port/").is_none());
+    }
+
+    #[test]
+    fn transfer_encoding_other_than_chunked_is_not_chunked() {
+        let r =
+            parse(b"HTTP/1.1 200 OK\r\nTransfer-Encoding: identity\r\nContent-Length: 2\r\n\r\nhi")
+                .unwrap()
+                .unwrap();
+        assert_eq!(r.body, b"hi");
+        // Content-Length after chunked is ignored.
+        let r = parse(b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\nContent-Length: 99\r\n\r\n2\r\nhi\r\n0\r\n\r\n").unwrap().unwrap();
+        assert_eq!(r.body, b"hi");
+    }
+
+    #[test]
+    fn heads_say_host_length_and_refuse_injection_anywhere() {
+        let req = |method: &'static str, url: &str, body: &[u8]| HttpsRequest {
+            method,
+            url: url.into(),
+            headers: vec![],
+            body: body.to_vec(),
+        };
+        let text = |r: &HttpsRequest| {
+            String::from_utf8(head(r, &Url::parse(&r.url).unwrap()).unwrap()).unwrap()
+        };
+        let get = text(&req("GET", "https://h/a", b""));
+        assert!(
+            get.contains("Host: h\r\n") && !get.contains("Content-Length"),
+            "{get}"
+        );
+        let post = text(&req("POST", "https://h:8443/a", b""));
+        assert!(
+            post.contains("Host: h:8443\r\n") && post.contains("Content-Length: 0\r\n"),
+            "{post}"
+        );
+        let put = text(&req("PUT", "https://h/a", b"xyz"));
+        assert!(put.contains("Content-Length: 3\r\n"), "{put}");
+        let bad_method = req("GET\r\nX: 1", "https://h/a", b"");
+        assert!(head(&bad_method, &Url::parse("https://h/a").unwrap()).is_none());
+        let bad_target = req("GET", "https://h/a\r\nX: 1", b"");
+        assert!(head(&bad_target, &Url::parse(&bad_target.url).unwrap()).is_none());
+        let empty_name = HttpsRequest {
+            method: "GET",
+            url: "https://h/".into(),
+            headers: vec![(String::new(), "v".into())],
+            body: vec![],
+        };
+        assert!(head(&empty_name, &Url::parse("https://h/").unwrap()).is_none());
     }
 
     #[test]

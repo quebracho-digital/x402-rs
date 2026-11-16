@@ -332,3 +332,61 @@ fn a_clean_close_before_the_head_ends_is_no_answer() {
     });
     assert!(r.is_err());
 }
+
+/// The builders keep the trusted roots, and the default cap lets 2 MiB through (it is 4 MiB).
+#[test]
+fn builders_keep_the_roots_and_raise_or_set_the_cap() {
+    let Some((cert, key)) = certificate("builders") else {
+        return;
+    };
+    let big: &'static [u8] = {
+        let mut a = format!(
+            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n",
+            5 * 1024 * 1024
+        )
+        .into_bytes();
+        a.extend(std::iter::repeat_n(b'z', 5 * 1024 * 1024));
+        Box::leak(a.into_boxed_slice())
+    };
+    let get = |c: HttpsClient, port: u16| {
+        c.send(&HttpsRequest {
+            method: "GET",
+            url: format!("https://127.0.0.1:{port}/"),
+            headers: vec![],
+            body: vec![],
+        })
+    };
+    let port = serve_and_close(&cert, &key, big, true);
+    let raised = trusting(&cert)
+        .timeout(std::time::Duration::from_secs(10))
+        .deadline(std::time::Duration::from_secs(30))
+        .max_response(8 * 1024 * 1024);
+    assert_eq!(get(raised, port).unwrap().body.len(), 5 * 1024 * 1024);
+    let two: &'static [u8] = {
+        let mut a = format!(
+            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n",
+            2 * 1024 * 1024
+        )
+        .into_bytes();
+        a.extend(std::iter::repeat_n(b'z', 2 * 1024 * 1024));
+        Box::leak(a.into_boxed_slice())
+    };
+    assert_eq!(
+        get(trusting(&cert), serve_and_close(&cert, &key, two, true))
+            .unwrap()
+            .body
+            .len(),
+        2 * 1024 * 1024
+    );
+    // A cap of exactly the answer's size lets it through.
+    let exact: &'static [u8] = b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nhi";
+    assert_eq!(
+        get(
+            trusting(&cert).max_response(exact.len()),
+            serve_and_close(&cert, &key, exact, true)
+        )
+        .unwrap()
+        .body,
+        b"hi"
+    );
+}

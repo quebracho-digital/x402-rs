@@ -181,3 +181,16 @@ fn calendar_edges() {
     assert_eq!(dates::iso(951_782_400), "2000-02-29T00:00:00Z");
     assert_eq!(dates::iso(-1), "1969-12-31T23:59:59Z");
 }
+
+#[test]
+fn a_list_keeps_its_date() {
+    let l = AddressList::parse(
+        "# updated: 2026-11-06T19:33:18-03:00\n0xaa00000000000000000000000000000000000001\n",
+        "x",
+    );
+    assert_eq!(l.updated.as_deref(), Some("2026-11-06T22:33:18Z"));
+    assert_eq!(
+        AddressList::parse("0xaa00000000000000000000000000000000000001\n", "x").updated,
+        None
+    );
+}

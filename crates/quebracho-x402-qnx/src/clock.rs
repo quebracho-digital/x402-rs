@@ -38,6 +38,25 @@ impl Clock for SystemClock {
     }
 
     fn reliable(&self) -> bool {
-        self.now() > self.trusted_after && self.check.as_ref().is_none_or(|c| c())
+        self.reliable_at(self.now())
+    }
+}
+
+impl SystemClock {
+    /// Trusted at `now`: strictly after the floor, and the platform check (if any) passes.
+    fn reliable_at(&self, now: u64) -> bool {
+        now > self.trusted_after && self.check.as_ref().is_none_or(|c| c())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn the_floor_itself_is_not_trusted() {
+        let c = SystemClock::new(1_000);
+        assert!(!c.reliable_at(1_000));
+        assert!(c.reliable_at(1_001));
     }
 }

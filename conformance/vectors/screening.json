@@ -140,6 +140,51 @@
             },
             {
                 "kind": "token_blacklist",
+                "name": "node returns error null and a result",
+                "options": {},
+                "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                "req": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                },
+                "answers": [
+                    {
+                        "status": 200,
+                        "body": "{\"jsonrpc\":\"2.0\",\"id\":1,\"error\":null,\"result\":\"0x0000000000000000000000000000000000000000000000000000000000000001\"}"
+                    }
+                ],
+                "sent": [
+                    {
+                        "method": "POST",
+                        "url": "https://sepolia.base.org",
+                        "api_key": null,
+                        "body": {
+                            "jsonrpc": "2.0",
+                            "id": 1,
+                            "method": "eth_call",
+                            "params": [
+                                {
+                                    "to": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                                    "data": "0xfe575a870000000000000000000000002c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                                },
+                                "latest"
+                            ]
+                        }
+                    }
+                ],
+                "reason": "address_blacklisted",
+                "skipped": 0
+            },
+            {
+                "kind": "token_blacklist",
                 "name": "node down",
                 "options": {},
                 "address": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
@@ -1204,6 +1249,10 @@
         ],
         "dates": [
             {
+                "text": "# updated: 2026-11-06 10:00:00",
+                "updated": null
+            },
+            {
                 "text": "# updated: 2026-11-06T19:33:18Z",
                 "updated": "2026-11-06T19:33:18Z"
             },
@@ -1229,7 +1278,7 @@
             }
         ],
         "sdn": {
-            "csv": "36,\"AEROCARIBBEAN AIRLINES\",-0- ,\"CUBA\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Havana, Cuba.\"\n9001,\"SOMEONE\",individual,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XBT 1AbcDefGhij.; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A; alt. Digital Currency Address - ETH 0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b.\"\n9002,\"MULTI LINE\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Website example.org; Digital Currency Address - USDT\nTXyz123; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A.\"\n9003,\"QUOTED \"\"NAME\"\"\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XMR 4Abc\"\n9004,\"BROKEN MARKERS\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - ; Digital Currency Address - eth 0xab; Digital Currency Address - ETH; Digital Currency Address - TRX TCrlf1\"\r\n9005,\"SHORT ROW\"",
+            "csv": "36,\"AEROCARIBBEAN AIRLINES\",-0- ,\"CUBA\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Havana, Cuba.\"\n9001,\"SOMEONE\",individual,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XBT 1AbcDefGhij.; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A; alt. Digital Currency Address - ETH 0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b.\"\n9002,\"MULTI LINE\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Website example.org; Digital Currency Address - USDT\nTXyz123; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A.\"\n9003,\"QUOTED \"\"NAME\"\"\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XMR 4Abc\"\n9004,\"BROKEN MARKERS\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - ; Digital Currency Address - eth 0xab; Digital Currency Address - ETH; Digital Currency Address - TRX TCrlf1\"\r\n9005,\"SHORT ROW\"\n9006,\"ESCAPED\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"note \"\"q\"\", Digital Currency Address - XBT 1Escaped\"\n9007,\"MID QUOTE\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,Digital Currency Address - XBT 1Mid\"q,trailing\n9008,\"GLUED\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - ETH0xglued; Digital Currency Address -  0xdouble\"\n9009,\"TRAILING COMMA\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XBT 1Last\",",
             "addresses": {
                 "ETH": [
                     "0x0330070FD38Ec3bB94F58FA55D40368271E9e54A",
@@ -1242,7 +1291,10 @@
                     "TXyz123"
                 ],
                 "XBT": [
-                    "1AbcDefGhij"
+                    "1AbcDefGhij",
+                    "1Escaped",
+                    "1Last",
+                    "1Mid\"q"
                 ],
                 "XMR": [
                     "4Abc"

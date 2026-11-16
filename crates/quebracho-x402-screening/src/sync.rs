@@ -72,7 +72,6 @@ pub fn parse_sdn(csv: &str) -> BTreeMap<String, Vec<String>> {
                 .entry(rest[..cur_len].into())
                 .or_default()
                 .insert(address.into());
-            from = start + cur_len + gap + addr_len;
         }
     }
     found

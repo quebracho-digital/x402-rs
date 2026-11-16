@@ -342,3 +342,22 @@ fn ofac_loads_the_younger_of_shipped_and_own() {
     );
     let _ = std::fs::remove_dir_all(dir);
 }
+
+/// Expiry is read against the wall clock: a state written long ago is gone.
+#[test]
+fn a_state_from_the_past_is_absent() {
+    use quebracho_x402::ports::Ledger;
+    let dir = temp("past");
+    let l = FileLedger::new(&dir);
+    l.claim("k", 600).unwrap();
+    let file = std::fs::read_dir(&dir)
+        .unwrap()
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| p.extension().is_some_and(|x| x == "json"))
+        .unwrap();
+    std::fs::write(&file, br#"{"expires":1000,"state":{"status":"settled"}}"#).unwrap();
+    assert_eq!(l.get("k").unwrap(), None);
+    assert!(l.claim("k", 600).unwrap());
+    let _ = std::fs::remove_dir_all(dir);
+}
