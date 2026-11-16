@@ -19,12 +19,16 @@ Each file names the library commit it came from (`source`).
 ## Regenerate
 
 ```bash
-X402_LIB=~/Proyects/x402-lib conformance/export.sh
-cargo test -p quebracho-x402 --test conformance
+conformance/export.sh                          # the library at the commit pinned in conformance/Dockerfile
+X402_REF=<commit> conformance/export.sh        # another commit of the public repository
+X402_LIB=/path/to/x402 conformance/export.sh   # a local checkout (its vendor/ installed)
+cargo test
 ```
 
-It runs `export.php` in Docker (`X402_PHP_IMAGE`, default `x402-php83-full`: PHP ≥ 8.3 with gmp
-and sodium). The library needs its `vendor/` installed.
+Only Docker is needed. `Dockerfile` builds PHP 8.3 with `gmp`, clones the public
+[quebracho/x402](https://github.com/quebracho-digital/x402) at a pinned commit and installs its
+dependencies, so anyone gets the same vectors. Bumping `X402_REF` and rerunning shows what changed in
+PHP; `cargo test` then says whether Rust still agrees.
 
 The key `0x4c08…2318` is the well-known web3.js test key, never funded. The `eip155:4689` digest uses
 a placeholder token: it pins the domain math only and makes no claim about USDC on IoTeX.

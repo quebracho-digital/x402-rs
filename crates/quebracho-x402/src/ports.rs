@@ -132,7 +132,7 @@ pub trait Events {
 /// One HTTP request, as the core builds it. The adapter sends it over TLS (`rustls`) and must not follow
 /// redirects, so a signed payment reaches only the host it was meant for.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct HttpRequest {
+pub struct HttpsRequest {
     pub method: &'static str,
     pub url: String,
     pub headers: Vec<(String, String)>,
@@ -141,18 +141,20 @@ pub struct HttpRequest {
 
 /// What came back: the status and the body.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct HttpResponse {
+pub struct HttpsResponse {
     pub status: u16,
     pub body: Vec<u8>,
 }
 
 /// The request did not complete (connection, TLS, timeout).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct HttpUnavailable;
+pub struct HttpsUnavailable;
 
-/// A blocking HTTPS client (port of PSR-18). No async: threads and messages, as QNX is organized.
-pub trait Http {
-    fn send(&self, request: &HttpRequest) -> Result<HttpResponse, HttpUnavailable>;
+/// A blocking HTTPS client (port of PSR-18). TLS is mandatory (decision of Leo): an adapter must refuse
+/// any URL that is not `https://`, verify the server certificate and never follow redirects. No async:
+/// threads and messages, as QNX is organized.
+pub trait Https {
+    fn send(&self, request: &HttpsRequest) -> Result<HttpsResponse, HttpsUnavailable>;
 }
 
 /// Waiting between two polls. A device that must not block passes a sleeper that returns at once and

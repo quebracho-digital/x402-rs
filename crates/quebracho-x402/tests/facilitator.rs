@@ -4,7 +4,9 @@
 use std::cell::{Cell, RefCell};
 
 use quebracho_x402::http_facilitator::{HttpFacilitator, NotHttps};
-use quebracho_x402::ports::{Facilitator, Http, HttpRequest, HttpResponse, HttpUnavailable, Sleep};
+use quebracho_x402::ports::{
+    Facilitator, Https, HttpsRequest, HttpsResponse, HttpsUnavailable, Sleep,
+};
 use serde_json::{Value, json};
 
 struct Scripted {
@@ -12,8 +14,8 @@ struct Scripted {
     sent: RefCell<Vec<Value>>,
 }
 
-impl Http for Scripted {
-    fn send(&self, r: &HttpRequest) -> Result<HttpResponse, HttpUnavailable> {
+impl Https for Scripted {
+    fn send(&self, r: &HttpsRequest) -> Result<HttpsResponse, HttpsUnavailable> {
         let header = |name: &str| {
             r.headers
                 .iter()
@@ -35,9 +37,9 @@ impl Http for Scripted {
             answers.remove(0)
         };
         if a.get("down").is_some() {
-            return Err(HttpUnavailable);
+            return Err(HttpsUnavailable);
         }
-        Ok(HttpResponse {
+        Ok(HttpsResponse {
             status: a["status"].as_u64().unwrap() as u16,
             body: a["body"].as_str().unwrap().as_bytes().to_vec(),
         })

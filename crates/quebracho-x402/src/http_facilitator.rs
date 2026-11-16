@@ -15,10 +15,10 @@ use serde_json::{Value, json};
 
 use crate::field::{self, Rule};
 use crate::php::{at, get};
-use crate::ports::{Facilitator, FacilitatorError, Http, HttpRequest, Sleep};
+use crate::ports::{Facilitator, FacilitatorError, Https, HttpsRequest, Sleep};
 
 pub struct HttpFacilitator<'a> {
-    http: &'a dyn Http,
+    http: &'a dyn Https,
     sleep: &'a dyn Sleep,
     url: String,
     bearer: Option<String>,
@@ -34,7 +34,7 @@ impl<'a> HttpFacilitator<'a> {
     /// `url` is the facilitator's base URL, https only; `bearer` its API key, if it has one. A pending
     /// settle is polled 5 times, 1 second apart (PHP's defaults): change it with [`Self::polling`].
     pub fn new(
-        http: &'a dyn Http,
+        http: &'a dyn Https,
         sleep: &'a dyn Sleep,
         url: &str,
         bearer: Option<&str>,
@@ -93,7 +93,7 @@ impl<'a> HttpFacilitator<'a> {
         if body.is_some() {
             headers.push(("Content-Type".into(), "application/json".into()));
         }
-        let request = HttpRequest {
+        let request = HttpsRequest {
             method,
             url: format!("{}{path}", self.url),
             headers,
