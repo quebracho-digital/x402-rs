@@ -1229,11 +1229,14 @@
             }
         ],
         "sdn": {
-            "csv": "36,\"AEROCARIBBEAN AIRLINES\",-0- ,\"CUBA\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Havana, Cuba.\"\n9001,\"SOMEONE\",individual,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XBT 1AbcDefGhij.; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A; alt. Digital Currency Address - ETH 0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b.\"\n9002,\"MULTI LINE\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Website example.org; Digital Currency Address - USDT\nTXyz123; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A.\"\n9003,\"QUOTED \"\"NAME\"\"\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XMR 4Abc\"",
+            "csv": "36,\"AEROCARIBBEAN AIRLINES\",-0- ,\"CUBA\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Havana, Cuba.\"\n9001,\"SOMEONE\",individual,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XBT 1AbcDefGhij.; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A; alt. Digital Currency Address - ETH 0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b.\"\n9002,\"MULTI LINE\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Website example.org; Digital Currency Address - USDT\nTXyz123; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A.\"\n9003,\"QUOTED \"\"NAME\"\"\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - XMR 4Abc\"\n9004,\"BROKEN MARKERS\",-0- ,\"CYBER2\",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,\"Digital Currency Address - ; Digital Currency Address - eth 0xab; Digital Currency Address - ETH; Digital Currency Address - TRX TCrlf1\"\r\n9005,\"SHORT ROW\"",
             "addresses": {
                 "ETH": [
                     "0x0330070FD38Ec3bB94F58FA55D40368271E9e54A",
                     "0xd882cfc20f52f2599d84b8e8d58c7fb62cfe344b"
+                ],
+                "TRX": [
+                    "TCrlf1"
                 ],
                 "USDT": [
                     "TXyz123"

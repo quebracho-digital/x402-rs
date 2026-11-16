@@ -104,6 +104,9 @@ impl HttpsClient {
         let mut chunk = [0u8; 16 * 1024];
         // Where the head ends, once seen: searched only in the bytes that arrived since.
         let mut head_end: Option<usize> = None;
+        // Ok(0) from rustls means the peer closed TLS properly (close_notify); an error means the connection
+        // was cut, which an attacker on the path can do to truncate an answer.
+        let mut clean_close = false;
         loop {
             if let Some(end) = head_end
                 && complete(&raw, end)
@@ -115,7 +118,10 @@ impl HttpsClient {
                 return Err(HttpsUnavailable);
             }
             match stream.read(&mut chunk) {
-                Ok(0) => break,
+                Ok(0) => {
+                    clean_close = true;
+                    break;
+                }
                 Ok(n) => {
                     let from = raw.len().saturating_sub(3);
                     raw.extend_from_slice(&chunk[..n]);
@@ -133,6 +139,10 @@ impl HttpsClient {
                 // A peer that closes without close_notify: only a complete message counts.
                 Err(_) => break,
             }
+        }
+        if !clean_close {
+            // Only a message whose length it declared, and that fully arrived, survives a cut.
+            return parse(&raw).unwrap_or(Err(HttpsUnavailable));
         }
         match parse_at_eof(&raw) {
             Some(done) => done,
@@ -392,6 +402,44 @@ mod tests {
             302
         );
         assert!(parse(b"garbage\r\n\r\n").unwrap().is_err());
+    }
+
+    #[test]
+    fn malformed_heads_and_bodies_are_refused() {
+        assert!(Url::parse("https://[]/").is_none());
+        assert!(
+            matches!(parse(b"HTTP/1.1 200 \xff\r\n\r\n"), Some(Err(_))),
+            "not UTF-8"
+        );
+        assert!(matches!(
+            parse(b"HTTP/1.1 200 OK\r\nContent-Length: ten\r\n\r\n"),
+            Some(Err(_))
+        ));
+        assert!(matches!(
+            parse(b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\nzz\r\n"),
+            Some(Err(_))
+        ));
+        assert!(matches!(parse_at_eof(b"garbage\r\n\r\n"), Some(Err(_))));
+        // A header line without a colon is ignored; the body is read until close.
+        let r = parse_at_eof(b"HTTP/1.1 200 OK\r\nno colon here\r\n\r\nrest")
+            .unwrap()
+            .unwrap();
+        assert_eq!(r.body, b"rest");
+        assert!(
+            parse(b"HTTP/1.1 200 OK\r\n\r\nrest").is_none(),
+            "until close: not complete yet"
+        );
+        // complete(): cheap and conservative.
+        assert!(complete(b"garbage\r\n\r\nx", 7));
+        assert!(!complete(b"HTTP/1.1 200 OK\r\n\r\nrest", 15));
+        assert!(complete(
+            b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n\r\nhi",
+            34
+        ));
+        assert!(!complete(
+            b"HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n5\r\nhel",
+            44
+        ));
     }
 
     /// A chunk larger than the default cap is fine when the client allows more (an OFAC sync).

@@ -232,3 +232,113 @@ fn an_unreadable_state_is_unavailable_not_absent() {
     assert!(file.exists());
     let _ = std::fs::remove_dir_all(dir);
 }
+
+#[test]
+fn the_stop_switch_refuses_unsafe_places_and_fails_toward_stopped() {
+    use std::os::unix::fs::PermissionsExt;
+    let dir = temp("stop-unsafe");
+    std::fs::create_dir_all(&dir).unwrap();
+    // A link at the path.
+    let link = dir.join("linked.stop");
+    std::os::unix::fs::symlink(dir.join("elsewhere"), &link).unwrap();
+    assert_eq!(
+        StopFile::new(&link).unwrap().engage("x"),
+        Err(quebracho_x402_qnx::stop::StopError::Unsafe)
+    );
+    // A directory others can write to.
+    let open_dir = dir.join("open");
+    std::fs::create_dir_all(&open_dir).unwrap();
+    std::fs::set_permissions(&open_dir, std::fs::Permissions::from_mode(0o777)).unwrap();
+    assert_eq!(
+        StopFile::new(open_dir.join("x.stop")).unwrap().engage("x"),
+        Err(quebracho_x402_qnx::stop::StopError::Unsafe)
+    );
+    // Releasing what is not engaged is fine; a path that cannot be removed is an error.
+    let s = StopFile::new(dir.join("never.stop")).unwrap();
+    assert_eq!(s.release(), Ok(()));
+    std::fs::create_dir_all(dir.join("adir.stop")).unwrap();
+    assert_eq!(
+        StopFile::new(dir.join("adir.stop")).unwrap().release(),
+        Err(quebracho_x402_qnx::stop::StopError::Io)
+    );
+    // A flag directory this process cannot search: it cannot see the flag, so it is stopped.
+    let hidden = dir.join("hidden");
+    std::fs::create_dir_all(&hidden).unwrap();
+    std::fs::set_permissions(&hidden, std::fs::Permissions::from_mode(0o000)).unwrap();
+    let blind = StopFile::new(hidden.join("x.stop")).unwrap();
+    if std::fs::read_dir(&hidden).is_err() {
+        assert!(blind.engaged());
+    }
+    std::fs::set_permissions(&hidden, std::fs::Permissions::from_mode(0o700)).unwrap();
+    std::fs::set_permissions(&open_dir, std::fs::Permissions::from_mode(0o700)).unwrap();
+    let _ = std::fs::remove_dir_all(dir);
+}
+
+#[test]
+fn prune_and_open_keys_handle_every_file() {
+    let dir = temp("prune");
+    let l = FileLedger::new(&dir);
+    assert_eq!(l.open_keys(10).unwrap(), vec![], "no directory yet");
+    l.put("old", &json!({ "status": "settled" }), 0).unwrap();
+    l.put("live", &json!({ "status": "settled" }), 600).unwrap();
+    assert_eq!(l.prune().unwrap(), 1);
+    assert_eq!(l.get("live").unwrap(), Some(json!({ "status": "settled" })));
+    for k in ["a", "b", "c"] {
+        l.open(k, &json!({ "status": "pending" }), 600).unwrap();
+    }
+    l.open("gone", &json!({ "status": "pending" }), 0).unwrap();
+    assert_eq!(l.open_keys(2).unwrap().len(), 2, "limit");
+    assert_eq!(
+        l.open_keys(10).unwrap().len(),
+        3,
+        "the expired one is dropped"
+    );
+    // A corrupt open entry is kept for a person, listed nowhere.
+    let corrupt = std::fs::read_dir(&dir)
+        .unwrap()
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| p.extension().is_some_and(|x| x == "open"))
+        .unwrap();
+    std::fs::write(&corrupt, b"{bad").unwrap();
+    assert_eq!(l.open_keys(10).unwrap().len(), 2);
+    assert!(corrupt.exists());
+    let _ = std::fs::remove_dir_all(dir);
+}
+
+#[test]
+fn a_ledger_that_cannot_write_is_unavailable() {
+    use std::os::unix::fs::PermissionsExt;
+    let dir = temp("readonly");
+    let l = FileLedger::new(&dir);
+    l.put("k", &json!({ "status": "settled" }), 600).unwrap();
+    std::fs::set_permissions(&dir, std::fs::Permissions::from_mode(0o500)).unwrap();
+    if std::fs::File::create(dir.join("probe")).is_err() {
+        assert!(l.put("k2", &json!({ "status": "settled" }), 600).is_err());
+        assert!(l.release("k").is_err(), "the file stays: unavailable");
+    }
+    std::fs::set_permissions(&dir, std::fs::Permissions::from_mode(0o700)).unwrap();
+    let _ = std::fs::remove_dir_all(dir);
+}
+
+#[test]
+fn ofac_loads_the_younger_of_shipped_and_own() {
+    use quebracho_x402_qnx::ofac::load;
+    let dir = temp("ofac");
+    std::fs::create_dir_all(&dir).unwrap();
+    let shipped = load(None);
+    let own = dir.join("ofac.json");
+    std::fs::write(&own, r#"{"published":"2999-01-01T00:00:00Z","addresses":{"ETH":["0x000000000000000000000000000000000000bEEF"]}}"#).unwrap();
+    assert_eq!(load(Some(&own)).published(), Some("2999-01-01T00:00:00Z"));
+    std::fs::write(
+        &own,
+        r#"{"published":"2000-01-01T00:00:00Z","addresses":{}}"#,
+    )
+    .unwrap();
+    assert_eq!(load(Some(&own)).published(), shipped.published());
+    assert_eq!(
+        load(Some(&dir.join("missing.json"))).published(),
+        shipped.published()
+    );
+    let _ = std::fs::remove_dir_all(dir);
+}

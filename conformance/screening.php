@@ -184,6 +184,8 @@ $csv = implode("\n", [
     '9002,"MULTI LINE",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Website example.org; Digital Currency Address - USDT',
     'TXyz123; Digital Currency Address - ETH 0x0330070FD38Ec3bB94F58FA55D40368271E9e54A."',
     '9003,"QUOTED ""NAME""",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Digital Currency Address - XMR 4Abc"',
+    '9004,"BROKEN MARKERS",-0- ,"CYBER2",-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,-0- ,"Digital Currency Address - ; Digital Currency Address - eth 0xab; Digital Currency Address - ETH; Digital Currency Address - TRX TCrlf1"'."\r",
+    '9005,"SHORT ROW"',
 ]);
 $sdn = ['csv' => $csv, 'addresses' => OfacSdn::parse($csv)];
 

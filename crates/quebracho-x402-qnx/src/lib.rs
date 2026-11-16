@@ -14,7 +14,7 @@ mod clock;
 mod file_ledger;
 pub mod https;
 pub mod ofac;
-mod stop;
+pub mod stop;
 
 pub use clock::SystemClock;
 pub use file_ledger::FileLedger;

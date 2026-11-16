@@ -252,3 +252,67 @@ fn a_dripping_server_hits_the_total_deadline() {
         started.elapsed()
     );
 }
+
+/// One connection answered `answer` raw, then closed with close_notify (`clean`) or by dropping TCP.
+fn serve_and_close(cert: &PathBuf, key: &PathBuf, answer: &'static [u8], clean: bool) -> u16 {
+    let certs = vec![CertificateDer::from_pem_file(cert).unwrap()];
+    let pkey = PrivateKeyDer::from_pem_file(key).unwrap();
+    let config = ServerConfig::builder_with_provider(Arc::new(rustls_rustcrypto::provider()))
+        .with_safe_default_protocol_versions()
+        .unwrap()
+        .with_no_client_auth()
+        .with_single_cert(certs, pkey)
+        .unwrap();
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let port = listener.local_addr().unwrap().port();
+    thread::spawn(move || {
+        let (tcp, _) = listener.accept().unwrap();
+        let mut tls = StreamOwned::new(ServerConnection::new(Arc::new(config)).unwrap(), tcp);
+        let mut buf = [0u8; 4096];
+        let _ = tls.read(&mut buf);
+        let _ = tls.write_all(answer);
+        if clean {
+            tls.conn.send_close_notify();
+        }
+        let _ = tls.flush();
+        let _ = tls.sock.shutdown(std::net::Shutdown::Both);
+    });
+    port
+}
+
+/// A body read until close counts only when TLS closed it (close_notify): a cut connection could be an
+/// attacker truncating the answer.
+#[test]
+fn a_body_until_close_needs_a_clean_tls_close() {
+    let Some((cert, key)) = certificate("truncate") else {
+        return;
+    };
+    let get = |port: u16| {
+        trusting(&cert).send(&HttpsRequest {
+            method: "GET",
+            url: format!("https://127.0.0.1:{port}/"),
+            headers: vec![],
+            body: vec![],
+        })
+    };
+    let clean = serve_and_close(&cert, &key, b"HTTP/1.1 200 OK\r\n\r\nwhole body", true);
+    assert_eq!(get(clean).unwrap().body, b"whole body");
+    let cut = serve_and_close(&cert, &key, b"HTTP/1.1 200 OK\r\n\r\nhalf a bo", false);
+    assert!(get(cut).is_err(), "a truncated answer must not count");
+}
+
+#[test]
+fn an_answer_over_the_cap_is_refused() {
+    let Some((cert, key)) = certificate("cap") else {
+        return;
+    };
+    let port = serve_and_close(&cert, &key, b"HTTP/1.1 200 OK\r\nContent-Length: 64\r\n\r\n0123456789012345678901234567890123456789012345678901234567890123", true);
+    let r = trusting(&cert).max_response(32).send(&HttpsRequest {
+        method: "GET",
+        url: format!("https://127.0.0.1:{port}/"),
+        headers: vec![],
+        body: vec![],
+    });
+    assert!(r.is_err());
+    let _ = HttpsClient::default();
+}
