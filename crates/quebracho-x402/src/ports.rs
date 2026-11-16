@@ -128,3 +128,35 @@ pub enum Event<'a> {
 pub trait Events {
     fn report(&self, event: &Event<'_>);
 }
+
+/// One HTTP request, as the core builds it. The adapter sends it over TLS (`rustls`) and must not follow
+/// redirects, so a signed payment reaches only the host it was meant for.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct HttpRequest {
+    pub method: &'static str,
+    pub url: String,
+    pub headers: Vec<(String, String)>,
+    pub body: Vec<u8>,
+}
+
+/// What came back: the status and the body.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct HttpResponse {
+    pub status: u16,
+    pub body: Vec<u8>,
+}
+
+/// The request did not complete (connection, TLS, timeout).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct HttpUnavailable;
+
+/// A blocking HTTPS client (port of PSR-18). No async: threads and messages, as QNX is organized.
+pub trait Http {
+    fn send(&self, request: &HttpRequest) -> Result<HttpResponse, HttpUnavailable>;
+}
+
+/// Waiting between two polls. A device that must not block passes a sleeper that returns at once and
+/// polls zero times.
+pub trait Sleep {
+    fn sleep(&self, seconds: u64);
+}

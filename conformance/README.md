@@ -11,6 +11,7 @@ byte for byte. Every expected value in `vectors/` is computed by the PHP code, n
 | `digest.json` | EIP-3009 `TransferWithAuthorization` digests and signatures | `Authorization::digest` |
 | `recover.json` | ecrecover: low-s only, v = 27/28, r and s ranges | `Signer::recover` |
 | `evm_exact.json` | Payment + offer + clock → x402 v2 reason code | `EvmExact::verify` |
+| `facilitator.json` | 52 scripted HTTP answers to verify, settle (with /status polling) and supported: requests sent and results | `HttpFacilitator` (`facilitator.php`) |
 | `sale.json` | 34 scripted sales (facilitator, handler, ledger failures, stop, lookup, upfront): status, headers, callbacks, events, ledger after | `X402Middleware` (`scenarios.php`) |
 
 Each file names the library commit it came from (`source`).

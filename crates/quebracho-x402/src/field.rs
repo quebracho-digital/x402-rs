@@ -26,6 +26,8 @@ pub enum Rule {
     Timestamp,
     /// CAIP-2 EVM network: `eip155:` and a chain id above zero, no leading zero.
     EvmNetwork,
+    /// A facilitator's payment id, safe in a URL path: letters, digits, `_` and `-`, 1 to 128.
+    PaymentId,
 }
 
 impl Rule {
@@ -40,6 +42,7 @@ impl Rule {
             "amount" => Self::Amount,
             "timestamp" => Self::Timestamp,
             "evm_network" => Self::EvmNetwork,
+            "payment_id" => Self::PaymentId,
             _ => return None,
         })
     }
@@ -54,6 +57,12 @@ pub fn is(rule: Rule, value: &str) -> bool {
         Rule::Uint256 => decimal(value, 78, true),
         Rule::Amount => decimal(value, 78, false),
         Rule::Timestamp => decimal(value, 19, true),
+        Rule::PaymentId => {
+            (1..=128).contains(&value.len())
+                && value
+                    .bytes()
+                    .all(|c| c.is_ascii_alphanumeric() || c == b'_' || c == b'-')
+        }
         Rule::EvmNetwork => value
             .strip_prefix("eip155:")
             .is_some_and(|id| decimal(id, usize::MAX, false)),

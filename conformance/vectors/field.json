@@ -293,6 +293,56 @@
             "ok": false
         },
         {
+            "rule": "payment_id",
+            "value": "pay_123",
+            "ok": true
+        },
+        {
+            "rule": "payment_id",
+            "value": "A-z_09",
+            "ok": true
+        },
+        {
+            "rule": "payment_id",
+            "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "ok": true
+        },
+        {
+            "rule": "payment_id",
+            "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "ok": false
+        },
+        {
+            "rule": "payment_id",
+            "value": "",
+            "ok": false
+        },
+        {
+            "rule": "payment_id",
+            "value": "../../admin",
+            "ok": false
+        },
+        {
+            "rule": "payment_id",
+            "value": "a/b",
+            "ok": false
+        },
+        {
+            "rule": "payment_id",
+            "value": "a b",
+            "ok": false
+        },
+        {
+            "rule": "payment_id",
+            "value": "a\n",
+            "ok": false
+        },
+        {
+            "rule": "payment_id",
+            "value": "\u00f1",
+            "ok": false
+        },
+        {
             "rule": "evm_network",
             "value": "eip155:1",
             "ok": true

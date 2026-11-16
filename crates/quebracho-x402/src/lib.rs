@@ -21,6 +21,7 @@ pub mod evm_exact;
 pub mod field;
 pub mod headers;
 mod hex;
+pub mod http_facilitator;
 mod php;
 pub mod ports;
 pub mod screening;

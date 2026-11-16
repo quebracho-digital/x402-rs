@@ -64,6 +64,7 @@ $candidates = [
     Field::UINT256 => ['0', '1', '10000', '010000', '00', '-1', '+1', '1e3', '0x10', ' 1', '1 ', "1\n", '١', str_repeat('9', 78), str_repeat('9', 79), ''],
     Field::AMOUNT => ['1', '10000', '0', '01', '-1', '', '1.5', str_repeat('9', 78), str_repeat('9', 79)],
     Field::TIMESTAMP => ['0', '1800000000', '01', str_repeat('9', 19), str_repeat('9', 20), '-5', '1.0'],
+    Field::PAYMENT_ID => ['pay_123', 'A-z_09', str_repeat('a', 128), str_repeat('a', 129), '', '../../admin', 'a/b', 'a b', "a\n", 'ñ'],
     Field::EVM_NETWORK => ['eip155:1', 'eip155:84532', 'eip155:4689', 'eip155:0', 'eip155:01', 'eip155:', 'EIP155:1', 'eip155:1 ', 'solana:abc'],
 ];
 $field = [];

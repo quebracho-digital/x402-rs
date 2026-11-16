@@ -13,6 +13,7 @@ needs no entropy.
 | `settlement`, `headers` | Payment key, TTLs, offer matching, reading a settle answer, `PAYMENT-*` headers | `Settlement`, `PaymentHeaders` |
 | `screening` | OFAC (on unless turned off by name), more lists, fail closed | `OfacSdn`, `AddressCheck`, `AddressList` |
 | `ports` | `Ledger`, `Facilitator`, `Lookup`, `Clock`, `AddressListener`, `Pause`, `Events` | `PaymentLedger`, `Facilitator`, ... |
+| `http_facilitator` | Any x402 facilitator by URL over the `Http` port; settle consistency rule, /status polling | `HttpFacilitator` |
 | `seller` | One paid request: 402, verify, claim, run, settle; upfront; ledger replay | `X402Middleware`, `Sale` |
 
 ```rust
@@ -34,5 +35,5 @@ cargo build -p quebracho-x402 --target wasm32-unknown-unknown  # checks it stays
 
 ## Not yet
 
-The HTTP facilitator client, the reconciler, job mode, the buyer and MCP.
+The TLS transport (an adapter), the reconciler, job mode, the buyer and MCP.
 Order and reasons: `planning/DESIGN.md`, `planning/CRATES.md`, `planning/todo.txt`.

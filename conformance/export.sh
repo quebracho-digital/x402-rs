@@ -22,3 +22,7 @@ docker run --rm --user "$(id -u):$(id -g)" --entrypoint php \
   -e X402_COMMIT="$commit" \
   -v "$lib":/x402:ro -v "$here":/out \
   "$image" /out/scenarios.php /x402 /out/vectors
+docker run --rm --user "$(id -u):$(id -g)" --entrypoint php \
+  -e X402_COMMIT="$commit" \
+  -v "$lib":/x402:ro -v "$here":/out \
+  "$image" /out/facilitator.php /x402 /out/vectors
