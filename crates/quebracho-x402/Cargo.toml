@@ -21,6 +21,7 @@ base64 = { workspace = true }
 [dev-dependencies]
 k256 = { workspace = true }
 serde_json = { version = "1", features = ["std"] }
+proptest = "1"
 
 [lints]
 workspace = true

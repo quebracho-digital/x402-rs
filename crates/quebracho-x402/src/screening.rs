@@ -167,11 +167,10 @@ impl AddressList {
             if line.is_empty() || line.starts_with('#') {
                 continue;
             }
-            if let Some(address) = line.split_whitespace().next() {
-                let address = normalize(address);
-                if list.index.insert(address.clone()) {
-                    list.entries.push(address);
-                }
+            // A trimmed, non-empty line always has a first word.
+            let address = normalize(line.split_whitespace().next().unwrap_or(line));
+            if list.index.insert(address.clone()) {
+                list.entries.push(address);
             }
         }
         list

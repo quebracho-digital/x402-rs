@@ -1,0 +1,525 @@
+{
+    "source": "quebracho/x402 @ 592f1e6",
+    "generator": "conformance/export.php",
+    "cases": {
+        "settled": [
+            {
+                "name": "full",
+                "receipt": {
+                    "success": true,
+                    "transaction": "0xabababababababababababababababababababababababababababababababab",
+                    "network": "eip155:84532",
+                    "payer": "0xAb",
+                    "errorReason": "r",
+                    "errorMessage": "m",
+                    "paymentId": "p1",
+                    "amount": "10000",
+                    "extensions": {
+                        "a": 1
+                    }
+                },
+                "settled": {
+                    "success": true,
+                    "transaction": "0xabababababababababababababababababababababababababababababababab",
+                    "network": "eip155:84532",
+                    "payer": "0xAb",
+                    "errorReason": "r",
+                    "errorMessage": "m",
+                    "paymentId": "p1",
+                    "amount": "10000",
+                    "extensions": {
+                        "a": 1
+                    }
+                }
+            },
+            {
+                "name": "wrong types dropped",
+                "receipt": {
+                    "success": true,
+                    "transaction": 5,
+                    "network": [
+                        "x"
+                    ],
+                    "payer": 7,
+                    "errorReason": false,
+                    "amount": "1e3",
+                    "paymentId": 9
+                },
+                "settled": {
+                    "success": true
+                }
+            },
+            {
+                "name": "payer null kept",
+                "receipt": {
+                    "success": true,
+                    "payer": null
+                },
+                "settled": {
+                    "success": true,
+                    "payer": null
+                }
+            },
+            {
+                "name": "amount not digits",
+                "receipt": {
+                    "success": true,
+                    "amount": "-5"
+                },
+                "settled": {
+                    "success": true
+                }
+            },
+            {
+                "name": "amount empty",
+                "receipt": {
+                    "success": true,
+                    "amount": ""
+                },
+                "settled": {
+                    "success": true
+                }
+            },
+            {
+                "name": "extensions null kept",
+                "receipt": {
+                    "success": true,
+                    "extensions": null
+                },
+                "settled": {
+                    "success": true,
+                    "extensions": null
+                }
+            },
+            {
+                "name": "nothing",
+                "receipt": {
+                    "success": true
+                },
+                "settled": {
+                    "success": true
+                }
+            }
+        ],
+        "run": [
+            {
+                "name": "success",
+                "answer": {
+                    "success": true,
+                    "transaction": "0xabababababababababababababababababababababababababababababababab",
+                    "network": "eip155:84532"
+                },
+                "receipt": {
+                    "success": true,
+                    "transaction": "0xabababababababababababababababababababababababababababababababab",
+                    "network": "eip155:84532"
+                }
+            },
+            {
+                "name": "refused with reason",
+                "answer": {
+                    "success": false,
+                    "errorReason": "insufficient_funds"
+                },
+                "receipt": {
+                    "success": false,
+                    "errorReason": "insufficient_funds",
+                    "transaction": "",
+                    "network": "eip155:84532"
+                }
+            },
+            {
+                "name": "refused with a transaction and a paymentId",
+                "answer": {
+                    "success": false,
+                    "errorReason": "settlement_pending",
+                    "transaction": "0xabababababababababababababababababababababababababababababababab",
+                    "paymentId": "pay_1"
+                },
+                "receipt": {
+                    "success": false,
+                    "errorReason": "settlement_pending",
+                    "transaction": "0xabababababababababababababababababababababababababababababababab",
+                    "network": "eip155:84532",
+                    "paymentId": "pay_1"
+                }
+            },
+            {
+                "name": "refused, reason not a string",
+                "answer": {
+                    "success": false,
+                    "errorReason": 5,
+                    "transaction": 7,
+                    "paymentId": 3
+                },
+                "receipt": {
+                    "success": false,
+                    "errorReason": "unexpected_settle_error",
+                    "transaction": "",
+                    "network": "eip155:84532"
+                }
+            },
+            {
+                "name": "success as a string",
+                "answer": {
+                    "success": "true"
+                },
+                "receipt": {
+                    "success": false,
+                    "errorReason": "unexpected_settle_error",
+                    "transaction": "",
+                    "network": "eip155:84532"
+                }
+            },
+            {
+                "name": "facilitator down",
+                "unavailable": true,
+                "receipt": {
+                    "success": false,
+                    "errorReason": "facilitator_unavailable",
+                    "transaction": "",
+                    "network": "eip155:84532"
+                }
+            },
+            {
+                "name": "facilitator broken",
+                "throws": true,
+                "receipt": {
+                    "success": false,
+                    "errorReason": "unexpected_settle_error",
+                    "transaction": "",
+                    "network": "eip155:84532"
+                }
+            }
+        ],
+        "verifier": [
+            {
+                "name": "valid",
+                "answer": {
+                    "isValid": true
+                },
+                "reason": null
+            },
+            {
+                "name": "invalid with reason",
+                "answer": {
+                    "isValid": false,
+                    "invalidReason": "insufficient_funds"
+                },
+                "reason": "insufficient_funds"
+            },
+            {
+                "name": "invalid without reason",
+                "answer": {
+                    "isValid": false
+                },
+                "reason": "invalid_payment"
+            },
+            {
+                "name": "invalid with empty reason",
+                "answer": {
+                    "isValid": false,
+                    "invalidReason": ""
+                },
+                "reason": "invalid_payment"
+            },
+            {
+                "name": "invalid with a non-string reason",
+                "answer": {
+                    "isValid": false,
+                    "invalidReason": 5
+                },
+                "reason": "invalid_payment"
+            }
+        ],
+        "offer": [
+            {
+                "name": "one match",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    }
+                ],
+                "accepted": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "asset": "0xAAAA000000000000000000000000000000000001"
+                },
+                "offer": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "asset": "0xAAAA000000000000000000000000000000000001"
+                }
+            },
+            {
+                "name": "two on EVM, asset in another case",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    },
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xBBBB000000000000000000000000000000000002"
+                    }
+                ],
+                "accepted": {
+                    "asset": "0xbbbb000000000000000000000000000000000002",
+                    "scheme": "exact",
+                    "network": "eip155:84532"
+                },
+                "offer": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "asset": "0xBBBB000000000000000000000000000000000002"
+                }
+            },
+            {
+                "name": "two on EVM, unknown asset: first",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    },
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xBBBB000000000000000000000000000000000002"
+                    }
+                ],
+                "accepted": {
+                    "asset": "0xCCCC000000000000000000000000000000000003",
+                    "scheme": "exact",
+                    "network": "eip155:84532"
+                },
+                "offer": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "asset": "0xAAAA000000000000000000000000000000000001"
+                }
+            },
+            {
+                "name": "two on Solana, exact asset",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "solana:devnet",
+                        "asset": "MintAAA"
+                    },
+                    {
+                        "scheme": "exact",
+                        "network": "solana:devnet",
+                        "asset": "MintBBB"
+                    }
+                ],
+                "accepted": {
+                    "scheme": "exact",
+                    "network": "solana:devnet",
+                    "asset": "MintBBB"
+                },
+                "offer": {
+                    "scheme": "exact",
+                    "network": "solana:devnet",
+                    "asset": "MintBBB"
+                }
+            },
+            {
+                "name": "two on Solana, asset in another case: first",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "solana:devnet",
+                        "asset": "MintAAA"
+                    },
+                    {
+                        "scheme": "exact",
+                        "network": "solana:devnet",
+                        "asset": "MintBBB"
+                    }
+                ],
+                "accepted": {
+                    "asset": "mintbbb",
+                    "scheme": "exact",
+                    "network": "solana:devnet"
+                },
+                "offer": {
+                    "scheme": "exact",
+                    "network": "solana:devnet",
+                    "asset": "MintAAA"
+                }
+            },
+            {
+                "name": "no match",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    }
+                ],
+                "accepted": {
+                    "network": "eip155:1",
+                    "scheme": "exact",
+                    "asset": "0xAAAA000000000000000000000000000000000001"
+                },
+                "offer": null
+            },
+            {
+                "name": "accepted not an array",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    }
+                ],
+                "accepted": "x",
+                "offer": null
+            },
+            {
+                "name": "accepted missing",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    }
+                ],
+                "accepted": null,
+                "offer": null
+            },
+            {
+                "name": "asset not a string",
+                "accepts": [
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xAAAA000000000000000000000000000000000001"
+                    },
+                    {
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "asset": "0xBBBB000000000000000000000000000000000002"
+                    }
+                ],
+                "accepted": {
+                    "asset": 5,
+                    "scheme": "exact",
+                    "network": "eip155:84532"
+                },
+                "offer": {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "asset": "0xAAAA000000000000000000000000000000000001"
+                }
+            }
+        ],
+        "key": [
+            {
+                "payment": {
+                    "x402Version": 2,
+                    "resource": {
+                        "url": "https://example.test/mcp"
+                    },
+                    "accepted": {
+                        "extra": {
+                            "assetTransferMethod": "eip3009",
+                            "name": "USDC",
+                            "version": "2"
+                        },
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "amount": "10000",
+                        "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                        "payTo": "0x000000000000000000000000000000000000dEaD",
+                        "maxTimeoutSeconds": 60
+                    },
+                    "payload": {
+                        "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                        "authorization": {
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "to": "0x000000000000000000000000000000000000dEaD",
+                            "value": "10000",
+                            "validAfter": "0",
+                            "validBefore": "1800000060",
+                            "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                        }
+                    }
+                },
+                "key": "d1f418e3f500b3d702702d310f8685ec782ff1734264f804e4b55ee3a14935c6"
+            },
+            {
+                "payment": {
+                    "x402Version": 2,
+                    "resource": {
+                        "url": "https://example.test/mcp"
+                    },
+                    "accepted": {
+                        "extra": {
+                            "assetTransferMethod": "eip3009",
+                            "name": "USDC",
+                            "version": "2"
+                        },
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "amount": "10000",
+                        "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                        "payTo": "0x000000000000000000000000000000000000dEaD",
+                        "maxTimeoutSeconds": 60
+                    },
+                    "payload": {
+                        "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b",
+                        "authorization": {
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "to": "0x000000000000000000000000000000000000dEaD",
+                            "value": "10000",
+                            "validAfter": "0",
+                            "validBefore": "99999999999",
+                            "nonce": "0x6a1f3e4b5c7d8e9fa0b1c2d3e4f5061728394a5b6c7d8e9f0a1b2c3d4e5f6071"
+                        }
+                    }
+                },
+                "key": "d1f418e3f500b3d702702d310f8685ec782ff1734264f804e4b55ee3a14935c6"
+            },
+            {
+                "payment": {
+                    "x402Version": 2,
+                    "resource": {
+                        "url": "https://example.test/mcp"
+                    },
+                    "accepted": {
+                        "extra": {
+                            "assetTransferMethod": "eip3009",
+                            "name": "USDC",
+                            "version": "2"
+                        },
+                        "scheme": "exact",
+                        "network": "eip155:84532",
+                        "amount": "10000",
+                        "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                        "payTo": "0x000000000000000000000000000000000000dEaD",
+                        "maxTimeoutSeconds": 60
+                    },
+                    "payload": {
+                        "signature": "0x6aca9b15f6884d55ae81ed174b64257b6dd4df40fac4a684ca14135a7a7b53935366f0f33d51476cce4bf818c0cefe0aabc6c30657c85a73bd4934d210fa686e1b"
+                    }
+                },
+                "key": "010b955e7f6fdb4ff6dbfcef25abc0c3d4f02efaf1229d6596665588b638aebe"
+            }
+        ],
+        "mock": {
+            "success": true,
+            "transaction": "",
+            "network": "eip155:84532",
+            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+            "extensions": {
+                "mock": true
+            }
+        }
+    }
+}

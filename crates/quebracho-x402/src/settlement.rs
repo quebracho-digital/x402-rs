@@ -1,7 +1,6 @@
 //! A payment's identity, its TTLs, the offer it took, and reading a facilitator's settle answer without
 //! trusting its shape (port of `Settlement`).
 
-use alloc::format;
 use alloc::string::String;
 use alloc::vec::Vec;
 
@@ -235,9 +234,4 @@ pub fn settled(receipt: &Value) -> Value {
         out.insert("extensions".into(), ext.clone());
     }
     Value::Object(out)
-}
-
-/// `0x`-prefixed lower-case hex of a hash, for logs.
-pub fn hex32(bytes: &[u8; 32]) -> String {
-    format!("0x{}", hex::encode(bytes))
 }

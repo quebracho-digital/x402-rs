@@ -2958,7 +2958,9 @@
             "preset": [
                 {
                     "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
-                    "status": "claimed"
+                    "state": {
+                        "status": "claimed"
+                    }
                 }
             ],
             "steps": [
@@ -3020,7 +3022,9 @@
             "preset": [
                 {
                     "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
-                    "status": "settling"
+                    "state": {
+                        "status": "settling"
+                    }
                 }
             ],
             "steps": [
@@ -3082,7 +3086,9 @@
             "preset": [
                 {
                     "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
-                    "status": "handling"
+                    "state": {
+                        "status": "handling"
+                    }
                 }
             ],
             "steps": [
@@ -3112,6 +3118,1698 @@
                             "response": false,
                             "handler_ran": null,
                             "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront: settling write refused, nothing sent",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4OTliNzJjZTVhNGVhYTY3NDUxMTRkODg5OTkyMDE5NTlmMWFkZGNkMjRlNmE0NDZhMDNkZDYyNDI2NjQ4ZjYyMDMyYzZkNTczOTFiMWU1OTY1YjViMDU1NzY2NzRjZDk0OWNjOGQ3NDM3NTNhY2YyNjk0OGE1OGVlYTc4MDBlMjIxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjAifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "fail": [
+                            {
+                                "op": "put",
+                                "status": "settling"
+                            }
+                        ],
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 503,
+                        "body": "{\"error\":\"ledger_unavailable\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 1,
+                    "settle_calls": 0,
+                    "outcomes": [
+                        {
+                            "status": "fault",
+                            "reason": "intend"
+                        },
+                        {
+                            "status": "failed",
+                            "reason": "ledger_unavailable"
+                        }
+                    ],
+                    "ledger": {},
+                    "open": []
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4OTliNzJjZTVhNGVhYTY3NDUxMTRkODg5OTkyMDE5NTlmMWFkZGNkMjRlNmE0NDZhMDNkZDYyNDI2NjQ4ZjYyMDMyYzZkNTczOTFiMWU1OTY1YjViMDU1NzY2NzRjZDk0OWNjOGQ3NDM3NTNhY2YyNjk0OGE1OGVlYTc4MDBlMjIxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjAifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "a423f9e592f80e47f8aeedc3c4784c1449d9f3c4e4165e6a8fccb6548f9b394d": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront: stop pressed after the intention, before the settle",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4NjhlNmRkM2IyYWM1NjBlM2FlNWEwMTM2ZDNkZWIyYzgwN2UzMWMwNzZhNTVjYjA2NjQyYzVlMTk5N2Q3ZjJmOTY4ZTFhMTQxYjI2N2JjNzQ5ZGQ1MGI4ZGVjNjQ5YTg1YTkzMzE4OGUyZTE4MmYyYzQxZmIxOWYzMzk3NGI1YzYxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjEifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "stop_on": "settling",
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 503,
+                        "body": "{\"error\":\"payments_paused\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": "300"
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 1,
+                    "settle_calls": 0,
+                    "outcomes": [
+                        {
+                            "status": "failed",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {},
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "stop pressed while the handler runs: withheld, not charged",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4ODNhOWUzNzZiMDI0YTBmYjdiYmUxNzgyNzhiOTlkNzFhZDhjMTBiMTBiYTBjZDE0MzZlNDUzN2RkNmMzM2NjODBmMTg4OGI4ZTdiMTk2NzFhMDhjYTEzMjQ0NTkxMGZhYWI1MDlkZGYxNmI5OGMwNjM0NzY5NWU3MzBjYThmNGExYiIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjIifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}",
+                            "stop": true
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 503,
+                        "body": "{\"error\":\"payments_paused\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": "300"
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 0,
+                    "outcomes": [
+                        {
+                            "status": "failed",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {},
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront: handler throws after the settle, the retry runs it",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MDA0MDgxMzUzZGQwZTRiMGUyMWRlOTMwMDBhZTFmN2UzYmNkNmY1YjNlOTRjYjU0YTUzYjZmYWJhYjk2NTUwYzE2ZGFiMzNmNDlmMTY5NzkwNDMxNzYzZmEyOGI1YjZmNDEwYWM2ZTViYzg5NzU4ZDc5MTRkODE1ZDY2NzZmOTgxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjMifX19",
+                        "handler": {
+                            "throw": true
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "threw": true
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        },
+                        {
+                            "status": "failed_after_settle",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "f7539d16b957f2056abafc4b99751ae134546fddfa87b8e524815121ffccd3fe": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": false,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MDA0MDgxMzUzZGQwZTRiMGUyMWRlOTMwMDBhZTFmN2UzYmNkNmY1YjNlOTRjYjU0YTUzYjZmYWJhYjk2NTUwYzE2ZGFiMzNmNDlmMTY5NzkwNDMxNzYzZmEyOGI1YjZmNDEwYWM2ZTViYzg5NzU4ZDc5MTRkODE1ZDY2NzZmOTgxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjMifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "f7539d16b957f2056abafc4b99751ae134546fddfa87b8e524815121ffccd3fe": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront retry while another retry runs the handler: in_progress",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "settled",
+                        "receipt": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "handler_ran": false
+                    }
+                },
+                {
+                    "slot": "run:b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "claimed"
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"in_progress\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": false,
+                            "receipt_success": true
+                        },
+                        "run:b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "claimed",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront retry: the second read under the run claim fails",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "settled",
+                        "receipt": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "handler_ran": false
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "fail": [
+                            {
+                                "op": "get",
+                                "skip": 1
+                            }
+                        ],
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 503,
+                        "body": "{\"error\":\"ledger_unavailable\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": false,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront retry: run claim not released afterwards",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "settled",
+                        "receipt": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "handler_ran": false
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "fail": [
+                            {
+                                "op": "release"
+                            }
+                        ],
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [
+                        {
+                            "status": "fault",
+                            "reason": "release_run"
+                        }
+                    ],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        },
+                        "run:b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "claimed",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "settling with a transaction, lookup confirms: replayed or refused",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "settling",
+                        "receipt": {
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"already_settled\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "upfront settling with a transaction, lookup confirms: the handler runs once",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "settling",
+                        "receipt": {
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "handling with a kept response: replayed",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "handling",
+                        "receipt": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "response": {
+                            "status": 200,
+                            "headers": {
+                                "Content-Type": "application/json"
+                            },
+                            "body": "eyJrZXB0IjoxfQ=="
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"kept\":1}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "handling",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "an unknown stored state is never admitted again",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "weird"
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"already_settled\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "weird",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "pending with a kept response, lookup confirms: delivered",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "pending",
+                        "receipt": {
+                            "success": false,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "response": {
+                            "status": 200,
+                            "headers": [],
+                            "body": "a2VwdA=="
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "kept",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "pending, lookup throws: still pending",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "pending",
+                        "receipt": {
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": "throw"
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"settlement_pending\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [
+                        {
+                            "status": "fault",
+                            "reason": "lookup"
+                        }
+                    ],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "pending",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "pending with a paymentId, lookup names another one",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "pending",
+                        "receipt": {
+                            "paymentId": "pay_1",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "paymentId": "pay_2",
+                            "network": "eip155:84532"
+                        }
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"settlement_pending\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "pending",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "pending with a paymentId, lookup confirms without naming it",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "pending",
+                        "receipt": {
+                            "paymentId": "pay_1",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"already_settled\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "pending, lookup names another payer",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "pending",
+                        "receipt": {
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532",
+                            "payer": "0x0000000000000000000000000000000000000001"
+                        }
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"settlement_pending\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "pending",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "pending, lookup names the payer in another case",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [
+                {
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "state": {
+                        "status": "pending",
+                        "receipt": {
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532"
+                        }
+                    }
+                }
+            ],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MzhkMjJmMzYzM2ZiNWI1ZTczMWQyOTA0MDY2MGY2Y2RjOGE4NzgyYjYwMmMzOWM3MGE5MDM1NzNkNjA5OTk5NTZmZjcxODhkZmViOTYwMGVmZTk4MWNlZjU2MGM1NWIxNjcyZTEzMjg4ZGU4N2I2YjU3MGY4YTk1ZjkzNzc1OTQxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMWUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": {
+                            "success": true,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536e3605d9c16a7a3d7b1898e529396a65c23"
+                        }
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"already_settled\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "closing the open entry fails after a settle: reported",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4ZDBiZGMyOWMyNmExYTUwMThmZTUxZmJjNGQ5NzMwMWY1ZmEyMTQzMDM2NDUwNDg5YTM0MjUzNTBiMWY4ZDNkNjQ1ZWM1MDBkOWZhMzkxM2M0NDE5OWMwOTMzN2EzOWNiZjI1ZTdlMjFhM2E0MmNlZTQ2NmRmMTNlODQ1MzUwNzIxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjQifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "fail": [
+                            {
+                                "op": "close"
+                            }
+                        ],
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        },
+                        {
+                            "status": "fault",
+                            "reason": "close"
+                        }
+                    ],
+                    "ledger": {
+                        "7c08d05f69bc419289812e6847271e8e4cf5eade4d3bf500335b643ba0509c8e": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": [
+                        "7c08d05f69bc419289812e6847271e8e4cf5eade4d3bf500335b643ba0509c8e"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "handler fails and the claim cannot be freed: reported, kept",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MmY0OTE3YjA0YmYxZmE0NGY2ODVmZWZmMzc3Zjc5OTUwOTBlZWY2NGE2YjNiNmRkYzU1NjNmZTVlYmM1ODZkYjI0OTUxNTg2YjQwZmUwMjkxN2I5YmFhZWRhMzFkYTg3ODhhNmUxMDEzNmFlMjYxMTBhOTJmN2JlZWE0N2YwNzYxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjUifX19",
+                        "handler": {
+                            "status": 500,
+                            "body": "boom"
+                        },
+                        "fail": [
+                            {
+                                "op": "release"
+                            }
+                        ],
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 500,
+                        "body": "boom",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 0,
+                    "outcomes": [
+                        {
+                            "status": "fault",
+                            "reason": "release"
+                        },
+                        {
+                            "status": "failed",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "07a6e6f071fec806cd1f4e1a66f89c929c391dbafd8b09ed67364142e48dab8f": {
+                            "status": "claimed",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MmY0OTE3YjA0YmYxZmE0NGY2ODVmZWZmMzc3Zjc5OTUwOTBlZWY2NGE2YjNiNmRkYzU1NjNmZTVlYmM1ODZkYjI0OTUxNTg2YjQwZmUwMjkxN2I5YmFhZWRhMzFkYTg3ODhhNmUxMDEzNmFlMjYxMTBhOTJmN2JlZWE0N2YwNzYxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjUifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"in_progress\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "07a6e6f071fec806cd1f4e1a66f89c929c391dbafd8b09ed67364142e48dab8f": {
+                            "status": "claimed",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": null
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "a body over 1 MiB is delivered but not kept",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4OGE2MDY3MDQ0OTRhMjAyYjkxODFhZjdhNmVjN2IyMWNkOWQxNjlkYjllYWI1NmJiZTc1YTgzOGI5YTgxN2NhMzcxNWNlYTVlZGVlM2NiZjQ2NDVhZDFmN2M0ZDI2OWJkZTBhNDA3NzlmZmY5ZTIyNGU1NDJmMjdmM2YwOGNiOTExYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjYifX19",
+                        "handler": {
+                            "status": 200,
+                            "big": true
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": {
+                            "sha256": "154b8ed3c2383ce429058768595935faf7851b5c38db2b1732594be1d88bc05a",
+                            "length": 1048577
+                        },
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "8a9c2eba54d055c4f707220571a5504eeb70fe75d753492a0560864aa74a922e": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4OGE2MDY3MDQ0OTRhMjAyYjkxODFhZjdhNmVjN2IyMWNkOWQxNjlkYjllYWI1NmJiZTc1YTgzOGI5YTgxN2NhMzcxNWNlYTVlZGVlM2NiZjQ2NDVhZDFmN2M0ZDI2OWJkZTBhNDA3NzlmZmY5ZTIyNGU1NDJmMjdmM2YwOGNiOTExYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjYifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"already_settled\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "8a9c2eba54d055c4f707220571a5504eeb70fe75d753492a0560864aa74a922e": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                }
+            ]
+        },
+        {
+            "name": "a repeated header is kept joined",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4ZWNmNDlhMzE1NzhhN2RlNTlmMzRkZTA5NDAxYzEzZjMxNjIzOTkyMDg5YmMzNzVmMTk2Nzk5MWMyMTQ4MzAyOTNmMDQ2MjgxNWUwYzY1Yzk1NmVlNjFhMTI2YmNjNGZlYzNkMDU0ZmZlZGExNDc3ZWEwODdjNGI1ZjZkMDc4YjcxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjcifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}",
+                            "headers": {
+                                "X-Tag": [
+                                    "a",
+                                    "b"
+                                ]
+                            }
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "2e7a62ab116a7362f401459e7133f6b5468650b3e3d57823d0492eaadb0d0fb2": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": []
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4ZWNmNDlhMzE1NzhhN2RlNTlmMzRkZTA5NDAxYzEzZjMxNjIzOTkyMDg5YmMzNzVmMTk2Nzk5MWMyMTQ4MzAyOTNmMDQ2MjgxNWUwYzY1Yzk1NmVlNjFhMTI2YmNjNGZlYzNkMDU0ZmZlZGExNDc3ZWEwODdjNGI1ZjZkMDc4YjcxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjcifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "2e7a62ab116a7362f401459e7133f6b5468650b3e3d57823d0492eaadb0d0fb2": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
                         }
                     },
                     "open": []

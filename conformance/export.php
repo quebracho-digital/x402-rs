@@ -17,6 +17,9 @@ use Quebracho\X402\EvmExact;
 use Quebracho\X402\Field;
 use Quebracho\X402\Networks;
 use Quebracho\X402\Signer;
+use Quebracho\X402\Settlement;
+use Quebracho\X402\FacilitatorException;
+use Quebracho\X402\Facilitator;
 
 [$self, $lib, $out] = $argv + [null, null, null];
 if (null === $lib || null === $out) {
@@ -207,4 +210,110 @@ foreach (['0', '', '-1', '1e3', '01'] as $amount) {
     $add("offer amount '$amount'", $base, ['amount' => $amount] + $req);
 }
 $add('offer payTo not canonical', $base, ['payTo' => substr($req['payTo'], 2)] + $req);
+// PHP's loose casts on our own offer and on the buyer's echo: (string), (int) and empty() on every JSON type.
+$withExtra = fn (string $field, mixed $v) => ['extra' => [$field => $v] + $req['extra']] + $req;
+foreach (['"0"' => '0', '0' => 0, '0.0' => 0.0, '[]' => [], '["x"]' => ['x'], 'true' => true, '1.5' => 1.5, '1e20' => 1e20, '1e-5' => 1.0e-5, '"USDC "' => 'USDC ', 'null' => null] as $label => $v) {
+    $add("offer extra.name $label", $base, $withExtra('name', $v));
+    $add("offer extra.version $label", $base, $withExtra('version', $v));
+}
+foreach (['10000 (int)' => 10000, '10000.0' => 10000.0, '"10000.0"' => '10000.0', 'true' => true, '["10000"]' => ['10000'], 'null' => null] as $label => $v) {
+    $add("offer amount $label", $base, ['amount' => $v] + $req);
+    $add("echoed amount $label", $patch(['accepted' => ['amount' => $v]]));
+}
+foreach (['"300"' => '300', '"300abc"' => '300abc', '" 300"' => ' 300', '"1e3"' => '1e3', '"-5"' => '-5', 'true' => true, 'null' => null, '300.9' => 300.9, '[]' => [], '[1]' => [1], '"99999999999999999999"' => '99999999999999999999', '"+7"' => '+7', '"0x1A"' => '0x1A', '"2.5e2"' => '2.5e2'] as $label => $v) {
+    $add("offer maxTimeoutSeconds $label", $base, ['maxTimeoutSeconds' => $v] + $req);
+}
+$add('offer network not EVM spelling', $patch(['accepted' => ['network' => 'eip155:084532']]), ['network' => 'eip155:084532'] + $req);
+$add('echoed asset as a number', $patch(['accepted' => ['asset' => 123]]));
+$add('offer asset as a number', $base, ['asset' => 123] + $req);
+$add('offer payTo as an array', $base, ['payTo' => ['x']] + $req);
+$add('offer amount false', $base, ['amount' => false] + $req);
+$add('echoed amount false', $patch(['accepted' => ['amount' => false]]));
+$add('echoed payTo true', $patch(['accepted' => ['payTo' => true]]));
 write($out, 'evm_exact', $cases);
+
+// --- settlement: reading a facilitator's answers without trusting their shape ---
+$tx = '0x'.str_repeat('ab', 32);
+$settledCases = [];
+foreach ([
+    'full' => ['success' => true, 'transaction' => $tx, 'network' => 'eip155:84532', 'payer' => '0xAb', 'errorReason' => 'r', 'errorMessage' => 'm', 'paymentId' => 'p1', 'amount' => '10000', 'extensions' => ['a' => 1]],
+    'wrong types dropped' => ['success' => true, 'transaction' => 5, 'network' => ['x'], 'payer' => 7, 'errorReason' => false, 'amount' => '1e3', 'paymentId' => 9],
+    'payer null kept' => ['success' => true, 'payer' => null],
+    'amount not digits' => ['success' => true, 'amount' => '-5'],
+    'amount empty' => ['success' => true, 'amount' => ''],
+    'extensions null kept' => ['success' => true, 'extensions' => null],
+    'nothing' => ['success' => true],
+] as $name => $receipt) {
+    $settledCases[] = ['name' => $name, 'receipt' => $receipt, 'settled' => Settlement::settled($receipt)];
+}
+$req84532 = ['network' => 'eip155:84532'];
+$runCases = [];
+foreach ([
+    'success' => ['answer' => ['success' => true, 'transaction' => $tx, 'network' => 'eip155:84532']],
+    'refused with reason' => ['answer' => ['success' => false, 'errorReason' => 'insufficient_funds']],
+    'refused with a transaction and a paymentId' => ['answer' => ['success' => false, 'errorReason' => 'settlement_pending', 'transaction' => $tx, 'paymentId' => 'pay_1']],
+    'refused, reason not a string' => ['answer' => ['success' => false, 'errorReason' => 5, 'transaction' => 7, 'paymentId' => 3]],
+    'success as a string' => ['answer' => ['success' => 'true']],
+    'facilitator down' => ['unavailable' => true],
+    'facilitator broken' => ['throws' => true],
+] as $name => $how) {
+    $settle = function () use ($how) {
+        if ($how['unavailable'] ?? false) {
+            throw new FacilitatorException('down');
+        }
+        if ($how['throws'] ?? false) {
+            throw new \RuntimeException('broken');
+        }
+
+        return $how['answer'];
+    };
+    $runCases[] = ['name' => $name] + $how + ['receipt' => Settlement::run($settle, [], $req84532)];
+}
+$verifyCases = [];
+foreach ([
+    'valid' => ['isValid' => true],
+    'invalid with reason' => ['isValid' => false, 'invalidReason' => 'insufficient_funds'],
+    'invalid without reason' => ['isValid' => false],
+    'invalid with empty reason' => ['isValid' => false, 'invalidReason' => ''],
+    'invalid with a non-string reason' => ['isValid' => false, 'invalidReason' => 5],
+] as $name => $answer) {
+    $f = new class($answer) implements Facilitator {
+        public function __construct(private array $a)
+        {
+        }
+
+        public function verify(array $payment, array $req): array
+        {
+            return $this->a;
+        }
+
+        public function settle(array $payment, array $req): array
+        {
+            return [];
+        }
+    };
+    $verifyCases[] = ['name' => $name, 'answer' => $answer, 'reason' => (Settlement::verifier($f))([], $req84532)];
+}
+$a1 = ['scheme' => 'exact', 'network' => 'eip155:84532', 'asset' => '0xAAAA000000000000000000000000000000000001'];
+$a2 = ['scheme' => 'exact', 'network' => 'eip155:84532', 'asset' => '0xBBBB000000000000000000000000000000000002'];
+$s1 = ['scheme' => 'exact', 'network' => 'solana:devnet', 'asset' => 'MintAAA'];
+$s2 = ['scheme' => 'exact', 'network' => 'solana:devnet', 'asset' => 'MintBBB'];
+$offerCases = [];
+foreach ([
+    'one match' => [[$a1], $a1],
+    'two on EVM, asset in another case' => [[$a1, $a2], ['asset' => strtolower($a2['asset'])] + $a2],
+    'two on EVM, unknown asset: first' => [[$a1, $a2], ['asset' => '0xCCCC000000000000000000000000000000000003'] + $a1],
+    'two on Solana, exact asset' => [[$s1, $s2], $s2],
+    'two on Solana, asset in another case: first' => [[$s1, $s2], ['asset' => 'mintbbb'] + $s2],
+    'no match' => [[$a1], ['network' => 'eip155:1'] + $a1],
+    'accepted not an array' => [[$a1], 'x'],
+    'accepted missing' => [[$a1], null],
+    'asset not a string' => [[$a1, $a2], ['asset' => 5] + $a2],
+] as $name => [$accepts, $accepted]) {
+    $offerCases[] = ['name' => $name, 'accepts' => $accepts, 'accepted' => $accepted, 'offer' => Settlement::offer($accepts, $accepted)];
+}
+$keyCases = [];
+foreach ([$base, $long, $noAuth] as $i => $p) {
+    $keyCases[] = ['payment' => $p, 'key' => Settlement::key($p)];
+}
+write($out, 'settlement', ['settled' => $settledCases, 'run' => $runCases, 'verifier' => $verifyCases, 'offer' => $offerCases, 'key' => $keyCases, 'mock' => Settlement::mock()($base, $req)]);

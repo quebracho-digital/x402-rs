@@ -193,9 +193,9 @@ pub fn check_settle(out: Value, payment: &Value, req: &Value) -> Value {
         }
     });
     let payer_ok = match (payer, from) {
-        (Some(p), Some(f)) => crate::php::php_string(p)
-            .zip(crate::php::php_string(f))
-            .is_some_and(|(p, f)| p.eq_ignore_ascii_case(&f)),
+        (Some(p), Some(f)) => {
+            crate::php::php_string(p).eq_ignore_ascii_case(&crate::php::php_string(f))
+        }
         _ => true,
     };
     if tx_ok && get(&out, "network").and_then(Value::as_str) == Some(network) && payer_ok {

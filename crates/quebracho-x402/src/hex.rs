@@ -34,3 +34,17 @@ pub(crate) fn encode(bytes: &[u8]) -> String {
     }
     out
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn decodes_only_its_exact_spelling() {
+        assert_eq!(decode::<2>("0xAbcD"), Some([0xab, 0xcd]));
+        assert_eq!(decode::<2>("0xabc"), None, "wrong length");
+        assert_eq!(decode::<2>("abcd"), None, "no 0x");
+        assert_eq!(decode::<2>("0xabzz"), None, "not hex");
+        assert_eq!(encode(&[0x0f, 0xa0]), "0fa0");
+    }
+}

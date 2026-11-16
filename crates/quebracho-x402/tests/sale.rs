@@ -4,6 +4,9 @@
 
 use std::cell::{Cell, RefCell};
 use std::collections::BTreeMap;
+use std::rc::Rc;
+
+use sha2::{Digest, Sha256};
 
 use quebracho_x402::headers;
 use quebracho_x402::ports::{
@@ -19,14 +22,23 @@ struct ScriptedLedger {
     states: RefCell<BTreeMap<String, Value>>,
     open: RefCell<BTreeMap<String, Value>>,
     fail: RefCell<Vec<Value>>,
+    /// Writing a state with this status engages the stop switch (a person pressing it mid-sale).
+    stop_on: RefCell<Option<Value>>,
+    stop: Rc<Cell<bool>>,
 }
 
 impl ScriptedLedger {
     fn failing(&self, op: &str, state: Option<&Value>) -> Result<(), LedgerUnavailable> {
-        for f in self.fail.borrow().iter() {
+        for f in self.fail.borrow_mut().iter_mut() {
             if f["op"] == op
                 && (f.get("status").is_none() || state.map(|s| &s["status"]) == f.get("status"))
             {
+                // 'skip': let that many matching calls through first.
+                let skip = f.get("skip").and_then(Value::as_u64).unwrap_or(0);
+                if skip > 0 {
+                    f["skip"] = json!(skip - 1);
+                    continue;
+                }
                 return Err(LedgerUnavailable);
             }
         }
@@ -51,6 +63,9 @@ impl Ledger for ScriptedLedger {
     fn put(&self, key: &str, state: &Value, _ttl: u64) -> Result<(), LedgerUnavailable> {
         self.failing("put", Some(state))?;
         self.states.borrow_mut().insert(key.into(), state.clone());
+        if self.stop_on.borrow().as_ref() == Some(&state["status"]) {
+            self.stop.set(true);
+        }
         Ok(())
     }
     fn release(&self, key: &str) -> Result<(), LedgerUnavailable> {
@@ -122,7 +137,7 @@ impl Clock for FixedClock {
 }
 
 #[derive(Default)]
-struct Switch(Cell<bool>);
+struct Switch(Rc<Cell<bool>>);
 impl Pause for Switch {
     fn engaged(&self) -> bool {
         self.0.get()
@@ -138,6 +153,9 @@ impl Lookup for ScriptedLookup {
         _payment: &Value,
         _req: &Value,
     ) -> Result<Option<Value>, LookupFailed> {
+        if *self.0.borrow() == json!("throw") {
+            return Err(LookupFailed);
+        }
         Ok(Some(self.0.borrow().clone()).filter(|v| !v.is_null()))
     }
 }
@@ -173,6 +191,18 @@ impl AddressListener for Deny {
     }
 }
 
+/// A body as PHP's scenario recorded it: over 4 KiB as its SHA-256 and length.
+fn recorded(bytes: &[u8]) -> Value {
+    if bytes.len() > 4096 {
+        let hash: String = Sha256::digest(bytes)
+            .iter()
+            .map(|b| format!("{b:02x}"))
+            .collect();
+        return json!({ "sha256": hash, "length": bytes.len() });
+    }
+    body(bytes)
+}
+
 /// The body as JSON when it is JSON, else as text: PHP and serde order keys differently.
 fn body(bytes: &[u8]) -> Value {
     serde_json::from_slice(bytes)
@@ -188,10 +218,10 @@ fn sale_scenarios_match_php() {
         let name = case["name"].as_str().unwrap();
         let ledger = ScriptedLedger::default();
         for p in case["preset"].as_array().unwrap() {
-            ledger.states.borrow_mut().insert(
-                p["slot"].as_str().unwrap().into(),
-                json!({ "status": p["status"] }),
-            );
+            ledger
+                .states
+                .borrow_mut()
+                .insert(p["slot"].as_str().unwrap().into(), p["state"].clone());
         }
         let facilitator = ScriptedFacilitator::default();
         let clock = FixedClock(case["now"].as_u64().unwrap());
@@ -210,17 +240,7 @@ fn sale_scenarios_match_php() {
             deny.iter().map(|d| d as &dyn AddressListener).collect();
         let events = Recorder::default();
         let lookup = ScriptedLookup::default();
-        let stop = Switch::default();
-        let seller = Seller {
-            ledger: &ledger,
-            facilitator: &facilitator,
-            clock: &clock,
-            ofac: &ofac,
-            listeners: &listeners,
-            events: Some(&events),
-            lookup: Some(&lookup),
-            stop: Some(&stop),
-        };
+        let stop = Switch(ledger.stop.clone());
         let offers: Vec<Value> = case["offers"].as_array().unwrap().clone();
 
         for (i, expected) in case["steps"].as_array().unwrap().iter().enumerate() {
@@ -234,6 +254,18 @@ fn sale_scenarios_match_php() {
                 .cloned()
                 .unwrap_or_default();
             *lookup.0.borrow_mut() = step["lookup"].clone();
+            *ledger.stop_on.borrow_mut() = step.get("stop_on").cloned();
+            // PHP passes no lookup at all when the step has none.
+            let seller = Seller {
+                ledger: &ledger,
+                facilitator: &facilitator,
+                clock: &clock,
+                ofac: &ofac,
+                listeners: &listeners,
+                events: Some(&events),
+                lookup: (!step["lookup"].is_null()).then_some(&lookup as &dyn Lookup),
+                stop: Some(&stop),
+            };
             stop.0
                 .set(step.get("stop").and_then(Value::as_bool).unwrap_or(false));
             events.0.borrow_mut().clear();
@@ -242,14 +274,31 @@ fn sale_scenarios_match_php() {
             let script = &step["handler"];
             let handler = || {
                 handler_calls.set(handler_calls.get() + 1);
+                if script.get("stop").is_some() {
+                    stop.0.set(true);
+                }
                 if script.get("throw").is_some() {
                     return Err(HandlerFailed);
                 }
-                Ok(Response::new(
-                    script["status"].as_u64().unwrap() as u16,
-                    script["body"].as_str().unwrap().as_bytes().to_vec(),
-                )
-                .with_header("Content-Type", "application/json"))
+                let content = if script.get("big").is_some() {
+                    vec![b'x'; 1_048_577]
+                } else {
+                    script["body"].as_str().unwrap().as_bytes().to_vec()
+                };
+                let mut r = Response::new(script["status"].as_u64().unwrap() as u16, content)
+                    .with_header("Content-Type", "application/json");
+                if let Some(Value::Object(h)) = script.get("headers") {
+                    for (name, values) in h {
+                        for v in values
+                            .as_array()
+                            .cloned()
+                            .unwrap_or_else(|| vec![values.clone()])
+                        {
+                            r.headers.push((name.clone(), v.as_str().unwrap().into()));
+                        }
+                    }
+                }
+                Ok(r)
             };
             let request = Request {
                 accepts: Some(&offers),
@@ -267,11 +316,11 @@ fn sale_scenarios_match_php() {
                 ),
                 Ok(r) => {
                     assert_eq!(json!(r.status), want["status"], "{at}: status");
-                    assert_eq!(
-                        body(&r.body),
-                        body(want["body"].as_str().unwrap().as_bytes()),
-                        "{at}: body"
-                    );
+                    let want_body = match &want["body"] {
+                        Value::String(text) => body(text.as_bytes()),
+                        other => other.clone(),
+                    };
+                    assert_eq!(recorded(&r.body), want_body, "{at}: body");
                     let decoded = |h: &str| {
                         r.header(h)
                             .map(|v| headers::decode(v).expect("decodes"))

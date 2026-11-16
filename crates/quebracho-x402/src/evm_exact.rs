@@ -6,9 +6,7 @@
 //! `accepts`). Where PHP casts loosely (`(string)`, `(int)`, `empty()`), the helpers at the bottom
 //! reproduce what the cast does to JSON values.
 //!
-//! One deliberate difference: PHP reads the chain id with `(int) explode(':', $network)[1]`; here an
-//! offer whose network is not in [`Rule::EvmNetwork`] spelling is `invalid_payment_requirements`.
-//! It is our own offer, so it never reaches a buyer.
+//! The chain id is read from our own offer as PHP reads it: `(int) explode(':', $network)[1]`.
 
 use serde_json::Value;
 
@@ -108,9 +106,10 @@ pub fn verify(payment: &Value, req: &Value, now: u64) -> Result<(), Reason> {
         InvalidPaymentRequirements,
     )?;
     let amount = php_string(get(req, "amount").unwrap_or(&EMPTY_STRING));
-    let Some(amount) = amount.filter(|a| field::is(Rule::Amount, a)) else {
-        return Err(InvalidPaymentRequirements);
-    };
+    fail(
+        !field::is(Rule::Amount, &amount),
+        InvalidPaymentRequirements,
+    )?;
     let (Some(Value::String(asset)), Some(Value::String(pay_to))) =
         (get(req, "asset"), get(req, "payTo"))
     else {
@@ -122,12 +121,11 @@ pub fn verify(payment: &Value, req: &Value, now: u64) -> Result<(), Reason> {
     )?;
     // The buyer echoes the offer it took; a different echo is not that offer.
     let echo = |key| php_string(get(accepted, key).unwrap_or(&EMPTY_STRING));
-    let same_ci =
-        |a: Option<alloc::string::String>, b: &str| a.is_some_and(|a| a.eq_ignore_ascii_case(b));
+    let same_ci = |a: alloc::string::String, b: &str| a.eq_ignore_ascii_case(b);
     fail(
         !same_ci(echo("asset"), asset)
             || !same_ci(echo("payTo"), pay_to)
-            || echo("amount").as_deref() != Some(amount.as_str()),
+            || echo("amount") != amount,
         InvalidPayload,
     )?;
 
@@ -156,16 +154,17 @@ pub fn verify(payment: &Value, req: &Value, now: u64) -> Result<(), Reason> {
     let network = get(req, "network")
         .and_then(Value::as_str)
         .unwrap_or_default();
-    let chain_id = match network.strip_prefix("eip155:") {
-        Some(id) if field::is(Rule::EvmNetwork, network) => {
-            id.parse::<u64>().map_err(|_| InvalidPaymentRequirements)?
-        }
-        _ => return Err(InvalidPaymentRequirements),
-    };
-    let (Some(name), Some(version)) = (name.and_then(php_string), version.and_then(php_string))
-    else {
-        return Err(InvalidPaymentRequirements);
-    };
+    // PHP: (int) explode(':', $network)[1]. Our own offer, so a sloppy spelling ("eip155:084532") is read
+    // as PHP reads it, and a chain id that is not a number signs for chain 0 (no signature matches).
+    let chain_id = u64::try_from(php_int(Some(&Value::String(
+        network.split(':').nth(1).unwrap_or_default().into(),
+    ))))
+    .unwrap_or(0);
+    // Both are present and not empty (checked above).
+    let (name, version) = (
+        php_string(name.unwrap_or(&EMPTY_STRING)),
+        php_string(version.unwrap_or(&EMPTY_STRING)),
+    );
     let domain = Domain {
         name: &name,
         version: &version,

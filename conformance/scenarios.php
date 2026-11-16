@@ -47,11 +47,19 @@ final class ScriptedLedger implements PaymentLedger
     public array $open = [];
     /** @var list<array{op: string, status?: string}> */
     public array $fail = [];
+    /** Writing a state with this status engages the stop switch (a person pressing it mid-sale). */
+    public ?string $stopOn = null;
+    public ?string $stopFile = null;
 
     private function failing(string $op, ?array $state = null): void
     {
-        foreach ($this->fail as $f) {
+        foreach ($this->fail as $i => $f) {
             if ($f['op'] === $op && (!isset($f['status']) || ($state['status'] ?? null) === $f['status'])) {
+                // 'skip': let that many matching calls through first.
+                if (($f['skip'] ?? 0) > 0) {
+                    --$this->fail[$i]['skip'];
+                    continue;
+                }
                 throw new LedgerUnavailableException("scripted $op failure");
             }
         }
@@ -79,6 +87,9 @@ final class ScriptedLedger implements PaymentLedger
     {
         $this->failing('put', $state);
         $this->states[$key] = $state;
+        if (null !== $this->stopOn && ($state['status'] ?? null) === $this->stopOn) {
+            touch($this->stopFile);
+        }
     }
 
     public function release(string $key): void
@@ -214,6 +225,27 @@ $scenarios = [
     ['name' => 'a claim in progress: 409', 'preset' => ['claimed'], 'steps' => [$valid(30) + ['handler' => $ok]]],
     ['name' => 'settling without a reference: settlement_unknown', 'preset' => ['settling'], 'steps' => [$valid(30) + ['handler' => $ok]]],
     ['name' => 'handling without a response: needs_review', 'preset' => ['handling'], 'steps' => [$valid(30) + ['handler' => $ok]]],
+    ['name' => 'upfront: settling write refused, nothing sent', 'offers' => [$upfrontReq], 'steps' => [$valid(32, $upfrontReq) + ['handler' => $ok, 'fail' => [['op' => 'put', 'status' => 'settling']]], $valid(32, $upfrontReq) + ['handler' => $ok]]],
+    ['name' => 'upfront: stop pressed after the intention, before the settle', 'offers' => [$upfrontReq], 'steps' => [$valid(33, $upfrontReq) + ['handler' => $ok, 'stop_on' => 'settling']]],
+    ['name' => 'stop pressed while the handler runs: withheld, not charged', 'steps' => [$valid(34) + ['handler' => $ok + ['stop' => true]]]],
+    ['name' => 'upfront: handler throws after the settle, the retry runs it', 'offers' => [$upfrontReq], 'steps' => [$valid(35, $upfrontReq) + ['handler' => ['throw' => true]], $valid(35, $upfrontReq) + ['handler' => $ok]]],
+    ['name' => 'upfront retry while another retry runs the handler: in_progress', 'offers' => [$upfrontReq], 'preset' => [['status' => 'settled', 'receipt' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532'], 'handler_ran' => false], ['status' => 'claimed', 'run' => true]], 'steps' => [$valid(30, $upfrontReq) + ['handler' => $ok]]],
+    ['name' => 'upfront retry: the second read under the run claim fails', 'offers' => [$upfrontReq], 'preset' => [['status' => 'settled', 'receipt' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532'], 'handler_ran' => false]], 'steps' => [$valid(30, $upfrontReq) + ['handler' => $ok, 'fail' => [['op' => 'get', 'skip' => 1]]]]],
+    ['name' => 'upfront retry: run claim not released afterwards', 'offers' => [$upfrontReq], 'preset' => [['status' => 'settled', 'receipt' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532'], 'handler_ran' => false]], 'steps' => [$valid(30, $upfrontReq) + ['handler' => $ok, 'fail' => [['op' => 'release']]]]],
+    ['name' => 'settling with a transaction, lookup confirms: replayed or refused', 'preset' => [['status' => 'settling', 'receipt' => ['transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]]],
+    ['name' => 'upfront settling with a transaction, lookup confirms: the handler runs once', 'offers' => [$upfrontReq], 'preset' => [['status' => 'settling', 'receipt' => ['transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]], 'steps' => [$valid(30, $upfrontReq) + ['handler' => $ok, 'lookup' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]]],
+    ['name' => 'handling with a kept response: replayed', 'preset' => [['status' => 'handling', 'receipt' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532'], 'response' => ['status' => 200, 'headers' => ['Content-Type' => 'application/json'], 'body' => base64_encode('{"kept":1}')]]], 'steps' => [$valid(30) + ['handler' => $ok]]],
+    ['name' => 'an unknown stored state is never admitted again', 'preset' => ['weird'], 'steps' => [$valid(30) + ['handler' => $ok]]],
+    ['name' => 'pending with a kept response, lookup confirms: delivered', 'preset' => [['status' => 'pending', 'receipt' => ['success' => false, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532'], 'response' => ['status' => 200, 'headers' => [], 'body' => base64_encode('kept')]]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]]],
+    ['name' => 'pending, lookup throws: still pending', 'preset' => [['status' => 'pending', 'receipt' => ['transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => 'throw']]],
+    ['name' => 'pending with a paymentId, lookup names another one', 'preset' => [['status' => 'pending', 'receipt' => ['paymentId' => 'pay_1', 'network' => 'eip155:84532']]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => ['success' => true, 'paymentId' => 'pay_2', 'network' => 'eip155:84532']]]],
+    ['name' => 'pending with a paymentId, lookup confirms without naming it', 'preset' => [['status' => 'pending', 'receipt' => ['paymentId' => 'pay_1', 'network' => 'eip155:84532']]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]]],
+    ['name' => 'pending, lookup names another payer', 'preset' => [['status' => 'pending', 'receipt' => ['transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532', 'payer' => '0x0000000000000000000000000000000000000001']]]],
+    ['name' => 'pending, lookup names the payer in another case', 'preset' => [['status' => 'pending', 'receipt' => ['transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532']]], 'steps' => [$valid(30) + ['handler' => $ok, 'lookup' => ['success' => true, 'transaction' => '0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd', 'network' => 'eip155:84532', 'payer' => strtolower($buyer->address())]]]],
+    ['name' => 'closing the open entry fails after a settle: reported', 'steps' => [$valid(36) + ['handler' => $ok, 'fail' => [['op' => 'close']]]]],
+    ['name' => 'handler fails and the claim cannot be freed: reported, kept', 'steps' => [$valid(37) + ['handler' => ['status' => 500, 'body' => 'boom'], 'fail' => [['op' => 'release']]], $valid(37) + ['handler' => $ok]]],
+    ['name' => 'a body over 1 MiB is delivered but not kept', 'steps' => [$valid(38) + ['handler' => ['status' => 200, 'big' => true]], $valid(38) + ['handler' => $ok]]],
+    ['name' => 'a repeated header is kept joined', 'steps' => [$valid(39) + ['handler' => $ok + ['headers' => ['X-Tag' => ['a', 'b']]]], $valid(39) + ['handler' => $ok]]],
     ['name' => 'two offers on one network: picked by asset', 'offers' => [['asset' => '0x1111111111111111111111111111111111111111'] + $req, $req], 'steps' => [$valid(31) + ['handler' => $ok]]],
 ];
 
@@ -221,18 +253,22 @@ final class ScriptedHandler implements RequestHandlerInterface
 {
     public int $calls = 0;
 
-    public function __construct(private readonly array $script)
+    public function __construct(private readonly array $script, private readonly string $stopFile)
     {
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         ++$this->calls;
+        if ($this->script['stop'] ?? false) {
+            touch($this->stopFile);
+        }
         if ($this->script['throw'] ?? false) {
             throw new \RuntimeException('scripted handler failure');
         }
+        $body = ($this->script['big'] ?? false) ? str_repeat('x', 1048577) : $this->script['body'];
 
-        return new Response($this->script['status'], ['Content-Type' => 'application/json'], $this->script['body']);
+        return new Response($this->script['status'], ['Content-Type' => 'application/json'] + ($this->script['headers'] ?? []), $body);
     }
 }
 
@@ -241,9 +277,15 @@ $f = new Psr17Factory();
 foreach ($scenarios as $scenario) {
     $offers = $scenario['offers'] ?? [$req];
     $ledger = new ScriptedLedger();
-    foreach ($scenario['preset'] ?? [] as $status) {
-        // The key of the step's payment (nonce 30), in the given state.
-        $ledger->states[\Quebracho\X402\Settlement::key($pay($req, $nonce(30)))] = ['status' => $status];
+    $presetKey = \Quebracho\X402\Settlement::key($pay($req, $nonce(30)));
+    $presets = [];
+    foreach ($scenario['preset'] ?? [] as $state) {
+        // The key of the step's payment (nonce 30), in the given state; 'run:' + key for a run claim.
+        $state = \is_string($state) ? ['status' => $state] : $state;
+        $slot = ($state['run'] ?? false) ? 'run:'.$presetKey : $presetKey;
+        unset($state['run']);
+        $ledger->states[$slot] = $state;
+        $presets[] = ['slot' => $slot, 'state' => $state];
     }
     $facilitator = new ScriptedFacilitator();
     $outcomes = [];
@@ -273,9 +315,11 @@ foreach ($scenarios as $scenario) {
         $facilitator->verify = $step['verify'] ?? null;
         $facilitator->settle = $step['settle'] ?? 'mock';
         $ledger->fail = $step['fail'] ?? [];
+        $ledger->stopOn = $step['stop_on'] ?? null;
+        $ledger->stopFile = $stopFile;
         $stepLookup = $step['lookup'] ?? null;
         ($step['stop'] ?? false) ? touch($stopFile) : @unlink($stopFile);
-        $handler = new ScriptedHandler($step['handler']);
+        $handler = new ScriptedHandler($step['handler'], $stopFile);
         $outcomes = [];
         $keep = $step['keep'] ?? true;
         $mw = new X402Middleware(
@@ -286,7 +330,7 @@ foreach ($scenarios as $scenario) {
             events: $events,
             resource: fn () => ['url' => 'https://device.test/reading'],
             ledger: $ledger,
-            lookup: null === $stepLookup ? null : fn () => $stepLookup,
+            lookup: null === $stepLookup ? null : ('throw' === $stepLookup ? fn () => throw new \RuntimeException('lookup down') : fn () => $stepLookup),
             sensitive: fn () => !$keep,
             ofac: 'sanctioned' === ($scenario['ofac'] ?? null) ? new OfacSdn($sanctioned) : null,
             stop: new Stop($stopFile),
@@ -300,7 +344,7 @@ foreach ($scenarios as $scenario) {
             $response = $mw->process($request, $handler);
             $result = [
                 'status' => $response->getStatusCode(),
-                'body' => (string) $response->getBody(),
+                'body' => \strlen($b = (string) $response->getBody()) > 4096 ? ['sha256' => hash('sha256', $b), 'length' => \strlen($b)] : $b,
                 'payment_required' => '' === $response->getHeaderLine('PAYMENT-REQUIRED') ? null : PaymentHeaders::decode($response->getHeaderLine('PAYMENT-REQUIRED')),
                 'payment_response' => '' === $response->getHeaderLine('PAYMENT-RESPONSE') ? null : PaymentHeaders::decode($response->getHeaderLine('PAYMENT-RESPONSE')),
                 'retry_after' => '' === $response->getHeaderLine('Retry-After') ? null : $response->getHeaderLine('Retry-After'),
@@ -332,7 +376,7 @@ foreach ($scenarios as $scenario) {
         ];
     }
     @unlink($stopFile);
-    $cases[] = ['name' => $scenario['name'], 'now' => NOW, 'offers' => $offers, 'resource' => ['url' => 'https://device.test/reading'], 'ofac' => $scenario['ofac'] ?? null, 'sanctioned' => 'sanctioned' === ($scenario['ofac'] ?? null) ? [$buyer->address()] : [], 'deny' => $scenario['deny'] ?? null, 'preset' => array_map(fn ($s) => ['slot' => \Quebracho\X402\Settlement::key($pay($req, $nonce(30))), 'status' => $s], $scenario['preset'] ?? []), 'steps' => $steps];
+    $cases[] = ['name' => $scenario['name'], 'now' => NOW, 'offers' => $offers, 'resource' => ['url' => 'https://device.test/reading'], 'ofac' => $scenario['ofac'] ?? null, 'sanctioned' => 'sanctioned' === ($scenario['ofac'] ?? null) ? [$buyer->address()] : [], 'deny' => $scenario['deny'] ?? null, 'preset' => $presets, 'steps' => $steps];
 }
 @unlink($sanctioned);
 @rmdir(dirname($stopFile));

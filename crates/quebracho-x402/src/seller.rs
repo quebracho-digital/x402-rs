@@ -771,3 +771,214 @@ fn capture(response: &Response) -> Option<Value> {
         json!({ "status": response.status, "headers": headers, "body": headers::base64(&response.body) }),
     )
 }
+
+#[cfg(test)]
+mod tests {
+    //! What PHP's scenarios cannot reach: races between two ledger reads, and the guards that keep a sale
+    //! from releasing what it does not hold.
+
+    use super::*;
+    use crate::ports::{FacilitatorError, LedgerUnavailable};
+    use crate::screening::Ofac;
+    use alloc::collections::BTreeMap;
+    use alloc::rc::Rc;
+    use core::cell::RefCell;
+
+    /// A ledger whose `get` answers from a script, one answer per call, then from its own states.
+    #[derive(Default)]
+    struct Racy {
+        gets: RefCell<Vec<Option<Value>>>,
+        states: RefCell<BTreeMap<String, Value>>,
+        releases: RefCell<Vec<String>>,
+    }
+    impl Ledger for Racy {
+        fn claim(&self, k: &str, _t: u64) -> Result<bool, LedgerUnavailable> {
+            let mut s = self.states.borrow_mut();
+            if s.contains_key(k) {
+                return Ok(false);
+            }
+            s.insert(k.into(), json!({ "status": "claimed" }));
+            Ok(true)
+        }
+        fn get(&self, k: &str) -> Result<Option<Value>, LedgerUnavailable> {
+            let mut g = self.gets.borrow_mut();
+            if !g.is_empty() {
+                return Ok(g.remove(0));
+            }
+            Ok(self.states.borrow().get(k).cloned())
+        }
+        fn put(&self, k: &str, s: &Value, _t: u64) -> Result<(), LedgerUnavailable> {
+            self.states.borrow_mut().insert(k.into(), s.clone());
+            Ok(())
+        }
+        fn release(&self, k: &str) -> Result<(), LedgerUnavailable> {
+            self.releases.borrow_mut().push(k.into());
+            self.states.borrow_mut().remove(k);
+            Ok(())
+        }
+        fn open(&self, _k: &str, _r: &Value, _t: u64) -> Result<(), LedgerUnavailable> {
+            Ok(())
+        }
+        fn open_keys(&self, _l: usize) -> Result<Vec<(String, Value)>, LedgerUnavailable> {
+            Ok(Vec::new())
+        }
+        fn close(&self, _k: &str) -> Result<(), LedgerUnavailable> {
+            Ok(())
+        }
+    }
+
+    struct Ok200;
+    impl Facilitator for Ok200 {
+        fn verify(&self, _p: &Value, _r: &Value) -> Result<Value, FacilitatorError> {
+            Ok(json!({ "isValid": true }))
+        }
+        fn settle(&self, p: &Value, r: &Value) -> Result<Value, FacilitatorError> {
+            Ok(
+                json!({ "success": true, "transaction": alloc::format!("0x{}", "ab".repeat(32)), "network": r["network"], "payer": p["payload"]["authorization"]["from"] }),
+            )
+        }
+    }
+    struct At(u64);
+    impl Clock for At {
+        fn now(&self) -> u64 {
+            self.0
+        }
+    }
+
+    /// The upfront payment of the PHP scenarios (nonce 30), its offer and its ledger key.
+    fn upfront() -> (Value, Value, String) {
+        let doc: Value =
+            serde_json::from_str(include_str!("../../../conformance/vectors/sale.json")).unwrap();
+        let case = doc["cases"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|c| c["name"] == "upfront retry: run claim not released afterwards")
+            .unwrap();
+        let header = case["steps"][0]["step"]["header"].as_str().unwrap();
+        let payment = headers::decode(header).unwrap();
+        let key = settlement::key(&payment).unwrap();
+        (Value::String(header.into()), case["offers"][0].clone(), key)
+    }
+
+    fn charged_not_run() -> Value {
+        json!({ "status": "settled", "receipt": { "success": true, "transaction": alloc::format!("0x{}", "cd".repeat(32)), "network": "eip155:84532" }, "handler_ran": false })
+    }
+
+    fn run(ledger: &Racy, header: &Value, offer: &Value, runs: &Rc<RefCell<u32>>) -> Response {
+        let ofac = Ofac::off();
+        let seller = Seller {
+            ledger,
+            facilitator: &Ok200,
+            clock: &At(1_800_000_000),
+            ofac: &ofac,
+            listeners: &[],
+            events: None,
+            lookup: None,
+            stop: None,
+        };
+        let offers = [offer.clone()];
+        let runs = runs.clone();
+        seller
+            .process(
+                &Request {
+                    accepts: Some(&offers),
+                    resource: &json!({}),
+                    payment: header.as_str(),
+                    keep: true,
+                },
+                move || {
+                    *runs.borrow_mut() += 1;
+                    Ok(Response::new(200, "energy"))
+                },
+            )
+            .unwrap()
+    }
+
+    /// Charged upfront, but by the second read (under the run claim) the state is gone (expired): the
+    /// payment is admitted as new, and the run claim is let go.
+    #[test]
+    fn the_state_vanishes_between_the_two_reads() {
+        let (header, offer, key) = upfront();
+        let ledger = Racy::default();
+        *ledger.gets.borrow_mut() = alloc::vec![Some(charged_not_run()), None];
+        let runs = Rc::new(RefCell::new(0));
+        let r = run(&ledger, &header, &offer, &runs);
+        assert_eq!(r.status, 200);
+        assert_eq!(*runs.borrow(), 1);
+        assert!(
+            ledger
+                .releases
+                .borrow()
+                .contains(&alloc::format!("{RUN}{key}")),
+            "run claim released"
+        );
+    }
+
+    /// By the second read another retry already delivered: replayed, the handler does not run again.
+    #[test]
+    fn another_retry_delivered_in_between() {
+        let (header, offer, key) = upfront();
+        let ledger = Racy::default();
+        let mut delivered = charged_not_run();
+        delivered["status"] = json!("delivered");
+        delivered["response"] =
+            json!({ "status": 200, "headers": {}, "body": headers::base64(b"kept") });
+        *ledger.gets.borrow_mut() = alloc::vec![Some(charged_not_run()), Some(delivered)];
+        let runs = Rc::new(RefCell::new(0));
+        let r = run(&ledger, &header, &offer, &runs);
+        assert_eq!((r.status, r.body.as_slice()), (200, b"kept".as_slice()));
+        assert_eq!(*runs.borrow(), 0);
+        assert!(
+            ledger
+                .releases
+                .borrow()
+                .contains(&alloc::format!("{RUN}{key}"))
+        );
+    }
+
+    /// A sale releases only what it holds: no run claim, no payment claim.
+    #[test]
+    fn a_sale_releases_only_what_it_holds() {
+        let (header, offer, _) = upfront();
+        let ledger = Racy::default();
+        let ofac = Ofac::off();
+        let seller = Seller {
+            ledger: &ledger,
+            facilitator: &Ok200,
+            clock: &At(1_800_000_000),
+            ofac: &ofac,
+            listeners: &[],
+            events: None,
+            lookup: None,
+            stop: None,
+        };
+        let payment = headers::decode(header.as_str().unwrap()).unwrap();
+        let sale = Sale::new(&seller, &payment, &offer);
+        sale.end_run();
+        sale.free();
+        sale.abandon(None);
+        assert!(ledger.releases.borrow().is_empty());
+    }
+
+    /// An offer on a chain family this seller does not verify (PHP throws a LogicException, a 500).
+    #[test]
+    fn an_offer_no_scheme_verifies_is_refused() {
+        let (header, mut offer, _) = upfront();
+        offer["network"] = json!("solana:devnet");
+        let ledger = Racy::default();
+        let header_value = {
+            let mut p = headers::decode(header.as_str().unwrap()).unwrap();
+            p["accepted"]["network"] = json!("solana:devnet");
+            Value::String(headers::encode(&p))
+        };
+        let runs = Rc::new(RefCell::new(0));
+        let r = run(&ledger, &header_value, &offer, &runs);
+        assert_eq!(r.status, 402);
+        assert_eq!(
+            serde_json::from_slice::<Value>(&r.body).unwrap()["error"],
+            "unsupported_scheme"
+        );
+        assert_eq!(*runs.borrow(), 0);
+    }
+}
