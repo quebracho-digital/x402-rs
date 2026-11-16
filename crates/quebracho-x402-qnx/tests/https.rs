@@ -316,3 +316,19 @@ fn an_answer_over_the_cap_is_refused() {
     assert!(r.is_err());
     let _ = HttpsClient::default();
 }
+
+/// A server that closes cleanly before its head is complete gave no answer.
+#[test]
+fn a_clean_close_before_the_head_ends_is_no_answer() {
+    let Some((cert, key)) = certificate("halfhead") else {
+        return;
+    };
+    let port = serve_and_close(&cert, &key, b"HTTP/1.1 200 OK\r\nConte", true);
+    let r = trusting(&cert).send(&HttpsRequest {
+        method: "GET",
+        url: format!("https://127.0.0.1:{port}/"),
+        headers: vec![],
+        body: vec![],
+    });
+    assert!(r.is_err());
+}
