@@ -790,9 +790,11 @@ mod tests {
         gets: RefCell<Vec<Option<Value>>>,
         states: RefCell<BTreeMap<String, Value>>,
         releases: RefCell<Vec<String>>,
+        ttls: RefCell<Vec<u64>>,
     }
     impl Ledger for Racy {
-        fn claim(&self, k: &str, _t: u64) -> Result<bool, LedgerUnavailable> {
+        fn claim(&self, k: &str, t: u64) -> Result<bool, LedgerUnavailable> {
+            self.ttls.borrow_mut().push(t);
             let mut s = self.states.borrow_mut();
             if s.contains_key(k) {
                 return Ok(false);
@@ -980,5 +982,50 @@ mod tests {
             "unsupported_scheme"
         );
         assert_eq!(*runs.borrow(), 0);
+    }
+
+    struct Keys(RefCell<Vec<Option<String>>>);
+    impl Events for Keys {
+        fn report(&self, e: &Event<'_>) {
+            if let Event::Outcome { key, .. } = e {
+                self.0.borrow_mut().push(key.map(String::from));
+            }
+        }
+    }
+
+    /// The claim lives until the payment expires (validBefore - now, under the 600 s cap), and
+    /// every outcome names the payment's key.
+    #[test]
+    fn claims_live_until_expiry_and_outcomes_name_the_key() {
+        let (header, offer, key) = upfront();
+        let ledger = Racy::default();
+        let keys = Keys(RefCell::default());
+        let ofac = Ofac::off();
+        let seller = Seller {
+            ledger: &ledger,
+            facilitator: &Ok200,
+            clock: &At(1_800_000_000),
+            ofac: &ofac,
+            listeners: &[],
+            events: Some(&keys),
+            lookup: None,
+            stop: None,
+        };
+        let offers = [offer];
+        let r = seller
+            .process(
+                &Request {
+                    accepts: Some(&offers),
+                    resource: &json!({}),
+                    payment: header.as_str(),
+                    keep: true,
+                },
+                || Ok(Response::new(200, "x")),
+            )
+            .unwrap();
+        assert_eq!(r.status, 200);
+        // The PHP vector's offer gives 60 s (validBefore = now + 60), under the 600 s cap.
+        assert_eq!(ledger.ttls.borrow()[0], 60);
+        assert_eq!(*keys.0.borrow(), alloc::vec![Some(key)]);
     }
 }

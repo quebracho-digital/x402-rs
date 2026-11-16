@@ -148,3 +148,36 @@ fn absurd_years_are_not_dates() {
         Some("2026-11-13T16:33:06Z")
     );
 }
+
+/// Calendar edges the property tests are unlikely to hit (found by cargo-mutants).
+#[test]
+fn calendar_edges() {
+    assert!(
+        dates::parse_iso("2000-02-29").is_some(),
+        "divisible by 400: leap"
+    );
+    assert_eq!(
+        dates::parse_iso("1900-02-29"),
+        None,
+        "divisible by 100: not leap"
+    );
+    assert_eq!(dates::parse_iso("2100-02-29"), None);
+    assert!(dates::parse_iso("2024-02-29").is_some());
+    assert_eq!(dates::parse_iso("2026-04-31"), None, "April has 30 days");
+    assert_eq!(dates::parse_iso("2026-06-31"), None);
+    assert!(dates::parse_iso("2026-07-31").is_some());
+    assert_eq!(
+        dates::parse_iso("+026-11-06"),
+        None,
+        "a sign is not a digit"
+    );
+    assert_eq!(
+        dates::parse_iso("2026x11-06"),
+        None,
+        "one bad separator is enough"
+    );
+    assert_eq!(dates::parse_iso("2026-11x06"), None);
+    // The last day of a 400-year era.
+    assert_eq!(dates::iso(951_782_400), "2000-02-29T00:00:00Z");
+    assert_eq!(dates::iso(-1), "1969-12-31T23:59:59Z");
+}

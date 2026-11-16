@@ -67,7 +67,7 @@
                     "settle_calls": 0,
                     "outcomes": [],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -117,7 +117,7 @@
                     "settle_calls": 0,
                     "outcomes": [],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -187,7 +187,7 @@
                     "settle_calls": 0,
                     "outcomes": [],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -254,7 +254,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -289,7 +289,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -356,7 +356,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -402,7 +402,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -477,7 +477,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -532,7 +532,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -572,7 +572,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -622,7 +622,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -662,7 +662,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -738,7 +738,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -778,7 +778,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -834,7 +834,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -910,7 +910,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -994,7 +994,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -1034,7 +1034,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -1126,9 +1126,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "fb9fbf9d7318c93ee0c5f5163db3bf83e4e5ad5c44490114695987d3ef737653"
-                    ]
+                    "open": {
+                        "fb9fbf9d7318c93ee0c5f5163db3bf83e4e5ad5c44490114695987d3ef737653": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x000000000000000000000000000000000000000000000000000000000000000c",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -1158,9 +1170,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "fb9fbf9d7318c93ee0c5f5163db3bf83e4e5ad5c44490114695987d3ef737653"
-                    ]
+                    "open": {
+                        "fb9fbf9d7318c93ee0c5f5163db3bf83e4e5ad5c44490114695987d3ef737653": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x000000000000000000000000000000000000000000000000000000000000000c",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 }
             ]
         },
@@ -1252,9 +1276,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "74408de8740798cff9c804773c894728093c88fa74c7f9f12561372b5ca5e709"
-                    ]
+                    "open": {
+                        "74408de8740798cff9c804773c894728093c88fa74c7f9f12561372b5ca5e709": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x000000000000000000000000000000000000000000000000000000000000000d",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -1292,7 +1328,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -1384,9 +1420,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "af883337e170f2e6ea3c28eb9cd730bf2a695035bc871ef07d635bddac20d6b1"
-                    ]
+                    "open": {
+                        "af883337e170f2e6ea3c28eb9cd730bf2a695035bc871ef07d635bddac20d6b1": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x000000000000000000000000000000000000000000000000000000000000000e",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -1428,7 +1476,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -1520,9 +1568,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "4a6339149799ab73c90912c44be192679503dc1d8367accdc011cf4ad5e53d47"
-                    ]
+                    "open": {
+                        "4a6339149799ab73c90912c44be192679503dc1d8367accdc011cf4ad5e53d47": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x000000000000000000000000000000000000000000000000000000000000000f",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -1556,9 +1616,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "4a6339149799ab73c90912c44be192679503dc1d8367accdc011cf4ad5e53d47"
-                    ]
+                    "open": {
+                        "4a6339149799ab73c90912c44be192679503dc1d8367accdc011cf4ad5e53d47": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x000000000000000000000000000000000000000000000000000000000000000f",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": "0xcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 }
             ]
         },
@@ -1626,9 +1698,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "b9e898420e64e2385cc9fdf8cdc095b9c41c6f277a225500c31d68ad0f4d4a99"
-                    ]
+                    "open": {
+                        "b9e898420e64e2385cc9fdf8cdc095b9c41c6f277a225500c31d68ad0f4d4a99": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000010",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -1658,9 +1742,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "b9e898420e64e2385cc9fdf8cdc095b9c41c6f277a225500c31d68ad0f4d4a99"
-                    ]
+                    "open": {
+                        "b9e898420e64e2385cc9fdf8cdc095b9c41c6f277a225500c31d68ad0f4d4a99": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000010",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 }
             ]
         },
@@ -1748,9 +1844,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "7b8b5d0c7f1a8d541e07da6dbeb3ff5ca72141cf56735eb5526378fa71d95e19"
-                    ]
+                    "open": {
+                        "7b8b5d0c7f1a8d541e07da6dbeb3ff5ca72141cf56735eb5526378fa71d95e19": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000011",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -1780,9 +1888,21 @@
                             "receipt_success": false
                         }
                     },
-                    "open": [
-                        "7b8b5d0c7f1a8d541e07da6dbeb3ff5ca72141cf56735eb5526378fa71d95e19"
-                    ]
+                    "open": {
+                        "7b8b5d0c7f1a8d541e07da6dbeb3ff5ca72141cf56735eb5526378fa71d95e19": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000011",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "pending",
+                            "upfront": false
+                        }
+                    }
                 }
             ]
         },
@@ -1847,7 +1967,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -1887,7 +2007,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -1942,7 +2062,7 @@
                     "settle_calls": 0,
                     "outcomes": [],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2019,9 +2139,21 @@
                             "receipt_success": null
                         }
                     },
-                    "open": [
-                        "c9dda370b0cdc07db6e3c6301d5540a3ae7295b5be297c194300e9075590e324"
-                    ]
+                    "open": {
+                        "c9dda370b0cdc07db6e3c6301d5540a3ae7295b5be297c194300e9075590e324": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000014",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "settling",
+                            "upfront": false
+                        }
+                    }
                 },
                 {
                     "step": {
@@ -2051,9 +2183,21 @@
                             "receipt_success": null
                         }
                     },
-                    "open": [
-                        "c9dda370b0cdc07db6e3c6301d5540a3ae7295b5be297c194300e9075590e324"
-                    ]
+                    "open": {
+                        "c9dda370b0cdc07db6e3c6301d5540a3ae7295b5be297c194300e9075590e324": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000014",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "settling",
+                            "upfront": false
+                        }
+                    }
                 }
             ]
         },
@@ -2121,7 +2265,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2151,7 +2295,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2202,7 +2346,7 @@
                     "settle_calls": 0,
                     "outcomes": [],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2225,7 +2369,7 @@
                     "settle_calls": 0,
                     "outcomes": [],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2292,7 +2436,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2328,7 +2472,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2405,7 +2549,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2480,7 +2624,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2548,7 +2692,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2583,7 +2727,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2669,7 +2813,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2741,7 +2885,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2776,7 +2920,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2811,7 +2955,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2893,7 +3037,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -2928,7 +3072,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -2992,7 +3136,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3056,7 +3200,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3120,7 +3264,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3186,7 +3330,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -3226,7 +3370,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3283,7 +3427,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3339,7 +3483,7 @@
                         }
                     ],
                     "ledger": {},
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3401,7 +3545,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -3436,7 +3580,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3519,7 +3663,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3596,7 +3740,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3687,7 +3831,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3759,7 +3903,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3836,7 +3980,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3916,7 +4060,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -3980,7 +4124,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4062,7 +4206,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4135,7 +4279,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4207,7 +4351,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4279,7 +4423,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4352,7 +4496,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4425,7 +4569,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4501,9 +4645,21 @@
                             "receipt_success": true
                         }
                     },
-                    "open": [
-                        "7c08d05f69bc419289812e6847271e8e4cf5eade4d3bf500335b643ba0509c8e"
-                    ]
+                    "open": {
+                        "7c08d05f69bc419289812e6847271e8e4cf5eade4d3bf500335b643ba0509c8e": {
+                            "network": "eip155:84532",
+                            "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                            "from": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23",
+                            "nonce": "0x0000000000000000000000000000000000000000000000000000000000000024",
+                            "payTo": "0x000000000000000000000000000000000000dEaD",
+                            "amount": "10000",
+                            "validBefore": 1800000060,
+                            "transaction": null,
+                            "paymentId": null,
+                            "status": "settling",
+                            "upfront": false
+                        }
+                    }
                 }
             ]
         },
@@ -4574,7 +4730,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -4604,7 +4760,7 @@
                             "receipt_success": null
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4674,7 +4830,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -4704,7 +4860,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         },
@@ -4777,7 +4933,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 },
                 {
                     "step": {
@@ -4812,7 +4968,278 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
+                }
+            ]
+        },
+        {
+            "name": "upfront and sensitive: delivered, the retry gets already_settled",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2",
+                        "paymentFlow": "upfront"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4YzAzMGU3YWMxNjIyM2U3MWNmMmM1ZTQ3OTE2MDRmZWNjNTA5MmUyZjUzZTE4NTgzYzAxOWZkNzdlMmE5NGRlODM3YTQ4OGRhYWIxNzEyZTM5ZmE5ZWM3MDliZWNlMTFhMzU1MzEzODE1ZTQ2ZTVmZjc2NTQ3Nzg2ZDI4ZWU3ZGUxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjgifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "keep": false,
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": "{\"reading\":21.5}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "f6e5a24caae6f9e418a684125bbed109bccb91ef2769bca2e2d348e74bb06f9e": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": {}
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiIsInBheW1lbnRGbG93IjoidXBmcm9udCJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4YzAzMGU3YWMxNjIyM2U3MWNmMmM1ZTQ3OTE2MDRmZWNjNTA5MmUyZjUzZTE4NTgzYzAxOWZkNzdlMmE5NGRlODM3YTQ4OGRhYWIxNzEyZTM5ZmE5ZWM3MDliZWNlMTFhMzU1MzEzODE1ZTQ2ZTVmZjc2NTQ3Nzg2ZDI4ZWU3ZGUxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjgifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 409,
+                        "body": "{\"error\":\"already_settled\"}",
+                        "payment_required": null,
+                        "payment_response": null,
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "f6e5a24caae6f9e418a684125bbed109bccb91ef2769bca2e2d348e74bb06f9e": {
+                            "status": "settled",
+                            "response": false,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": {}
+                }
+            ]
+        },
+        {
+            "name": "the facilitator could not store its reference: 503",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4MmVlMTZlMDUwYzc0MTAwZTk0NDI0NmI4NWU2NWM4YmQ1NzU2MDk2OTBhMDI4Y2JiM2Y3MGExOGM4NmUxNzZmNzI4M2Q2ZTg0NzA4N2JkNjNlOWRiNWU1ZGZhZTQ4NDhkNGMzZDQxYWJiYjE5ZjE3N2M4YjlkMjMzYmZiMDQ5OTgxYyIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMjkifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "settle": {
+                            "success": false,
+                            "errorReason": "reference_unavailable"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 503,
+                        "body": "{\"error\":\"ledger_unavailable\"}",
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": false,
+                            "errorReason": "reference_unavailable",
+                            "transaction": "",
+                            "network": "eip155:84532"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "not_settled",
+                            "reason": "reference_unavailable"
+                        }
+                    ],
+                    "ledger": {},
+                    "open": {}
+                }
+            ]
+        },
+        {
+            "name": "a body of exactly 1 MiB is kept",
+            "now": 1800000000,
+            "offers": [
+                {
+                    "scheme": "exact",
+                    "network": "eip155:84532",
+                    "amount": "10000",
+                    "asset": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+                    "payTo": "0x000000000000000000000000000000000000dEaD",
+                    "maxTimeoutSeconds": 60,
+                    "extra": {
+                        "name": "USDC",
+                        "version": "2"
+                    }
+                }
+            ],
+            "resource": {
+                "url": "https://device.test/reading"
+            },
+            "ofac": null,
+            "sanctioned": [],
+            "deny": null,
+            "preset": [],
+            "steps": [
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4OTkzOTM5ZWI1NjZiNWRlNmNjMWM3YjA5YzM0NDYwNDI5Y2ViOWZhNDRhZmExMGM0YTcyMTljNjNjODQyNjFiZjQ2Zjk5MDhhOGUwNDIxNjAzZDBkNjZjNWYzYzM0OTlmYTIzYTMzMWQ3M2M1NGNkZjBiZTI0MDE2Y2RkYmJkN2MxYiIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMmEifX19",
+                        "handler": {
+                            "status": 200,
+                            "big": "exact"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": {
+                            "sha256": "8f990ba0b577b51cf009ea049368c16bbda1b21e1b93be07a824758bb253c39b",
+                            "length": 1048576
+                        },
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 1,
+                    "verify_calls": 1,
+                    "settle_calls": 1,
+                    "outcomes": [
+                        {
+                            "status": "settled",
+                            "reason": null
+                        }
+                    ],
+                    "ledger": {
+                        "e2f4e7da94c1e4506773f4f33e229b08523a985afd29e4759f4b074ed1edc155": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": {}
+                },
+                {
+                    "step": {
+                        "header": "eyJ4NDAyVmVyc2lvbiI6MiwicmVzb3VyY2UiOnsidXJsIjoiaHR0cHM6Ly9kZXZpY2UudGVzdC9yZWFkaW5nIn0sImFjY2VwdGVkIjp7ImV4dHJhIjp7ImFzc2V0VHJhbnNmZXJNZXRob2QiOiJlaXAzMDA5IiwibmFtZSI6IlVTREMiLCJ2ZXJzaW9uIjoiMiJ9LCJzY2hlbWUiOiJleGFjdCIsIm5ldHdvcmsiOiJlaXAxNTU6ODQ1MzIiLCJhbW91bnQiOiIxMDAwMCIsImFzc2V0IjoiMHgwMzZDYkQ1Mzg0MmM1NDI2NjM0ZTc5Mjk1NDFlQzIzMThmM2RDRjdlIiwicGF5VG8iOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMGRFYUQiLCJtYXhUaW1lb3V0U2Vjb25kcyI6NjB9LCJwYXlsb2FkIjp7InNpZ25hdHVyZSI6IjB4OTkzOTM5ZWI1NjZiNWRlNmNjMWM3YjA5YzM0NDYwNDI5Y2ViOWZhNDRhZmExMGM0YTcyMTljNjNjODQyNjFiZjQ2Zjk5MDhhOGUwNDIxNjAzZDBkNjZjNWYzYzM0OTlmYTIzYTMzMWQ3M2M1NGNkZjBiZTI0MDE2Y2RkYmJkN2MxYiIsImF1dGhvcml6YXRpb24iOnsiZnJvbSI6IjB4MmM3NTM2RTM2MDVEOUMxNmE3YTNEN2IxODk4ZTUyOTM5NmE2NWMyMyIsInRvIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDBkRWFEIiwidmFsdWUiOiIxMDAwMCIsInZhbGlkQWZ0ZXIiOiIwIiwidmFsaWRCZWZvcmUiOiIxODAwMDAwMDYwIiwibm9uY2UiOiIweDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMmEifX19",
+                        "handler": {
+                            "status": 200,
+                            "body": "{\"reading\":21.5}"
+                        },
+                        "lookup": null
+                    },
+                    "result": {
+                        "status": 200,
+                        "body": {
+                            "sha256": "8f990ba0b577b51cf009ea049368c16bbda1b21e1b93be07a824758bb253c39b",
+                            "length": 1048576
+                        },
+                        "payment_required": null,
+                        "payment_response": {
+                            "success": true,
+                            "transaction": "0xabababababababababababababababababababababababababababababababab",
+                            "network": "eip155:84532",
+                            "payer": "0x2c7536E3605D9C16a7a3D7b1898e529396a65c23"
+                        },
+                        "retry_after": null
+                    },
+                    "handler_calls": 0,
+                    "verify_calls": 0,
+                    "settle_calls": 0,
+                    "outcomes": [],
+                    "ledger": {
+                        "e2f4e7da94c1e4506773f4f33e229b08523a985afd29e4759f4b074ed1edc155": {
+                            "status": "delivered",
+                            "response": true,
+                            "handler_ran": null,
+                            "receipt_success": true
+                        }
+                    },
+                    "open": {}
                 }
             ]
         },
@@ -4891,7 +5318,7 @@
                             "receipt_success": true
                         }
                     },
-                    "open": []
+                    "open": {}
                 }
             ]
         }

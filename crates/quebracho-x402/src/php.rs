@@ -151,7 +151,8 @@ fn php_string_int(s: &str) -> i64 {
         }
     }
     let mantissa_end = i;
-    if mantissa_end == int_start || (int_digits == 0 && !float) {
+    // No digit before or after a point: not a number (a lone sign, ".", "-.", "abc").
+    if mantissa_end == int_start {
         return 0;
     }
     if matches!(b.get(i), Some(b'e' | b'E')) {
@@ -263,6 +264,14 @@ mod tests {
             assert_eq!(php_int(Some(&json!(f))), want, "{f}");
         }
         for (s, want) in [
+            ("5.e3", 5000),
+            ("-.5e1", -5),
+            (".5e1", 5),
+            (".e3", 0),
+            ("5.5e3", 5500),
+            ("-.", 0),
+            (".", 0),
+            ("+5", 5),
             ("1e+3", 1000),
             ("1E3", 1000),
             ("5e", 5),

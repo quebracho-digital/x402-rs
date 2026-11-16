@@ -225,6 +225,12 @@ foreach (['"300"' => '300', '"300abc"' => '300abc', '" 300"' => ' 300', '"1e3"' 
 }
 $add('offer network not EVM spelling', $patch(['accepted' => ['network' => 'eip155:084532']]), ['network' => 'eip155:084532'] + $req);
 $add('echoed asset as a number', $patch(['accepted' => ['asset' => 123]]));
+$acceptedString = $base;
+$acceptedString['accepted'] = 'exact';
+$add('accepted is a string', $acceptedString);
+$authString = $base;
+$authString['payload']['authorization'] = 'x';
+$add('authorization is a string', $authString);
 $add('offer asset as a number', $base, ['asset' => 123] + $req);
 $add('offer payTo as an array', $base, ['payTo' => ['x']] + $req);
 $add('offer amount false', $base, ['amount' => false] + $req);

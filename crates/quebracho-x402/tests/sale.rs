@@ -280,8 +280,8 @@ fn sale_scenarios_match_php() {
                 if script.get("throw").is_some() {
                     return Err(HandlerFailed);
                 }
-                let content = if script.get("big").is_some() {
-                    vec![b'x'; 1_048_577]
+                let content = if let Some(big) = script.get("big") {
+                    vec![b'x'; if big == "exact" { 1_048_576 } else { 1_048_577 }]
                 } else {
                     script["body"].as_str().unwrap().as_bytes().to_vec()
                 };
@@ -380,8 +380,14 @@ fn sale_scenarios_match_php() {
                 })
                 .collect();
             assert_eq!(Value::Object(view), expected["ledger"], "{at}: ledger");
-            let open: Vec<Value> = ledger.open.borrow().keys().map(|k| json!(k)).collect();
-            assert_eq!(Value::Array(open), expected["open"], "{at}: open entries");
+            // The open entries with their references: what a reconciler reads.
+            let open: serde_json::Map<String, Value> = ledger
+                .open
+                .borrow()
+                .iter()
+                .map(|(k, r)| (k.clone(), r.clone()))
+                .collect();
+            assert_eq!(Value::Object(open), expected["open"], "{at}: open entries");
         }
         scenarios += 1;
     }

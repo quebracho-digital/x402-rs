@@ -246,6 +246,9 @@ $scenarios = [
     ['name' => 'handler fails and the claim cannot be freed: reported, kept', 'steps' => [$valid(37) + ['handler' => ['status' => 500, 'body' => 'boom'], 'fail' => [['op' => 'release']]], $valid(37) + ['handler' => $ok]]],
     ['name' => 'a body over 1 MiB is delivered but not kept', 'steps' => [$valid(38) + ['handler' => ['status' => 200, 'big' => true]], $valid(38) + ['handler' => $ok]]],
     ['name' => 'a repeated header is kept joined', 'steps' => [$valid(39) + ['handler' => $ok + ['headers' => ['X-Tag' => ['a', 'b']]]], $valid(39) + ['handler' => $ok]]],
+    ['name' => 'upfront and sensitive: delivered, the retry gets already_settled', 'offers' => [$upfrontReq], 'steps' => [$valid(40, $upfrontReq) + ['handler' => $ok, 'keep' => false], $valid(40, $upfrontReq) + ['handler' => $ok]]],
+    ['name' => 'the facilitator could not store its reference: 503', 'steps' => [$valid(41) + ['handler' => $ok, 'settle' => ['success' => false, 'errorReason' => 'reference_unavailable']]]],
+    ['name' => 'a body of exactly 1 MiB is kept', 'steps' => [$valid(42) + ['handler' => ['status' => 200, 'big' => 'exact']], $valid(42) + ['handler' => $ok]]],
     ['name' => 'two offers on one network: picked by asset', 'offers' => [['asset' => '0x1111111111111111111111111111111111111111'] + $req, $req], 'steps' => [$valid(31) + ['handler' => $ok]]],
 ];
 
@@ -266,7 +269,11 @@ final class ScriptedHandler implements RequestHandlerInterface
         if ($this->script['throw'] ?? false) {
             throw new \RuntimeException('scripted handler failure');
         }
-        $body = ($this->script['big'] ?? false) ? str_repeat('x', 1048577) : $this->script['body'];
+        $body = match ($this->script['big'] ?? false) {
+            'exact' => str_repeat('x', 1048576),
+            true => str_repeat('x', 1048577),
+            default => $this->script['body'],
+        };
 
         return new Response($this->script['status'], ['Content-Type' => 'application/json'] + ($this->script['headers'] ?? []), $body);
     }
@@ -362,8 +369,13 @@ foreach ($scenarios as $scenario) {
             ];
         }
         ksort($ledgerView);
-        $open = array_keys($ledger->open);
-        sort($open);
+        // What a reconciler would read, without the open time (wall clock).
+        $open = [];
+        foreach ($ledger->open as $k => $ref) {
+            $open[$k] = $ref;
+        }
+        ksort($open);
+        $open = (object) $open;
         $steps[] = [
             'step' => $step + ['lookup' => $stepLookup],
             'result' => $result,
