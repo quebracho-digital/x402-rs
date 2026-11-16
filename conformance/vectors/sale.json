@@ -2957,7 +2957,7 @@
             "deny": null,
             "preset": [
                 {
-                    "key": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
                     "status": "claimed"
                 }
             ],
@@ -3019,7 +3019,7 @@
             "deny": null,
             "preset": [
                 {
-                    "key": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
                     "status": "settling"
                 }
             ],
@@ -3081,7 +3081,7 @@
             "deny": null,
             "preset": [
                 {
-                    "key": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
+                    "slot": "b7f6529cffe79c29394f528697f0212352e81d5b71f17dd97c8af94d8a595d21",
                     "status": "handling"
                 }
             ],

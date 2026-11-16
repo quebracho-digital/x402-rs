@@ -83,7 +83,7 @@ fn field_spellings_match_php() {
 fn addresses_and_checksums_match_php() {
     let doc = &cases(include_str!("../../../conformance/vectors/signer.json"))[0];
     for c in doc["keys"].as_array().unwrap() {
-        let key = SigningKey::from_slice(&hex_bytes(c["private_key"].as_str().unwrap())).unwrap();
+        let key = SigningKey::from_slice(&hex_bytes(c["test_signer"].as_str().unwrap())).unwrap();
         assert_eq!(
             signer::checksum(&signer::address_of(key.verifying_key())),
             c["address"]

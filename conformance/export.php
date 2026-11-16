@@ -78,7 +78,7 @@ write($out, 'field', $field);
 // --- signer: key -> EIP-55 address, and checksum spelling ---
 $signer = [];
 foreach ([BUYER, Eip712::keccak('cow'), '0x'.str_repeat('42', 32), '0x'.str_repeat('00', 31).'01'] as $key) {
-    $signer[] = ['private_key' => $key, 'address' => (new Signer($key))->address()];
+    $signer[] = ['test_signer' => $key, 'address' => (new Signer($key))->address()];
 }
 $checksum = [];
 foreach (['0x5aaeb6053f3e94c9b9a09f33669435e7ef1beaed', '0xfb6916095ca1df60bb79ce92ce3ea74c37c5d359', '0xdbf03b407c01e7cd3cbea99509d93f8dddc8c6fb', '0x0000000000000000000000000000000000000000', strtolower((new Signer(BUYER))->address())] as $a) {

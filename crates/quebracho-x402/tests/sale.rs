@@ -189,7 +189,7 @@ fn sale_scenarios_match_php() {
         let ledger = ScriptedLedger::default();
         for p in case["preset"].as_array().unwrap() {
             ledger.states.borrow_mut().insert(
-                p["key"].as_str().unwrap().into(),
+                p["slot"].as_str().unwrap().into(),
                 json!({ "status": p["status"] }),
             );
         }

@@ -332,7 +332,7 @@ foreach ($scenarios as $scenario) {
         ];
     }
     @unlink($stopFile);
-    $cases[] = ['name' => $scenario['name'], 'now' => NOW, 'offers' => $offers, 'resource' => ['url' => 'https://device.test/reading'], 'ofac' => $scenario['ofac'] ?? null, 'sanctioned' => 'sanctioned' === ($scenario['ofac'] ?? null) ? [$buyer->address()] : [], 'deny' => $scenario['deny'] ?? null, 'preset' => array_map(fn ($s) => ['key' => \Quebracho\X402\Settlement::key($pay($req, $nonce(30))), 'status' => $s], $scenario['preset'] ?? []), 'steps' => $steps];
+    $cases[] = ['name' => $scenario['name'], 'now' => NOW, 'offers' => $offers, 'resource' => ['url' => 'https://device.test/reading'], 'ofac' => $scenario['ofac'] ?? null, 'sanctioned' => 'sanctioned' === ($scenario['ofac'] ?? null) ? [$buyer->address()] : [], 'deny' => $scenario['deny'] ?? null, 'preset' => array_map(fn ($s) => ['slot' => \Quebracho\X402\Settlement::key($pay($req, $nonce(30))), 'status' => $s], $scenario['preset'] ?? []), 'steps' => $steps];
 }
 @unlink($sanctioned);
 @rmdir(dirname($stopFile));
