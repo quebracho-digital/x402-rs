@@ -1,0 +1,27 @@
+# cargo deny check: dependency advisories, licenses, sources. Run in CI.
+
+[graph]
+all-features = true
+
+[advisories]
+# RustSec: any vulnerability or unmaintained/unsound notice fails the build.
+yanked = "deny"
+ignore = [
+    # paste: archived, no fixed version exists. A compile-time proc-macro (no code in the binary), pulled by
+    # rustls-rustcrypto (our pure-Rust TLS provider). Accepted 2026-11-16; revisit when the provider changes.
+    { id = "RUSTSEC-2024-0436", reason = "unmaintained compile-time macro via rustls-rustcrypto; no fix exists" },
+]
+
+[licenses]
+# Permissive licenses only (the crates are MIT). CDLA-Permissive-2.0 is the Mozilla root list (webpki-roots).
+allow = ["MIT", "Apache-2.0", "ISC", "BSD-3-Clause", "Unicode-3.0", "CDLA-Permissive-2.0"]
+confidence-threshold = 0.9
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"

@@ -11,7 +11,7 @@ use crate::{hex, keccak256};
 
 /// The address of an uncompressed secp256k1 public key (`0x04 ‖ x ‖ y`).
 pub fn address_of(public_key: &VerifyingKey) -> [u8; 20] {
-    let point = public_key.to_encoded_point(false);
+    let point = public_key.to_sec1_point(false);
     let hash = keccak256(&point.as_bytes()[1..]);
     let mut out = [0u8; 20];
     out.copy_from_slice(&hash[12..]);
@@ -30,7 +30,7 @@ pub fn recover(digest: &[u8; 32], signature: &[u8; 65]) -> Option<[u8; 20]> {
     };
     // Rejects r or s equal to zero or not below n.
     let sig = Signature::from_slice(&signature[..64]).ok()?;
-    if sig.normalize_s().is_some() {
+    if sig.normalize_s() != sig {
         return None; // s > n/2
     }
     let key = VerifyingKey::recover_from_prehash(digest, &sig, RecoveryId::from_byte(v)?).ok()?;

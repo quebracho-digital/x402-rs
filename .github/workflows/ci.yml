@@ -24,6 +24,15 @@ jobs:
       # The core and the screening crate must stay no_std.
       - run: cargo build -p quebracho-x402 -p quebracho-x402-screening --target wasm32-unknown-unknown
 
+  dependencies:
+    # RustSec advisories, licenses and sources (deny.toml).
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check advisories licenses sources
+
   conformance:
     # The vectors must be exactly what the pinned PHP library exports.
     runs-on: ubuntu-24.04
