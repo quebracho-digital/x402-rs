@@ -9,7 +9,7 @@ ecrecover), OFAC screening on by default, one signature = one delivery, pay on
 delivery or upfront, a payment ledger in files with replay and crash recovery,
 a stop switch. Every step is checked against vectors and sale scenarios
 exported from the PHP library. Next: the reconciler, the seller's HTTPS server, the OCPP
-gateway, then the buyer and `signerd` (see `planning/todo.txt`).
+gateway, then the buyer and `signerd`.
 
 | Path | What |
 |---|---|
@@ -17,7 +17,7 @@ gateway, then the buyer and `signerd` (see `planning/todo.txt`).
 | `crates/quebracho-x402-ofac` | OFAC's SDN list, shipped |
 | `crates/quebracho-x402-qnx` | Platform adapters (std/POSIX): file ledger, stop switch, clock, HTTPS client (rustls, pure Rust) |
 | `conformance/` | Vectors exported from the PHP library, and the exporter ([README](conformance/README.md)) |
-| `planning/` | Design, threats, crates, OCPP, schedule |
+| `docs/THREATS.md` | The threat model: what is defended, what is still to build |
 
 ```bash
 cargo test

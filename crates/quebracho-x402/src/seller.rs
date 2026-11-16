@@ -1,6 +1,6 @@
 //! Charging for one request: 402 → verify → claim → run → settle (port of `X402Middleware` and `Sale`).
 //!
-//! Transport-agnostic (`planning/DESIGN.md` §10): the caller hands over the `PAYMENT-SIGNATURE` header, the
+//! Transport-agnostic: the caller hands over the `PAYMENT-SIGNATURE` header, the
 //! offers and a handler, and gets back a [`Response`] to write in its own transport. HTTP status codes and
 //! JSON bodies are the PHP middleware's, checked against `conformance/vectors/sale.json`.
 //!
@@ -25,7 +25,7 @@ use crate::settlement::{self, MAX_BODY, MAY_HAVE_MOVED, OPEN_TTL, RUN, UNAVAILAB
 
 /// The reason a paused seller answers with.
 pub const PAUSED: &str = "payments_paused";
-/// Added in the port: no trusted time, no new payment (`THREATS.md` T6).
+/// Added in the port: no trusted time, no new payment (threat T6, `docs/THREATS.md`).
 pub const CLOCK_UNRELIABLE: &str = "clock_unreliable";
 
 /// What goes back to the transport.

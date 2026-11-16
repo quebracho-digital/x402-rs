@@ -1,6 +1,6 @@
 //! Wall time for the core's [`Clock`] port.
 //!
-//! Fail closed (`THREATS.md` T6): a clock that reads before `trusted_after` (for example the build date,
+//! Fail closed (threat T6 in `docs/THREATS.md`): a clock that reads before `trusted_after` (for example the build date,
 //! or the last time recorded on disk) is not trusted, so a device that booted without RTC or NTP and
 //! thinks it is 1970 admits no payment. Whether time is synchronized (NTP, PTP) is the platform's to say:
 //! pass a check with [`SystemClock::with_check`].

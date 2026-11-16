@@ -10,7 +10,7 @@
 //! - [`evm_exact`]: offline verification of an `exact` EVM payment, with the x402 v2 reason codes (`EvmExact.php`).
 //!
 //! Every behaviour is checked against vectors exported from the PHP library (`conformance/`).
-//! Not here yet: settlement keys, claims, ledger, screening, the sale (see `planning/DESIGN.md`).
+//! Also: [`settlement`], [`headers`], [`screening`], [`ports`], [`seller`] and [`http_facilitator`].
 
 #![no_std]
 

@@ -36,4 +36,3 @@ cargo build -p quebracho-x402 --target wasm32-unknown-unknown  # checks it stays
 ## Not yet
 
 The TLS transport (an adapter), the reconciler, job mode, the buyer and MCP.
-Order and reasons: `planning/DESIGN.md`, `planning/CRATES.md`, `planning/todo.txt`.

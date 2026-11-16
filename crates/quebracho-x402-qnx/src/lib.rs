@@ -2,7 +2,7 @@
 //!
 //! Plain POSIX through `std` (files, `rename`, `fsync`, file locks), so the same code is developed and
 //! tested on Linux and built for QNX 8.0 (`aarch64-unknown-qnx`, `x86_64-pc-qnx`). Whether every call
-//! behaves on QNX is part of the viability test (`planning/PLAN.md` §10), not assumed here.
+//! behaves on QNX is part of the QNX viability test, not assumed here.
 //!
 //! - [`FileLedger`]: the payment ledger in files, the same layout as PHP's `FileLedger`.
 //! - [`StopFile`]: the stop switch.

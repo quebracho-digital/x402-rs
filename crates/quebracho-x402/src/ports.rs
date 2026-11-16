@@ -1,4 +1,4 @@
-//! Ports: everything the core needs from the world enters through these traits (`planning/DESIGN.md` §5).
+//! Ports: everything the core needs from the world enters through these traits.
 //! The core does no I/O. A device wires adapters (files, HTTP, slog2); tests wire scripts.
 //!
 //! States, receipts and references are JSON values with the same fields as in the PHP library, so a
@@ -71,7 +71,7 @@ pub trait Lookup {
     ) -> Result<Option<Value>, LookupFailed>;
 }
 
-/// The time. `reliable` is the fail-closed rule of `THREATS.md` T6 (not in PHP): without a trusted clock no
+/// The time. `reliable` is the fail-closed rule of threat T6 (`docs/THREATS.md`) (not in PHP): without a trusted clock no
 /// new payment is admitted.
 pub trait Clock {
     /// Unix seconds.
