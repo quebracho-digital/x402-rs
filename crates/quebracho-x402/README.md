@@ -43,4 +43,5 @@ cargo build -p quebracho-x402 --target wasm32-unknown-unknown  # checks it stays
 
 ## Not yet
 
-The TLS transport (an adapter), the reconciler, job mode, the buyer and MCP.
+The seller's HTTPS server, the reconciler, job mode, the buyer and MCP. (An HTTPS client for the
+`Https` port is in `quebracho-x402-qnx`, not published until it runs on QNX.)

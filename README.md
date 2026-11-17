@@ -12,9 +12,10 @@ A port of [quebracho/x402](https://github.com/quebracho-digital/x402) (PHP).
   delivery by name (`extra.paymentFlow = "delivery"`; PHP's default is the reverse); OFAC screening is on unless turned off by name;
   anything that cannot answer (a list, the ledger, the clock) refuses instead of letting a payment through.
 - **Pure Rust, `no_std` core:** no C in the dependency tree, TLS with `rustls` + `rustls-rustcrypto`.
-- **Checked against PHP:** every behaviour is compared with the PHP library it ports, through vectors and
-  scripted scenarios exported from it (`conformance/`).
-- **Status:** experimental (0.1), not audited. It runs on any POSIX host today; QNX 8.0 builds come next.
+- **Checked against PHP:** every shared behaviour is compared with the PHP library it ports, through
+  vectors and scripted scenarios exported from it (`conformance/`, which also lists where Rust differs on
+  purpose). PHP is not needed to build or test: the vectors are committed.
+- **Status:** experimental (0.1.1), no third-party audit yet (only our own reviews, see `docs/TESTING.md`). It runs on any POSIX host today; QNX 8.0 builds come next.
 
 ## What works today
 
