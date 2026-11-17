@@ -13,6 +13,7 @@ use serde_json::Value;
 use crate::eip712::{self, Domain, TransferWithAuthorization};
 use crate::field::{self, Rule};
 use crate::hex;
+use crate::settlement::TTL;
 use crate::signer;
 
 /// Seconds a signature must still be valid when verified, so it does not expire on its way into a block.
@@ -144,10 +145,13 @@ pub fn verify(payment: &Value, req: &Value, now: u64) -> Result<(), Reason> {
     );
     fail(valid_after > now, ValidAfter)?;
     fail(valid_before < now.saturating_add(SLACK), ValidBefore)?;
-    // No longer than the offer allows (+60 s skew): bounds replay windows and claim storage.
-    let timeout = php_int(get(req, "maxTimeoutSeconds"));
+    // No longer than the offer allows (+60 s skew): bounds replay windows and claim storage. And never
+    // longer than a claim lives ([`TTL`]): past that the ledger forgets the payment while its authorization
+    // is still good, and only the facilitator could stop a replay. (PHP has no such cap; offers up to
+    // 540 s, the default 300 s included, behave as in PHP.)
+    let timeout = i128::from(php_int(get(req, "maxTimeoutSeconds"))).min(i128::from(TTL) - SKEW);
     fail(
-        i128::from(valid_before) > i128::from(now) + i128::from(timeout) + SKEW,
+        i128::from(valid_before) > i128::from(now) + timeout + SKEW,
         ValidBefore,
     )?;
 

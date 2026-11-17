@@ -39,7 +39,7 @@ Out of scope: an attacker with root on the device, hardware side channels, legal
 | T9 | A fake charger connects to the gateway (R → A3/A7) | One identity per charger; `payTo` fixed by the gateway | Pending (gateway) |
 | T10 | The charger lies about its meter (C → A2/A3) | v1: readings shown as declared, energy blocks capped. Production: signed meter readings | Pending (gateway) |
 | T11 | A driver empties the wallet after charging starts (P → A3) | Settle when the start is confirmed, small blocks, stop if the settle fails | Pending (gateway) |
-| T12 | Malformed or huge input (R → A6) | Strict parsing, size limits, one failing request does not take the rest down | **Done** for payments and HTTPS answers; servers pending |
+| T12 | Malformed or huge input (R → A6) | Strict parsing, size limits, one failing request does not take the rest down | **Done** for payments (the core refuses a `PAYMENT-SIGNATURE` header over 64 KiB, `headers::MAX_PAYMENT_HEADER`) and HTTPS answers (4 MiB); servers pending, and the server in front must cap its own request headers too |
 | T13 | A process crashes or hangs (A6) | QNX High Availability Manager restarts it; recovery from the ledger | Pending (QNX) |
 | T14 | An in-memory ledger lost on reboot (A4) | Accepted in the Lite profile: work is lost, not money (the spent nonce makes a second settle fail) | By design |
 | T15 | Personal data leaks (R → A7) | Keep the minimum; never a signature or a body in logs or open entries | **Done** for the ledger's open entries |
@@ -49,3 +49,13 @@ Out of scope: an attacker with root on the device, hardware side channels, legal
 Entropy mixing, boot quarantine, in-flight signature limits: more checks than value. A per-charger
 client-certificate PKI: costs more than it gives in v1. Defending against root: out of scope. Refunds
 and disputes: x402 `exact` has none; exposure is bounded by small energy blocks.
+
+## Trusted on purpose
+
+The facilitator. The seller chooses and configures it (HTTPS only, a bearer token for that host), and the
+x402 model has it verify and settle on the seller's behalf: the seller believes its `success: true` once
+the answer names the offer's network, a well-formed transaction and, when it names one, the payer. A
+facilitator that lies is not defended against; a seller that wants more confirms settled transactions on
+chain through the `Lookup` port. Likewise the buyer's whole payment object, including its `accepted`
+copy, goes to the facilitator next to the seller's own requirements, as the x402 v2 shape asks; the
+seller's own checks use only its offer, never the buyer's copy.

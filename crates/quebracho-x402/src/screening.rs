@@ -9,7 +9,6 @@ use alloc::string::{String, ToString};
 
 use serde_json::Value;
 
-use crate::field::{self, Rule};
 use crate::ports::{AddressListener, Event, Events, ListFailed};
 
 /// OFAC's reason.
@@ -100,13 +99,23 @@ impl Ofac {
     }
 }
 
-/// A `0x…` EVM address in lower case (EIP-55's case is a checksum); others as they are.
+/// An EVM address as `0x` and 40 lower-case hex digits (EIP-55's case is a checksum): `0x…`, `0X…` and the
+/// bare 40 digits are one address, so a list written in any of those spellings matches. Others as they are.
 fn normalize(address: &str) -> String {
-    if field::is(Rule::Address, address) {
-        address.to_ascii_lowercase()
+    let digits = address
+        .strip_prefix("0x")
+        .or_else(|| address.strip_prefix("0X"))
+        .unwrap_or(address);
+    if digits.len() == 40 && digits.bytes().all(|c| c.is_ascii_hexdigit()) {
+        alloc::format!("0x{}", digits.to_ascii_lowercase())
     } else {
         address.to_string()
     }
+}
+
+/// A list line without the byte order mark an editor may put at the top of a file, and without padding.
+fn clean(line: &str) -> &str {
+    line.trim_start_matches('\u{feff}').trim()
 }
 
 /// Why `address` may not take part in this payment (`role` is [`PAYER`] or [`PAY_TO`]), or `None`.
@@ -145,7 +154,8 @@ pub fn check(
 }
 
 /// One plain-text list (`resources/address-list.example.txt` of the PHP library): one address per line,
-/// `#` comments and blank lines ignored, anything after the address ignored. `0x…` matches in any case.
+/// `#` comments and blank lines ignored, anything after the address ignored. `0x…` matches in any case, and `0X…`
+/// or the bare 40 digits are read as the same address; a leading byte order mark is ignored.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct AddressList {
     entries: alloc::vec::Vec<String>,
@@ -163,7 +173,7 @@ impl AddressList {
             ..Self::default()
         };
         for line in text.lines() {
-            let line = line.trim();
+            let line = clean(line);
             if line.is_empty() || line.starts_with('#') {
                 continue;
             }
@@ -189,7 +199,7 @@ impl AddressList {
 /// The date in a list's `# updated:` comment (any case, any spacing), as `YYYY-MM-DDTHH:MM:SSZ`, or `None`.
 pub fn updated(text: &str) -> Option<String> {
     text.lines().find_map(|line| {
-        let rest = line.trim().strip_prefix('#')?.trim_start();
+        let rest = clean(line).strip_prefix('#')?.trim_start();
         let rest = rest
             .get(..8)
             .filter(|p| p.eq_ignore_ascii_case("updated:"))

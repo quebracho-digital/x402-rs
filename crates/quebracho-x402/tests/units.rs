@@ -1,10 +1,11 @@
 //! The small rules that no PHP vector reaches: unknown names, malformed dates, broken snapshots.
 
+use quebracho_x402::evm_exact::{self, Reason};
 use quebracho_x402::field::{self, Rule};
 use quebracho_x402::http_facilitator::check_settle;
 use quebracho_x402::ports::{AddressListener, Clock, HttpsResponse};
 use quebracho_x402::screening::{self, AddressList, Ofac};
-use quebracho_x402::{dates, signer};
+use quebracho_x402::{dates, headers, signer};
 use serde_json::json;
 
 #[test]
@@ -193,4 +194,79 @@ fn a_list_keeps_its_date() {
         AddressList::parse("0xaa00000000000000000000000000000000000001\n", "x").updated,
         None
     );
+}
+
+/// An offer may ask for a long `maxTimeoutSeconds`, but a ledger claim lives 600 s at most. A payment valid
+/// for longer than a claim would be forgotten while its authorization is still good, so it is refused.
+#[test]
+fn a_payment_never_outlives_the_claim_that_remembers_it() {
+    let now = 1_800_000_000_u64;
+    let pay_to = "0x000000000000000000000000000000000000dEaD";
+    let asset = "0x036CbD53842c5426634e7929541eC2318f3dCF7e";
+    let offer = |timeout: u64| {
+        json!({
+            "scheme": "exact", "network": "eip155:84532", "amount": "10000", "asset": asset,
+            "payTo": pay_to, "maxTimeoutSeconds": timeout,
+            "extra": { "name": "USDC", "version": "2" }
+        })
+    };
+    let payment = |valid_before: u64| {
+        json!({
+            "x402Version": 2,
+            "accepted": { "scheme": "exact", "network": "eip155:84532", "amount": "10000", "asset": asset, "payTo": pay_to },
+            "payload": {
+                "signature": format!("0x{}", "11".repeat(65)),
+                "authorization": {
+                    "from": "0x0000000000000000000000000000000000000001", "to": pay_to, "value": "10000",
+                    "validAfter": "0", "validBefore": valid_before.to_string(),
+                    "nonce": format!("0x{}", "22".repeat(32)),
+                }
+            }
+        })
+    };
+    let too_long = |timeout: u64, valid_before: u64| {
+        evm_exact::verify(&payment(valid_before), &offer(timeout), now) == Err(Reason::ValidBefore)
+    };
+    // The default offer (300 s + 60 s of skew) is as before: the limit is 360 s.
+    assert!(!too_long(300, now + 360));
+    assert!(too_long(300, now + 361));
+    // A long offer is held to the claim's life (600 s = 540 s + 60 s of skew), not to its own timeout.
+    assert!(!too_long(3600, now + 600));
+    assert!(too_long(3600, now + 601));
+}
+
+/// The decoder takes a header of exactly the limit and nothing longer, whatever it holds.
+#[test]
+fn a_payment_header_has_a_size_limit() {
+    // base64 of n bytes is 4 * ceil(n / 3) characters: 49152 bytes fill the limit exactly.
+    let json_of = |bytes: usize| format!("{{\"p\":\"{}\"}}", "x".repeat(bytes - 8));
+    let at_limit = headers::base64(json_of(49_152).as_bytes());
+    assert_eq!(at_limit.len(), headers::MAX_PAYMENT_HEADER);
+    assert!(headers::decode(&at_limit).is_some());
+    let over = headers::base64(json_of(49_155).as_bytes());
+    assert_eq!(over.len(), headers::MAX_PAYMENT_HEADER + 4);
+    assert!(headers::decode(&over).is_none());
+}
+
+/// A list an editor saved with a byte order mark, or one that writes `0X…` or the bare digits, still denies:
+/// an entry that silently matches nothing is worse than none, because the operator believes it is there.
+#[test]
+fn a_list_entry_matches_in_any_spelling_of_the_address() {
+    let payer = "0xAbCdEf0123456789aBcDeF0123456789AbCdEf01";
+    let list = AddressList::parse(
+        "\u{feff}# updated: 2026-11-06T10:00:00Z\n0XABCDEF0123456789ABCDEF0123456789ABCDEF01 first\n\
+         abcdef0123456789abcdef0123456789abcdef02\n\u{feff}0xabcdef0123456789abcdef0123456789abcdef03\n",
+        "denied",
+    );
+    assert!(list.contains(payer));
+    assert!(list.contains("0xabcdef0123456789abcdef0123456789abcdef02"));
+    assert!(list.contains("0xAbCdEf0123456789aBcDeF0123456789AbCdEf03"));
+    assert!(!list.contains("0xabcdef0123456789abcdef0123456789abcdef04"));
+    // All three entries are kept in the one canonical spelling, and the BOM did not hide the date line.
+    assert_eq!(list.addresses().len(), 3);
+    assert!(list.addresses().iter().all(|a| field::is(Rule::Address, a)));
+    assert_eq!(list.updated.as_deref(), Some("2026-11-06T10:00:00Z"));
+    // Entries that are not EVM addresses are kept as written.
+    let other = AddressList::parse("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh\n", "denied");
+    assert!(other.contains("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"));
 }

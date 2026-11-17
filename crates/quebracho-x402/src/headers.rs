@@ -22,8 +22,17 @@ pub fn encode(data: &Value) -> String {
     B64.encode(serde_json::to_vec(data).unwrap_or_default())
 }
 
-/// The JSON a header holds, or `None` when it is not base64 of a JSON object or list (PHP's arrays).
+/// The longest `PAYMENT-SIGNATURE` header taken, in bytes. A real payment is about 1 KiB; the limit leaves
+/// room for extensions and stops a client from making the seller decode, parse and forward megabytes. The
+/// transport in front should cap its headers too; this is the core's own bound.
+pub const MAX_PAYMENT_HEADER: usize = 64 * 1024;
+
+/// The JSON a header holds, or `None` when it is not base64 of a JSON object or list (PHP's arrays), or is
+/// longer than [`MAX_PAYMENT_HEADER`].
 pub fn decode(header: &str) -> Option<Value> {
+    if header.len() > MAX_PAYMENT_HEADER {
+        return None;
+    }
     let bytes: Vec<u8> = B64.decode(header).ok()?;
     let value: Value = serde_json::from_slice(&bytes).ok()?;
     matches!(value, Value::Object(_) | Value::Array(_)).then_some(value)

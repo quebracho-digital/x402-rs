@@ -120,6 +120,12 @@ impl Seller<'_> {
             }
             return Ok(required("PAYMENT-SIGNATURE header is required"));
         }
+        if header.len() > headers::MAX_PAYMENT_HEADER {
+            return Ok(Response::json(
+                431,
+                &json!({ "error": "The payment header is too large." }),
+            ));
+        }
         let Some(payment) = headers::decode(header) else {
             return Ok(Response::json(
                 400,
@@ -173,13 +179,26 @@ impl Seller<'_> {
                 sale.abandon(None);
                 return Ok(paused());
             }
+            // The run claim is taken before the money moves: once `settled` is stored, a retry may run the
+            // handler, and it must find this request already running it.
+            if !sale.begin_run() {
+                sale.abandon(None);
+                return Ok(Response::json(
+                    503,
+                    &json!({ "error": "ledger_unavailable" }),
+                ));
+            }
             // Money first; once it moved, the receipt goes with whatever the handler answers.
             let receipt = sale.settle(None);
             sale.record(&receipt, None, false);
             if receipt["success"] != Value::Bool(true) {
+                sale.end_run();
                 return Ok(failed(accepts, request.resource, &receipt));
             }
-            return self.deliver_upfront(&sale, &receipt, request.keep, handler);
+            let out = self.deliver_upfront(&sale, &receipt, request.keep, handler);
+            // After the outcome is written, whatever it was: the next retry finds it.
+            sale.end_run();
+            return out;
         }
 
         let response = match handler() {
@@ -461,6 +480,17 @@ impl<'a> Sale<'a> {
                 Ok(answer)
             }
         }
+    }
+
+    /// Takes the run claim of this payment: the one request that may run its upfront handler. `false`
+    /// when the ledger cannot say or someone else holds it.
+    fn begin_run(&self) -> bool {
+        let run_key = alloc::format!("{RUN}{}", self.key);
+        if matches!(self.seller.ledger.claim(&run_key, self.ttl(None)), Ok(true)) {
+            self.running.set(true);
+            return true;
+        }
+        false
     }
 
     fn end_run(&self) {
@@ -791,6 +821,8 @@ mod tests {
         states: RefCell<BTreeMap<String, Value>>,
         releases: RefCell<Vec<String>>,
         ttls: RefCell<Vec<u64>>,
+        /// For each `settled` state without a delivered handler that was stored: was the run claim held?
+        run_held: RefCell<Vec<bool>>,
     }
     impl Ledger for Racy {
         fn claim(&self, k: &str, t: u64) -> Result<bool, LedgerUnavailable> {
@@ -810,6 +842,15 @@ mod tests {
             Ok(self.states.borrow().get(k).cloned())
         }
         fn put(&self, k: &str, s: &Value, _t: u64) -> Result<(), LedgerUnavailable> {
+            if get(s, "status") == Some(&json!("settled"))
+                && get(s, "handler_ran") == Some(&Value::Bool(false))
+            {
+                let held = self
+                    .states
+                    .borrow()
+                    .contains_key(&alloc::format!("{RUN}{k}"));
+                self.run_held.borrow_mut().push(held);
+            }
             self.states.borrow_mut().insert(k.into(), s.clone());
             Ok(())
         }
@@ -937,6 +978,45 @@ mod tests {
                 .borrow()
                 .contains(&alloc::format!("{RUN}{key}"))
         );
+    }
+
+    /// Upfront, the request that charges holds the run claim from before the money moves until the outcome
+    /// is written. A retry that reads `settled` with `handler_ran: false` in between must find it taken and
+    /// get `in_progress`, not run the handler a second time.
+    #[test]
+    fn the_charging_request_holds_the_run_claim_while_it_delivers() {
+        let (header, offer, key) = upfront();
+        let ledger = Racy::default();
+        let runs = Rc::new(RefCell::new(0));
+        let r = run(&ledger, &header, &offer, &runs);
+        assert_eq!(r.status, 200);
+        assert_eq!(*runs.borrow(), 1);
+        // Every `settled` state without a delivered handler was stored with the run claim held ...
+        assert_eq!(*ledger.run_held.borrow(), alloc::vec![true]);
+        // ... and the claim is let go once the outcome is written.
+        assert!(
+            ledger
+                .releases
+                .borrow()
+                .contains(&alloc::format!("{RUN}{key}")),
+            "run claim released"
+        );
+    }
+
+    /// A header past the limit is refused before it is decoded, parsed or forwarded: no handler, no ledger.
+    #[test]
+    fn an_oversized_payment_header_is_refused_before_anything_else() {
+        let (_, offer, _) = upfront();
+        let ledger = Racy::default();
+        let runs = Rc::new(RefCell::new(0));
+        let big = Value::String("A".repeat(headers::MAX_PAYMENT_HEADER + 1));
+        let r = run(&ledger, &big, &offer, &runs);
+        assert_eq!(r.status, 431);
+        assert_eq!(*runs.borrow(), 0);
+        assert!(ledger.states.borrow().is_empty() && ledger.ttls.borrow().is_empty());
+        // At the limit it is read as usual (and refused for what it is: not base64 of JSON).
+        let edge = Value::String("A".repeat(headers::MAX_PAYMENT_HEADER));
+        assert_eq!(run(&ledger, &edge, &offer, &runs).status, 400);
     }
 
     /// A sale releases only what it holds: no run claim, no payment claim.
