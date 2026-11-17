@@ -270,3 +270,21 @@ fn a_list_entry_matches_in_any_spelling_of_the_address() {
     let other = AddressList::parse("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh\n", "denied");
     assert!(other.contains("bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"));
 }
+
+/// Only an EVM address (exactly 40 hex digits) gets the canonical spelling. Anything else matches only as
+/// written: a short hex string is not an address with its `0x` left out, and 40 characters that are not
+/// all hex do not become one by changing their case.
+#[test]
+fn a_list_entry_that_is_not_an_evm_address_matches_only_as_written() {
+    let short = AddressList::parse("abc123\n", "denied");
+    assert!(short.contains("abc123"));
+    assert!(!short.contains("0xabc123"));
+    assert!(!short.contains("ABC123"));
+
+    let not_hex = "zzcdef0123456789abcdef0123456789abcdef01";
+    assert_eq!(not_hex.len(), 40);
+    let list = AddressList::parse(&format!("{not_hex}\n"), "denied");
+    assert!(list.contains(not_hex));
+    assert!(!list.contains(&not_hex.to_ascii_uppercase()));
+    assert!(!list.contains(&format!("0x{not_hex}")));
+}
