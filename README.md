@@ -8,7 +8,8 @@ A port of [quebracho/x402](https://github.com/quebracho-digital/x402) (PHP).
 - **What:** a device (an EV charger gateway, a sensor) charges for what it does with
   [x402](https://www.x402.org/): HTTP 402, a signed USDC authorization (EIP-3009), settled by a
   facilitator. The device only *verifies*: it holds no key.
-- **Safe by default:** one signature buys one delivery; OFAC screening is on unless turned off by name;
+- **Safe by default:** one signature buys one delivery; paid upfront unless an offer asks for pay on
+  delivery by name (`extra.paymentFlow = "delivery"`; PHP's default is the reverse); OFAC screening is on unless turned off by name;
   anything that cannot answer (a list, the ledger, the clock) refuses instead of letting a payment through.
 - **Pure Rust, `no_std` core:** no C in the dependency tree, TLS with `rustls` + `rustls-rustcrypto`.
 - **Checked against PHP:** every behaviour is compared with the PHP library it ports, through vectors and
@@ -20,7 +21,7 @@ A port of [quebracho/x402](https://github.com/quebracho-digital/x402) (PHP).
 | Area | What | Crate |
 |---|---|---|
 | Verify | EVM `exact` offline: EIP-712 / EIP-3009 digest, low-s ecrecover, one spelling per value, x402 v2 reason codes | `quebracho-x402` |
-| Sell | 402 → verify → screen → claim → run → settle; pay on delivery or upfront; replay from the ledger; pending lookups; stop switch | `quebracho-x402` |
+| Sell | 402 → verify → screen → claim → run → settle; upfront (default) or pay on delivery; replay from the ledger; pending lookups; stop switch | `quebracho-x402` |
 | Facilitator | Any x402 facilitator by URL (`/verify`, `/settle`, `/status`), with the settle consistency rule | `quebracho-x402` |
 | Screening | OFAC's list shipped; the token's own blacklist (USDC/USDT freeze); Chainalysis' oracle and API; your own allow and deny lists; list syncs | `quebracho-x402-screening` |
 | Platform | Ledger in files (PHP's layout, lock + fsync + rename), stop file, trusted clock, HTTPS client | `quebracho-x402-qnx` |

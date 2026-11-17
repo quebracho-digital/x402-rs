@@ -17,7 +17,12 @@ needs no entropy.
 | `dates` | ISO 8601 and HTTP dates, UTC, no time zone database | (`strtotime`, `gmdate`) |
 | `ports` | `Ledger`, `Facilitator`, `Lookup`, `Clock`, `AddressListener`, `Pause`, `Events` | `PaymentLedger`, `Facilitator`, ... |
 | `http_facilitator` | Any x402 facilitator by URL over the `Http` port; settle consistency rule, /status polling | `HttpFacilitator` |
-| `seller` | One paid request: 402, verify, claim, run, settle; upfront; ledger replay | `X402Middleware`, `Sale` |
+| `seller` | One paid request: 402, verify, claim, settle, run (upfront, the default) or run, settle (`extra.paymentFlow = "delivery"`); ledger replay | `X402Middleware`, `Sale` |
+
+**Upfront by default, unlike PHP.** Pay on delivery runs the handler before the settle; if the settle then
+fails, the claim is freed and the same effect can be had again without paying. An offer that names no
+`paymentFlow` is therefore paid upfront: settled before the handler runs. Ask for `"delivery"` only when
+the handler's effect is a read that costs nothing to repeat.
 
 ```rust
 use quebracho_x402::evm_exact;

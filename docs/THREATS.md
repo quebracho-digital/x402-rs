@@ -28,7 +28,7 @@ Out of scope: an attacker with root on the device, hardware side channels, legal
 
 | # | Threat (attacker → asset) | Defence | Status |
 |---|---|---|---|
-| T1 | Replaying a payment to get two deliveries (P → A3/A4) | One signature, one delivery: an atomic claim on (network, payer, nonce) before the handler runs | **Done**: `seller`, `FileLedger`; race and replay tests |
+| T1 | Replaying a payment to get two deliveries (P → A3/A4) | One signature, one delivery: an atomic claim on (network, payer, nonce) before the handler runs. Upfront by default: on delivery a settle that fails frees the claim, and the effect could be had again unpaid | **Done**: `seller`, `FileLedger`; race and replay tests; pay on delivery only by name (`extra.paymentFlow = "delivery"`) |
 | T2 | The process dies between charging and delivering (A3/A4) | State written before the effect (`settling`, `handling`); replay from the ledger; reconciler | **Done** for the seller; reconciler pending |
 | T3 | A compromised app asks for signatures to any payee (C → A1/A2) | Policies inside `signerd`: allowed payees, known tokens and EIP-712 domains, amount caps, budget | Pending (`signerd`) |
 | T4 | Another app steals the key (C/L → A1) | The key lives only in `signerd`: separate process, minimal QNX abilities, file mode 0600 | Pending (`signerd`) |

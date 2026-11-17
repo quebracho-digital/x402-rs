@@ -150,6 +150,9 @@ final class ScriptedFacilitator implements Facilitator
 }
 
 $req = Networks::requirements('eip155:84532', '0.01', PAY_TO);
+// PHP pays on delivery unless an offer says 'upfront'; x402-rs pays upfront unless it says 'delivery'. Naming
+// the flow on every offer keeps the scenarios meaning the same in both.
+$req['extra']['paymentFlow'] = 'delivery';
 $upfrontReq = $req;
 $upfrontReq['extra']['paymentFlow'] = 'upfront';
 $buyer = new Signer(BUYER);

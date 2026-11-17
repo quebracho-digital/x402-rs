@@ -7,6 +7,11 @@
 //! What is not ported, on purpose: the claims-only mode (a [`Ledger`] is always required), deferred
 //! address lookups, `ChainFacilitator`'s reference callback (no self-facilitation, decision of Leo) and the
 //! MCP transport. Added, not in PHP: an unreliable [`Clock`] refuses new payments (`clock_unreliable`, 503).
+//!
+//! Changed from PHP: an offer is paid upfront unless it says `extra.paymentFlow = "delivery"`. Pay on
+//! delivery runs the handler before the settle, so a settle that fails frees the claim and the same effect
+//! can be had again without paying; for a device whose effects cannot be taken back (a relay, a charger)
+//! that is the wrong default. PHP pays on delivery unless the offer says `"upfront"`.
 
 use alloc::string::{String, ToString};
 use alloc::vec::Vec;
@@ -27,6 +32,8 @@ use crate::settlement::{self, MAX_BODY, MAY_HAVE_MOVED, OPEN_TTL, RUN, UNAVAILAB
 pub const PAUSED: &str = "payments_paused";
 /// Added in the port: no trusted time, no new payment (threat T6, `docs/THREATS.md`).
 pub const CLOCK_UNRELIABLE: &str = "clock_unreliable";
+/// The `extra.paymentFlow` of an offer paid on delivery; any other value, or none, is paid upfront.
+pub const DELIVERY: &str = "delivery";
 
 /// What goes back to the transport.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -384,8 +391,9 @@ impl<'a> Sale<'a> {
         self.seller.clock.now()
     }
 
+    /// Upfront unless the offer asks for pay on delivery by name (see the module docs).
     fn upfront(&self) -> bool {
-        at(self.req, &["extra", "paymentFlow"]).and_then(Value::as_str) == Some("upfront")
+        at(self.req, &["extra", "paymentFlow"]).and_then(Value::as_str) != Some(DELIVERY)
     }
 
     fn payer(&self) -> Option<&str> {
@@ -1001,6 +1009,69 @@ mod tests {
                 .contains(&alloc::format!("{RUN}{key}")),
             "run claim released"
         );
+    }
+
+    /// Records the order of the settle and the handler.
+    struct Ordered(Rc<RefCell<Vec<&'static str>>>);
+    impl Facilitator for Ordered {
+        fn verify(&self, p: &Value, r: &Value) -> Result<Value, FacilitatorError> {
+            Ok200.verify(p, r)
+        }
+        fn settle(&self, p: &Value, r: &Value) -> Result<Value, FacilitatorError> {
+            self.0.borrow_mut().push("settle");
+            Ok200.settle(p, r)
+        }
+    }
+
+    /// Upfront is the default (decision of Leo, 2026-11-17): an offer with no `paymentFlow`, or one this
+    /// library does not know, settles before the handler runs. Only `"delivery"`, by name, runs it first.
+    #[test]
+    fn an_offer_is_paid_upfront_unless_it_asks_for_delivery() {
+        let (header, upfront_offer, _) = upfront();
+        for (flow, order) in [
+            (None, ["settle", "handler"]),
+            (Some("upfront"), ["settle", "handler"]),
+            (Some("Delivery"), ["settle", "handler"]),
+            (Some(DELIVERY), ["handler", "settle"]),
+        ] {
+            let mut offer = upfront_offer.clone();
+            let extra = offer["extra"].as_object_mut().unwrap();
+            extra.remove("paymentFlow");
+            if let Some(flow) = flow {
+                extra.insert("paymentFlow".into(), json!(flow));
+            }
+            let steps = Rc::new(RefCell::new(Vec::new()));
+            let ledger = Racy::default();
+            let ofac = Ofac::off();
+            let seller = Seller {
+                ledger: &ledger,
+                facilitator: &Ordered(steps.clone()),
+                clock: &At(1_800_000_000),
+                ofac: &ofac,
+                listeners: &[],
+                events: None,
+                lookup: None,
+                stop: None,
+            };
+            let offers = [offer];
+            let handler_steps = steps.clone();
+            let r = seller
+                .process(
+                    &Request {
+                        accepts: Some(&offers),
+                        resource: &json!({}),
+                        payment: header.as_str(),
+                        keep: true,
+                    },
+                    move || {
+                        handler_steps.borrow_mut().push("handler");
+                        Ok(Response::new(200, "energy"))
+                    },
+                )
+                .unwrap();
+            assert_eq!(r.status, 200, "{flow:?}");
+            assert_eq!(*steps.borrow(), order, "{flow:?}");
+        }
     }
 
     /// A header past the limit is refused before it is decoded, parsed or forwarded: no handler, no ledger.
