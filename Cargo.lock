@@ -742,7 +742,7 @@ dependencies = [
 
 [[package]]
 name = "quebracho-x402"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "base64",
  "k256",
@@ -754,7 +754,7 @@ dependencies = [
 
 [[package]]
 name = "quebracho-x402-qnx"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "quebracho-x402",
  "quebracho-x402-screening",
@@ -767,7 +767,7 @@ dependencies = [
 
 [[package]]
 name = "quebracho-x402-screening"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "quebracho-x402",
  "serde_json",

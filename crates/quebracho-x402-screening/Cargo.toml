@@ -19,7 +19,7 @@ ofac = []
 std = []
 
 [dependencies]
-quebracho-x402 = { path = "../quebracho-x402", version = "0.1.0" }
+quebracho-x402 = { path = "../quebracho-x402", version = "0.1.1" }
 serde_json = { workspace = true }
 
 [dev-dependencies]
