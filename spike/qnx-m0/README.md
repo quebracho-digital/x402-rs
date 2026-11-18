@@ -4,6 +4,9 @@ This is not product code. It answers one question before the demo work continues
 
 > Does the minimum the seller and the gateway need build and run on QNX 8.0?
 
+QNX is not installed yet? `./host-check.sh` checks the host (disk, KVM, QEMU) and `../../QNX-QEMU.md`
+has the QSTI/QEMU install steps.
+
 M0 was planned for 2026-11-09..15 and is the critical path. A `no_std` hello-world is not enough:
 the seller server, the OCPP WebSocket and the TLS client need **`std`**, threads, sockets and the
 filesystem.

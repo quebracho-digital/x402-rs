@@ -1,5 +1,8 @@
 # M0 on your Mint: exact commands
 
+> QNX is not installed yet? The QEMU/QSTI runbook is in `../../QNX-QEMU.md`. This file assumes the SDP
+> is installed and `qcc` is on `PATH`.
+
 The probe is built. This is the runbook to build and run it on the QNX host. Work from the repository
 root: `/home/leo/Proyects/Quebracho/x402-rs`.
 
