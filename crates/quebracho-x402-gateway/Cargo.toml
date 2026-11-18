@@ -1,0 +1,20 @@
+[package]
+name = "quebracho-x402-gateway"
+description = "An OCPP gateway that sells EV charging with x402: charge-point port, session state and a simulated charge point."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+readme = "README.md"
+publish = false
+keywords = ["x402", "ocpp", "ev-charging", "payments"]
+categories = ["cryptography::cryptocurrencies", "web-programming"]
+
+[dependencies]
+quebracho-x402 = { path = "../quebracho-x402", version = "0.1.1" }
+serde_json = { version = "1", features = ["std"] }
+
+[lints]
+workspace = true

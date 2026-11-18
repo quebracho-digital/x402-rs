@@ -1,6 +1,8 @@
 [workspace]
 resolver = "3"
-members = ["crates/quebracho-x402", "crates/quebracho-x402-screening", "crates/quebracho-x402-qnx"]
+members = ["crates/quebracho-x402", "crates/quebracho-x402-screening", "crates/quebracho-x402-qnx", "crates/quebracho-x402-gateway"]
+# The M0 probe has its own workspace and needs nightly + the QNX SDP, not the Linux toolchain.
+exclude = ["spike/qnx-m0"]
 
 [workspace.package]
 version = "0.1.1"

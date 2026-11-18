@@ -1,0 +1,15 @@
+[package]
+name = "qnx-m0"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "M0 viability probe: std, threads, TCP, files, the core crates, TLS and WebSocket on QNX 8.0."
+
+# Its own workspace: the root workspace must not try to build it with the stable Linux toolchain.
+[workspace]
+
+[dependencies]
+quebracho-x402 = { path = "../../crates/quebracho-x402" }
+quebracho-x402-screening = { path = "../../crates/quebracho-x402-screening" }
+quebracho-x402-qnx = { path = "../../crates/quebracho-x402-qnx" }
+tungstenite = { version = "0.30", default-features = false, features = ["handshake"] }

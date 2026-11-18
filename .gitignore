@@ -2,3 +2,6 @@
 **/*.rs.bk
 .env
 *.key
+
+# M0 probe: its own workspace and its own target directory.
+/spike/qnx-m0/target/
